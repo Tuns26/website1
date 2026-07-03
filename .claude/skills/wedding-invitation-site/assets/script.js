@@ -1,4 +1,4 @@
-// ===== Ewig & Immer — Interaktivität =====
+// ===== WeddingLink — Interaktivität =====
 (function () {
   "use strict";
 

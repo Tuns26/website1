@@ -1,6 +1,6 @@
 ---
 name: wedding-invitation-site
-description: Build an elegant single-page digital wedding-invitation website (like "Ewig & Immer") in a chosen design/theme. Use whenever the user wants to create, generate, or restyle a wedding / marriage invitation site, "Hochzeitseinladung", digital invite landing page, or asks for the same layout in a different color palette or style. Produces vanilla HTML/CSS/JS with no build step.
+description: Build an elegant single-page digital wedding-invitation website (like "WeddingLink") in a chosen design/theme. Use whenever the user wants to create, generate, or restyle a wedding / marriage invitation site, "Hochzeitseinladung", digital invite landing page, or asks for the same layout in a different color palette or style. Produces vanilla HTML/CSS/JS with no build step.
 ---
 
 # Wedding Invitation Website
@@ -58,7 +58,7 @@ The base template lives in `assets/` — three files, no dependencies, no build:
      `❦ ❧ ❀ ✿ ✦ ✧ ❤` and swap to match the motif — e.g. florals vs. geometric)
 
 4. **Personalize the copy** in `index.html` when the user gives details: couple names,
-   wedding date, venue, studio/brand name (`Ewig & Immer`), prices, testimonials.
+   wedding date, venue, studio/brand name (`WeddingLink`), prices, testimonials.
    Keep the German copy unless the user wants another language.
 
 5. **Update the countdown date** in `script.js`

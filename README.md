@@ -1,4 +1,4 @@
-# Ewig & Immer — Digitale Hochzeitseinladungen
+# WeddingLink — Digitale Hochzeitseinladungen
 
 Eine elegante, einseitige Website für digitale Hochzeitseinladungen. Warme Cremetöne,
 Bordeaux-Akzente und feine Serifen-Typografie — inspiriert von handgefertigten Einladungen.

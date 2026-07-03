@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>Emma &amp; Lukas · Einladung</title>
+<meta name="description" content="Wir heiraten — öffne unsere Einladung." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:wght@300;400;500;600&family=Tangerine:wght@700&display=swap" rel="stylesheet" />
+<style>
+/* ================= THEME (hier tauschst du das Design) ================= */
+:root{
+  --wine:#6d1f2f; --wine-dark:#521623; --wine-soft:#8a3a48;
+  --cream:#f7f1e8; --cream-2:#f1e8db; --sand:#e8dcc9;
+  --ink:#3a2f2a; --ink-soft:#6b5d54; --gold:#c8a96a; --white:#fffdf9;
+  --paper:#fffdf9;
+  --serif:"Cormorant Garamond",Georgia,serif;
+  --sans:"Jost",system-ui,sans-serif;
+  --script:"Tangerine",cursive;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%}
+body{
+  font-family:var(--sans);color:var(--ink);font-weight:300;line-height:1.6;
+  background:radial-gradient(130% 100% at 50% 0%,var(--cream) 0%,var(--cream-2) 55%,var(--sand) 100%);
+  overflow:hidden; /* bis geöffnet: kein Scrollen */
+  -webkit-font-smoothing:antialiased;
+}
+body.is-open{overflow:auto}
+em{font-style:italic}
+
+/* ================= STUFE 1: BRIEFUMSCHLAG-SZENE ================= */
+.scene{
+  position:fixed;inset:0;display:grid;place-items:center;
+  perspective:1400px;z-index:50;padding:1.5rem;
+  transition:opacity .8s ease .5s, visibility .8s ease .5s;
+}
+body.is-open .scene{opacity:0;visibility:hidden;pointer-events:none}
+
+.hint{
+  position:absolute;bottom:9%;left:0;right:0;text-align:center;
+  text-transform:uppercase;letter-spacing:.32em;font-size:.72rem;color:var(--wine-soft);
+  animation:pulse 2.2s ease-in-out infinite;
+}
+@keyframes pulse{0%,100%{opacity:.5;transform:translateY(0)}50%{opacity:1;transform:translateY(-4px)}}
+body.opening .hint{opacity:0;transition:opacity .3s}
+
+/* Umschlag */
+.envelope{
+  position:relative;width:min(84vw,380px);aspect-ratio:4/3;
+  cursor:pointer;transform-style:preserve-3d;
+  transition:transform .8s ease;
+}
+.envelope:hover{transform:translateY(-6px)}
+body.opening .envelope{cursor:default;pointer-events:none}
+
+.env-back{
+  position:absolute;inset:0;border-radius:10px;
+  background:linear-gradient(160deg,var(--wine-soft),var(--wine));
+  box-shadow:0 30px 70px -25px rgba(82,22,35,.55);
+}
+/* Der Brief, der herausgleitet – vollständig im Umschlag verborgen */
+.letter{
+  position:absolute;left:7%;right:7%;top:11%;height:80%;
+  background:var(--paper);border-radius:6px;
+  box-shadow:0 10px 30px -12px rgba(0,0,0,.25);
+  display:flex;flex-direction:column;align-items:center;
+  padding:1.3rem 1.1rem;text-align:center;
+  transform:translateY(0);z-index:2;
+  transition:transform 1s cubic-bezier(.22,1,.36,1) .35s;
+}
+.letter .l-orn{font-size:1.5rem;color:var(--gold)}
+.letter .l-pre{text-transform:uppercase;letter-spacing:.3em;font-size:.58rem;color:var(--wine-soft);margin-top:.45rem}
+.letter .l-names{font-family:var(--script);font-size:2.4rem;color:var(--wine);line-height:1;margin:.15rem 0}
+.letter .l-date{font-family:var(--serif);font-size:.9rem;color:var(--ink)}
+body.opening .letter{transform:translateY(-72%)}
+
+/* Vordere Umschlagtasche – verdeckt Brief (Seiten + Boden), V-Öffnung oben */
+.env-front{
+  position:absolute;inset:0;z-index:3;pointer-events:none;border-radius:10px;
+  background:linear-gradient(165deg,var(--wine),var(--wine-dark));
+  clip-path:polygon(0 0, 50% 56%, 100% 0, 100% 100%, 0 100%);
+}
+.env-front::after{ /* sanfte Kante an der V-Öffnung */
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(180deg,rgba(0,0,0,.12),transparent 30%);
+  clip-path:polygon(0 0, 50% 56%, 100% 0, 100% 100%, 0 100%);
+}
+
+/* Klappe oben – öffnet sich */
+.env-flap{
+  position:absolute;top:0;left:0;right:0;height:58%;z-index:6;
+  transform-origin:top center;transform:rotateX(0deg);
+  transition:transform .8s ease, z-index 0s linear .45s;
+  background:linear-gradient(160deg,var(--wine),var(--wine-dark));
+  clip-path:polygon(0 0,100% 0,50% 100%);
+  border-radius:10px 10px 0 0;
+}
+.env-flap::after{ /* dezente Falzlinie */
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(160deg,rgba(255,255,255,.06),transparent 40%);
+  clip-path:polygon(0 0,100% 0,50% 100%);
+}
+body.opening .env-flap{transform:rotateX(180deg);z-index:1}
+
+/* Siegel */
+.seal{
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  width:58px;height:58px;border-radius:50%;z-index:7;
+  background:radial-gradient(circle at 35% 30%,var(--wine-soft),var(--wine) 60%,var(--wine-dark));
+  box-shadow:0 6px 14px -4px rgba(0,0,0,.45), inset 0 2px 4px rgba(255,255,255,.25);
+  display:grid;place-items:center;color:var(--gold);
+  font-family:var(--serif);font-weight:600;font-size:1.2rem;
+  border:2px solid rgba(200,169,106,.5);
+  transition:transform .4s ease, opacity .4s ease;
+}
+body.opening .seal{transform:translate(-50%,-50%) scale(.2);opacity:0}
+
+/* ================= STUFE 2: EINLADUNG (HOCHFORMAT) ================= */
+.invitation{
+  position:relative;z-index:10;
+  width:min(92vw,430px);margin:0 auto;
+  min-height:100dvh;
+  padding:clamp(2.5rem,7vw,3.6rem) clamp(1.4rem,5vw,2.2rem) 3rem;
+  background:var(--paper);
+  box-shadow:0 40px 120px -40px rgba(82,22,35,.4);
+  text-align:center;
+  opacity:0;transform:translateY(30px) scale(.98);
+  transition:opacity .8s ease .7s, transform .9s cubic-bezier(.22,1,.36,1) .7s;
+}
+body.is-open .invitation{opacity:1;transform:none}
+
+/* dünner Zierrahmen */
+.invitation::before{
+  content:"";position:absolute;inset:12px;border:1px solid var(--sand);
+  pointer-events:none;
+}
+
+/* gestaffelte Einblendung der Inhalte */
+.reveal{opacity:0;transform:translateY(18px)}
+body.is-open .reveal{animation:rise .8s ease forwards}
+@keyframes rise{to{opacity:1;transform:none}}
+body.is-open .r1{animation-delay:.9s}
+body.is-open .r2{animation-delay:1.05s}
+body.is-open .r3{animation-delay:1.2s}
+body.is-open .r4{animation-delay:1.35s}
+body.is-open .r5{animation-delay:1.5s}
+body.is-open .r6{animation-delay:1.7s}
+body.is-open .r7{animation-delay:1.9s}
+body.is-open .r8{animation-delay:2.1s}
+
+.monogram{
+  width:70px;height:70px;margin:0 auto 1rem;border:1px solid var(--gold);border-radius:50%;
+  display:grid;place-items:center;font-family:var(--serif);font-weight:600;color:var(--wine);font-size:1.25rem;
+}
+.pre{text-transform:uppercase;letter-spacing:.34em;font-size:.72rem;color:var(--wine-soft)}
+.names{font-family:var(--script);font-size:clamp(3.4rem,15vw,4.6rem);color:var(--wine);line-height:.95;margin:.4rem 0}
+.amp{display:block;font-size:.5em;color:var(--gold);margin:-.1em 0}
+.divider{display:flex;align-items:center;gap:.7rem;color:var(--gold);margin:1.2rem 0}
+.divider::before,.divider::after{content:"";flex:1;height:1px;background:var(--sand)}
+.tagline{font-family:var(--serif);font-style:italic;font-size:1.15rem;color:var(--ink-soft)}
+
+.date-line{font-family:var(--serif);font-size:1.5rem;color:var(--ink);margin-top:.3rem}
+.venue{color:var(--ink-soft);font-size:.95rem;margin-top:.25rem}
+
+/* Countdown */
+.countdown{display:flex;justify-content:center;gap:1rem;margin:1.8rem 0}
+.countdown div{display:flex;flex-direction:column;min-width:48px}
+.countdown b{font-family:var(--serif);font-size:1.8rem;color:var(--wine);font-weight:600}
+.countdown i{font-style:normal;font-size:.6rem;text-transform:uppercase;letter-spacing:.14em;color:var(--ink-soft)}
+
+/* Abschnitt */
+.block{margin-top:2.4rem}
+.block__title{text-transform:uppercase;letter-spacing:.28em;font-size:.72rem;color:var(--wine-soft);margin-bottom:1.1rem}
+
+/* Programm-Timeline */
+.timeline{list-style:none;text-align:left;max-width:250px;margin:0 auto;position:relative}
+.timeline::before{content:"";position:absolute;left:7px;top:6px;bottom:6px;width:1px;background:var(--sand)}
+.timeline li{position:relative;padding:.55rem 0 .55rem 2rem}
+.timeline li::before{content:"";position:absolute;left:2px;top:.95rem;width:11px;height:11px;border-radius:50%;background:var(--wine);border:2px solid var(--paper);box-shadow:0 0 0 1px var(--gold)}
+.timeline b{font-family:var(--serif);font-size:1.05rem;color:var(--ink);display:block;font-weight:600}
+.timeline span{font-size:.82rem;color:var(--ink-soft)}
+
+/* Info-Zeilen */
+.info{font-family:var(--serif);font-size:1.05rem;color:var(--ink)}
+.info small{display:block;font-family:var(--sans);font-size:.82rem;color:var(--ink-soft);margin-top:.15rem;letter-spacing:.02em}
+.info + .info{margin-top:1rem}
+
+/* RSVP */
+.rsvp-actions{display:flex;gap:.7rem;justify-content:center;flex-wrap:wrap;margin-top:1.2rem}
+.btn{font-family:var(--sans);font-weight:500;font-size:.9rem;letter-spacing:.02em;padding:.8rem 1.7rem;border-radius:100px;cursor:pointer;border:1px solid var(--wine);transition:transform .2s ease,background .2s ease,color .2s ease}
+.btn--yes{background:var(--wine);color:var(--white)}
+.btn--yes:hover{background:var(--wine-dark);transform:translateY(-2px)}
+.btn--no{background:transparent;color:var(--wine)}
+.btn--no:hover{background:rgba(109,31,47,.06);transform:translateY(-2px)}
+.rsvp-note{margin-top:1rem;font-family:var(--serif);font-style:italic;color:var(--wine);min-height:1.4em}
+
+.closing{margin-top:2.6rem;font-family:var(--script);font-size:2.2rem;color:var(--wine-soft);line-height:1}
+.foot{margin-top:.6rem;font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-soft)}
+.credit{margin-top:1.8rem;font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;color:var(--sand)}
+
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+  .reveal{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+
+  <!-- STUFE 1 · Briefumschlag -->
+  <div class="scene" id="scene">
+    <div class="envelope" id="envelope" role="button" tabindex="0" aria-label="Einladung öffnen">
+      <div class="env-back"></div>
+      <div class="letter">
+        <div class="l-orn">❦</div>
+        <p class="l-pre">Wir heiraten</p>
+        <p class="l-names">Emma &amp; Lukas</p>
+        <p class="l-date">23 · 08 · 2026</p>
+      </div>
+      <div class="env-front"></div>
+      <div class="env-flap"></div>
+      <div class="seal">E&amp;L</div>
+    </div>
+    <p class="hint">✦ Tippen, um die Einladung zu öffnen ✦</p>
+  </div>
+
+  <!-- STUFE 2 · Einladung im Hochformat -->
+  <main class="invitation" id="invitation" aria-hidden="true">
+    <div class="monogram reveal r1">E&amp;L</div>
+    <p class="pre reveal r1">Wir heiraten</p>
+    <h1 class="names reveal r2">Emma<span class="amp">&amp;</span>Lukas</h1>
+
+    <div class="divider reveal r3"><span>❧</span></div>
+    <p class="tagline reveal r3">Wir sagen „Ja" — und würden uns freuen,<br />wenn ihr dabei seid.</p>
+
+    <p class="date-line reveal r4">Samstag, 23. August 2026</p>
+    <p class="venue reveal r4">Schloss Rosenau · 15:00 Uhr</p>
+
+    <div class="countdown reveal r4" id="countdown">
+      <div><b data-d>—</b><i>Tage</i></div>
+      <div><b data-h>—</b><i>Std.</i></div>
+      <div><b data-m>—</b><i>Min.</i></div>
+      <div><b data-s>—</b><i>Sek.</i></div>
+    </div>
+
+    <section class="block reveal r5">
+      <h2 class="block__title">Der Ablauf</h2>
+      <ul class="timeline">
+        <li><b>15:00 · Trauung</b><span>Schlosskapelle</span></li>
+        <li><b>16:00 · Sektempfang</b><span>Rosengarten</span></li>
+        <li><b>18:00 · Dinner</b><span>Festsaal</span></li>
+        <li><b>21:00 · Feier &amp; Tanz</b><span>bis in die Nacht</span></li>
+      </ul>
+    </section>
+
+    <section class="block reveal r6">
+      <h2 class="block__title">Gut zu wissen</h2>
+      <p class="info">Schloss Rosenau<small>Rosenauer Str. 1, 96472 Rödental</small></p>
+      <p class="info">Dresscode<small>Festlich · Töne von Creme &amp; Bordeaux</small></p>
+      <p class="info">Übernachtung<small>Zimmerkontingent im Schlosshotel</small></p>
+    </section>
+
+    <section class="block reveal r7">
+      <h2 class="block__title">Sagt ihr zu?</h2>
+      <p class="info" style="margin-bottom:.4rem">Bitte bis zum 30. Juni 2026</p>
+      <div class="rsvp-actions">
+        <button class="btn btn--yes" data-rsvp="yes">Ja, wir kommen ✦</button>
+        <button class="btn btn--no" data-rsvp="no">Leider nicht</button>
+      </div>
+      <p class="rsvp-note" id="rsvpNote"></p>
+    </section>
+
+    <p class="closing reveal r8">Wir freuen uns auf euch</p>
+    <p class="foot reveal r8">Emma &amp; Lukas</p>
+    <p class="credit reveal r8">erstellt mit ♥ auf WeddingLink</p>
+  </main>
+
+<script>
+(function(){
+  "use strict";
+  var body=document.body;
+  var envelope=document.getElementById("envelope");
+  var invitation=document.getElementById("invitation");
+  var opened=false;
+
+  function open(){
+    if(opened) return; opened=true;
+    body.classList.add("opening");
+    // nach der Umschlag-Animation die Einladung einblenden & Scrollen erlauben
+    setTimeout(function(){
+      body.classList.add("is-open");
+      invitation.setAttribute("aria-hidden","false");
+      window.scrollTo({top:0});
+    },1500);
+  }
+  envelope.addEventListener("click",open);
+  envelope.addEventListener("keydown",function(e){
+    if(e.key==="Enter"||e.key===" "){e.preventDefault();open();}
+  });
+
+  // Live-Countdown (Datum hier anpassen)
+  var target=new Date("2026-08-23T15:00:00");
+  var elD=document.querySelector("[data-d]"),elH=document.querySelector("[data-h]"),
+      elM=document.querySelector("[data-m]"),elS=document.querySelector("[data-s]");
+  function tick(){
+    var diff=target-new Date();
+    if(diff<0) diff=0;
+    var d=Math.floor(diff/864e5),h=Math.floor(diff%864e5/36e5),
+        m=Math.floor(diff%36e5/6e4),s=Math.floor(diff%6e4/1e3);
+    elD.textContent=d; elH.textContent=String(h).padStart(2,"0");
+    elM.textContent=String(m).padStart(2,"0"); elS.textContent=String(s).padStart(2,"0");
+  }
+  tick(); setInterval(tick,1000);
+
+  // RSVP (Front-end-Demo)
+  var note=document.getElementById("rsvpNote");
+  document.querySelectorAll("[data-rsvp]").forEach(function(btn){
+    btn.addEventListener("click",function(){
+      note.textContent = btn.dataset.rsvp==="yes"
+        ? "Wunderbar — wir können es kaum erwarten! 💌"
+        : "Schade — wir werden euch vermissen. 🤍";
+    });
+  });
+})();
+</script>
+</body>
+</html>
