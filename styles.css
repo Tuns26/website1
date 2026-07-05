@@ -437,16 +437,16 @@ em { font-style: italic; }
 @keyframes modalIn { from { opacity: 0; transform: translateY(18px) scale(0.97); } }
 .demo-modal__frame {
   position: relative;
-  /* Grundgröße: Handy-Display 360×640 (echtes 9:16) + 11px Rand;
+  /* Grundgröße: Handy-Display 360×780 (9:19,5 wie moderne Smartphones) + 11px Rand;
      bei wenig Platz skaliert script.js Rahmen und Inhalt gemeinsam herunter */
-  width: 382px; height: 662px;
+  width: 382px; height: 802px;
   background: linear-gradient(160deg, #2a2320, #453a34);
   border-radius: 40px;
   box-shadow: 0 40px 100px -30px rgba(0,0,0,0.6), 0 0 0 2px rgba(200,169,106,0.25);
 }
 .demo-modal__iframe {
   position: absolute; top: 11px; left: 11px;
-  width: 360px; height: 640px;
+  width: 360px; height: 780px;
   transform-origin: top left;
   border: 0; border-radius: 30px;
   background: var(--cream); display: block;

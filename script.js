@@ -67,9 +67,9 @@
     const cta = document.getElementById("demoCta");
     const phone = modal.querySelector(".demo-modal__frame");
 
-    // Display bleibt intern immer 360×640 (9:16) und wird nur optisch skaliert,
-    // damit die Demos exakt wie auf einem echten Handy umbrechen
-    const SCREEN_W = 360, SCREEN_H = 640, BEZEL = 11;
+    // Display bleibt intern immer 360×780 (9:19,5 wie moderne Smartphones) und wird
+    // nur optisch skaliert, damit die Demos exakt wie auf einem echten Handy umbrechen
+    const SCREEN_W = 360, SCREEN_H = 780, BEZEL = 11;
     const fitDemoFrame = () => {
       const maxW = window.innerWidth * 0.92;
       const maxH = window.innerHeight - 140; // Platz für CTA-Button und Abstände
