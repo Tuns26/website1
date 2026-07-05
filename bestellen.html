@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Einladung bestellen — WeddingLink</title>
+  <meta name="description" content="Wählen Sie Ihr Paket und erzählen Sie uns von Ihrer Hochzeit — danach geht es direkt zur sicheren Kasse." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:wght@300;400;500;600&family=Tangerine:wght@700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    /* ---- Bestellseite ---- */
+    .order { padding: 9rem 0 6rem; min-height: 100vh; }
+    .order__grid { display: grid; grid-template-columns: 1fr; gap: 2rem; max-width: 720px; margin: 3rem auto 0; }
+
+    .order-step { background: var(--white); border: 1px solid var(--sand); border-radius: var(--radius); padding: 2.2rem 2rem; }
+    .order-step__head { display: flex; align-items: baseline; gap: 0.8rem; margin-bottom: 1.4rem; }
+    .order-step__num { font-family: var(--serif); font-size: 1.6rem; font-weight: 600; color: var(--wine); opacity: 0.4; }
+    .order-step__title { font-family: var(--serif); font-size: 1.5rem; font-weight: 600; }
+
+    /* Paketwahl */
+    .pick { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 0.9rem; }
+    .pick label { position: relative; display: block; cursor: pointer; }
+    .pick input { position: absolute; opacity: 0; }
+    .pick__card { display: block; background: var(--white); border: 1px solid var(--sand); border-radius: 14px; padding: 1.2rem 1rem; text-align: center; transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s; }
+    .pick input:checked + .pick__card { border-color: var(--wine); box-shadow: 0 0 0 2px rgba(109,31,47,0.15), var(--shadow); transform: translateY(-3px); }
+    .pick input:focus-visible + .pick__card { outline: 2px solid var(--wine); outline-offset: 2px; }
+    .pick__name { font-family: var(--serif); font-size: 1.25rem; font-weight: 600; }
+    .pick__price { color: var(--wine); font-family: var(--serif); font-size: 1.5rem; font-weight: 600; margin-top: 0.2rem; }
+    .pick__hint { font-size: 0.78rem; color: var(--ink-soft); margin-top: 0.3rem; }
+
+    /* Formular */
+    .ofield { margin-bottom: 1.1rem; }
+    .ofield label { display: block; font-size: 0.85rem; font-weight: 500; letter-spacing: 0.03em; margin-bottom: 0.35rem; color: var(--ink); }
+    .ofield label small { color: var(--ink-soft); font-weight: 300; }
+    .ofield input, .ofield textarea, .ofield select {
+      width: 100%; padding: 0.85rem 1.1rem; border: 1px solid var(--sand); border-radius: 12px;
+      background: var(--white); font-family: var(--sans); font-size: 0.95rem; color: var(--ink); resize: vertical;
+    }
+    .ofield input:focus, .ofield textarea:focus, .ofield select:focus { outline: none; border-color: var(--wine); box-shadow: 0 0 0 3px rgba(109,31,47,0.1); }
+    .ofield--row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    @media (max-width: 560px) { .ofield--row { grid-template-columns: 1fr; } }
+
+    .order__submit { text-align: center; }
+    .order__submit .btn { font-size: 1rem; padding: 1rem 2.4rem; }
+    .order__secure { margin-top: 0.9rem; font-size: 0.8rem; color: var(--ink-soft); }
+    .order__error { color: var(--wine); font-size: 0.9rem; margin-top: 0.8rem; display: none; }
+    .order__back { text-align: center; margin-top: 2rem; }
+    .order__back a { color: var(--wine); font-size: 0.9rem; }
+  </style>
+</head>
+<body>
+  <header class="nav scrolled" id="nav">
+    <div class="container nav__inner">
+      <a href="index.html" class="brand">
+        <span class="brand__mark">WL</span>
+        <span class="brand__name">WeddingLink</span>
+      </a>
+      <a href="index.html#preise" class="btn btn--nav">Zurück zu den Paketen</a>
+    </div>
+  </header>
+
+  <main class="order">
+    <div class="container">
+      <p class="eyebrow eyebrow--center">Nur noch zwei Schritte</p>
+      <h1 class="section-title">Erzählen Sie uns von <em>Ihrer Hochzeit</em></h1>
+      <p class="section-sub">Ihre Angaben wandern automatisch mit in die Bestellung — danach geht es direkt zur sicheren Kasse.</p>
+
+      <form class="order__grid" id="orderForm" novalidate>
+        <!-- Schritt 1: Paket -->
+        <section class="order-step">
+          <div class="order-step__head">
+            <span class="order-step__num">1</span>
+            <h2 class="order-step__title">Ihr Paket</h2>
+          </div>
+          <div class="pick">
+            <label>
+              <input type="radio" name="paket" value="essentiell" />
+              <span class="pick__card">
+                <span class="pick__name">Essentiell</span>
+                <span class="pick__price" style="display:block">175 €</span>
+                <span class="pick__hint" style="display:block">Design aus der Kollektion</span>
+              </span>
+            </label>
+            <label>
+              <input type="radio" name="paket" value="praemie" checked />
+              <span class="pick__card">
+                <span class="pick__name">Prämie</span>
+                <span class="pick__price" style="display:block">375 €</span>
+                <span class="pick__hint" style="display:block">Maßgeschneidert + RSVP</span>
+              </span>
+            </label>
+            <label>
+              <input type="radio" name="paket" value="exzellent" />
+              <span class="pick__card">
+                <span class="pick__name">Exzellent</span>
+                <span class="pick__price" style="display:block">975 €</span>
+                <span class="pick__hint" style="display:block">Rundum-sorglos</span>
+              </span>
+            </label>
+          </div>
+        </section>
+
+        <!-- Schritt 2: Details -->
+        <section class="order-step">
+          <div class="order-step__head">
+            <span class="order-step__num">2</span>
+            <h2 class="order-step__title">Ihre Details</h2>
+          </div>
+
+          <div class="ofield ofield--row">
+            <div>
+              <label for="brautpaar">Ihre Namen *</label>
+              <input type="text" id="brautpaar" name="Brautpaar" placeholder="z. B. Emma & Lukas" required />
+            </div>
+            <div>
+              <label for="datum">Hochzeitsdatum *</label>
+              <input type="date" id="datum" name="Hochzeitsdatum" required />
+            </div>
+          </div>
+
+          <div class="ofield">
+            <label for="ort">Ort &amp; Location <small>(falls schon bekannt)</small></label>
+            <input type="text" id="ort" name="Ort" placeholder="z. B. Schloss Rosenau, Rödental" />
+          </div>
+
+          <div class="ofield ofield--row">
+            <div>
+              <label for="stil">Gewünschter Stil *</label>
+              <select id="stil" name="Stil" required>
+                <option value="">Bitte wählen…</option>
+                <option>Botanische Ruhe (Grün & Creme)</option>
+                <option>Klassische Eleganz (Bordeaux & Gold)</option>
+                <option>Zarte Romantik (Rosé & Puder)</option>
+                <option>Moderne Nacht (Dunkel & Gold)</option>
+                <option>Eigener Stil — beschreibe ich unten</option>
+              </select>
+            </div>
+            <div>
+              <label for="sprache">Sprache der Einladung</label>
+              <select id="sprache" name="Sprache">
+                <option>Deutsch</option>
+                <option>Englisch</option>
+                <option>Zweisprachig</option>
+                <option>Andere — siehe Wünsche</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="ofield">
+            <label for="farben">Farbwünsche <small>(Hochzeitsfarben, Blumen, Motto …)</small></label>
+            <input type="text" id="farben" name="Farben" placeholder="z. B. Salbeigrün mit Gold, Eukalyptus" />
+          </div>
+
+          <div class="ofield">
+            <label for="wuensche">Ihre Wünsche &amp; Ideen</label>
+            <textarea id="wuensche" name="Wuensche" rows="4" placeholder="Was soll Ihre Einladung erzählen? Besondere Elemente, Programm, Dresscode, Musik beim Öffnen …"></textarea>
+          </div>
+
+          <div class="ofield">
+            <label for="kontaktmail">E-Mail für Rückfragen *</label>
+            <input type="email" id="kontaktmail" name="Kontakt" placeholder="ihre@mail.de" required />
+          </div>
+        </section>
+
+        <!-- Absenden -->
+        <div class="order__submit">
+          <button type="submit" class="btn btn--primary">Weiter zur sicheren Kasse ✦</button>
+          <p class="order__secure">🔒 Bezahlung über unseren Shop — Ihre Angaben werden automatisch an die Bestellung angehängt.</p>
+          <p class="order__error" id="orderError">Bitte füllen Sie alle Pflichtfelder (*) aus.</p>
+        </div>
+      </form>
+
+      <p class="order__back"><a href="index.html">← Zurück zur Übersicht</a></p>
+    </div>
+  </main>
+
+  <script>
+    (function () {
+      "use strict";
+
+      /* ================= SHOPIFY-KONFIGURATION =================
+         1. SHOP_DOMAIN durch eure myshopify-Adresse ersetzen
+            (oder eigene Domain, wenn der Shop darüber läuft).
+         2. In Shopify die drei Produkte anlegen und je Produkt die
+            VARIANTEN-ID eintragen. Die findet ihr im Admin unter
+            Produkt → Varianten (Zahl in der URL) oder per
+            "Copy variant ID"-Link.
+         ========================================================== */
+      var SHOP_DOMAIN = "DEIN-SHOP.myshopify.com";
+      var VARIANTS = {
+        essentiell: "VARIANTE_ID_ESSENTIELL",
+        praemie:    "VARIANTE_ID_PRAEMIE",
+        exzellent:  "VARIANTE_ID_EXZELLENT"
+      };
+      /* ========================================================== */
+
+      // Paket aus URL vorwählen: bestellen.html?paket=essentiell
+      var params = new URLSearchParams(location.search);
+      var pre = params.get("paket");
+      if (pre) {
+        var radio = document.querySelector('input[name="paket"][value="' + pre + '"]');
+        if (radio) radio.checked = true;
+      }
+
+      var form = document.getElementById("orderForm");
+      var errEl = document.getElementById("orderError");
+
+      form.addEventListener("submit", function (e) {
+        e.preventDefault();
+        errEl.style.display = "none";
+
+        if (!form.checkValidity()) {
+          errEl.style.display = "block";
+          form.reportValidity();
+          return;
+        }
+
+        var paket = form.querySelector('input[name="paket"]:checked').value;
+        var variantId = VARIANTS[paket];
+
+        // Cart-Permalink mit den Details als Bestellattribute bauen
+        var attrs = [];
+        ["Brautpaar", "Hochzeitsdatum", "Ort", "Stil", "Sprache", "Farben", "Wuensche", "Kontakt"]
+          .forEach(function (name) {
+            var field = form.elements[name];
+            if (field && field.value.trim()) {
+              attrs.push("attributes[" + encodeURIComponent(name) + "]=" + encodeURIComponent(field.value.trim()));
+            }
+          });
+        attrs.push("attributes[Paket]=" + encodeURIComponent(paket));
+
+        var url = "https://" + SHOP_DOMAIN + "/cart/" + variantId + ":1?" + attrs.join("&");
+
+        if (SHOP_DOMAIN.indexOf("DEIN-SHOP") === 0 || variantId.indexOf("VARIANTE_ID") === 0) {
+          // Platzhalter noch nicht ersetzt → Hinweis statt kaputtem Link
+          alert("Shopify ist noch nicht verbunden.\n\nIn bestellen.html oben im <script> die SHOP_DOMAIN und die drei Varianten-IDs eintragen — dann führt dieser Button direkt in euren Shopify-Warenkorb.\n\nDieser Link würde aufgerufen:\n" + url);
+          return;
+        }
+
+        window.location.href = url;
+      });
+    })();
+  </script>
+</body>
+</html>
