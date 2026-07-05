@@ -1,0 +1,16 @@
+/* Gemeinsames Layout der Rechtsseiten */
+.legal { padding: 9rem 0 5rem; }
+.legal__body { max-width: 760px; margin: 2.5rem auto 0; background: var(--white); border: 1px solid var(--sand); border-radius: var(--radius); padding: clamp(1.6rem, 4vw, 3rem); }
+.legal__body h2 { font-family: var(--serif); font-size: 1.45rem; font-weight: 600; margin: 2rem 0 0.7rem; color: var(--ink); }
+.legal__body h2:first-child { margin-top: 0; }
+.legal__body h3 { font-family: var(--serif); font-size: 1.15rem; font-weight: 600; margin: 1.4rem 0 0.4rem; }
+.legal__body p, .legal__body li { font-size: 0.95rem; color: var(--ink-soft); }
+.legal__body p { margin: 0.6rem 0; }
+.legal__body ul { margin: 0.6rem 0 0.6rem 1.3rem; }
+.legal__body a { color: var(--wine); }
+.legal__body strong { color: var(--ink); font-weight: 500; }
+.legal__stand { margin-top: 2.4rem; font-size: 0.8rem; color: var(--ink-soft); font-style: italic; }
+/* Platzhalter, die noch ersetzt werden müssen */
+.todo { background: #fdf3d7; border: 1px dashed #c8a96a; border-radius: 6px; padding: 0.05em 0.4em; color: #7a5c1e; font-weight: 500; white-space: nowrap; }
+.legal__nav { text-align: center; margin-top: 2rem; font-size: 0.9rem; }
+.legal__nav a { color: var(--wine); margin: 0 0.6rem; }
