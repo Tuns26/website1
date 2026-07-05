@@ -1,0 +1,766 @@
+/* ============================================================
+   Aquarell-Einladung – Styles
+   Palette: Creme-Papier, Salbeigrün, Terrakotta, Taupe
+   ============================================================ */
+
+:root {
+  --paper: #f6f1e7;
+  --paper-deep: #efe7d8;
+  --ink: #4a4238;
+  --ink-soft: #7a6f60;
+  --sage: #7d8c6f;
+  --sage-deep: #5f6e53;
+  --terracotta: #b3714e;
+  --gold: #c2a878;
+  --white: #fdfbf6;
+
+  --font-serif: "Cormorant Garamond", Georgia, serif;
+  --font-script: "Parisienne", cursive;
+  --font-sans: "Jost", "Segoe UI", sans-serif;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-serif);
+  background: var(--paper);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* Sanftes Papierkorn über der ganzen Seite */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 5;
+  opacity: 0.35;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 0.5 0 0 0 0 0.46 0 0 0 0 0.4 0 0 0 0.05 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+img, video { display: block; max-width: 100%; }
+
+[hidden] { display: none !important; }
+
+/* ---------- Layout-Rahmen: mittig, Handy-Breite ---------- */
+.invitation {
+  max-width: 480px;
+  margin: 0 auto;
+  background: var(--paper);
+  box-shadow: 0 0 60px rgba(74, 66, 56, 0.18);
+}
+
+/* ============================================================
+   1. Briefumschlag-Intro
+   ============================================================ */
+.envelope {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  cursor: pointer;
+  transition: opacity 1.2s ease, visibility 1.2s;
+}
+
+.envelope--hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/* Der Umschlag deckt die komplette Seite ab – kein sichtbarer Hintergrund */
+.envelope__video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Pulsierender Ring als stummer "Tipp mich"-Hinweis (kein Text) */
+.envelope__pulse {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 120px;
+  height: 120px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  border: 1.5px solid rgba(194, 168, 120, 0.85);
+  animation: pulse 2.4s ease-out infinite;
+  pointer-events: none;
+}
+
+.envelope--opening .envelope__pulse { display: none; }
+
+@keyframes pulse {
+  0%   { transform: translate(-50%, -50%) scale(0.65); opacity: 0.9; }
+  70%  { transform: translate(-50%, -50%) scale(1.25); opacity: 0; }
+  100% { opacity: 0; }
+}
+
+/* ============================================================
+   Gemeinsame Titel
+   ============================================================ */
+.section-title {
+  font-family: var(--font-script);
+  font-size: clamp(2.2rem, 9vw, 3rem);
+  font-weight: 400;
+  color: var(--ink);
+  text-align: center;
+}
+
+.section-sub {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 1.05rem;
+  color: var(--ink-soft);
+  text-align: center;
+  margin-top: 0.5rem;
+}
+
+.section-title--light, .section-sub--light { color: var(--white); }
+.section-sub--light { opacity: 0.85; }
+
+/* ============================================================
+   2. Hero
+   ============================================================ */
+.hero {
+  position: relative;
+  height: 100svh;
+  min-height: 620px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero__video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero__overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(to bottom,
+      rgba(46, 42, 34, 0.35) 0%,
+      rgba(46, 42, 34, 0.05) 35%,
+      rgba(46, 42, 34, 0.08) 60%,
+      rgba(46, 42, 34, 0.55) 100%);
+}
+
+.hero__content {
+  position: relative;
+  text-align: center;
+  color: var(--white);
+  padding: 0 1.5rem;
+  text-shadow: 0 2px 18px rgba(40, 35, 25, 0.55);
+  animation: rise 1.6s ease both 0.4s;
+}
+
+@keyframes rise {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: none; }
+}
+
+.hero__announce {
+  font-family: var(--font-sans);
+  font-weight: 300;
+  font-size: 0.85rem;
+  letter-spacing: 0.55em;
+  text-transform: uppercase;
+  padding-left: 0.55em; /* optischer Ausgleich fürs letter-spacing */
+  margin-bottom: 1.6rem;
+}
+
+.hero__names {
+  font-family: var(--font-script);
+  font-weight: 400;
+  font-size: clamp(3rem, 14vw, 4.6rem);
+  line-height: 1.15;
+  display: flex;
+  flex-direction: column;
+  gap: 0.1em;
+}
+
+.hero__amp {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 0.42em;
+  color: var(--gold);
+}
+
+.hero__divider {
+  width: 70px;
+  height: 1px;
+  margin: 1.6rem auto 1.2rem;
+  background: linear-gradient(to right, transparent, rgba(253, 251, 246, 0.9), transparent);
+}
+
+.hero__date {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 1.35rem;
+  letter-spacing: 0.08em;
+}
+
+.hero__cta {
+  position: absolute;
+  bottom: max(1.6rem, env(safe-area-inset-bottom));
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+  color: var(--white);
+  text-decoration: none;
+  font-family: var(--font-sans);
+  font-weight: 300;
+  font-size: 0.72rem;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  text-shadow: 0 1px 10px rgba(40, 35, 25, 0.6);
+}
+
+.hero__chevron {
+  width: 22px;
+  height: 22px;
+  animation: bob 2s ease-in-out infinite;
+}
+
+@keyframes bob {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(6px); }
+}
+
+/* ============================================================
+   3. Countdown
+   ============================================================ */
+.countdown {
+  background:
+    radial-gradient(120% 90% at 20% 10%, rgba(253, 251, 246, 0.14), transparent 60%),
+    radial-gradient(120% 90% at 85% 90%, rgba(40, 50, 32, 0.25), transparent 55%),
+    var(--sage);
+  padding: 4.5rem 1.5rem 5rem;
+}
+
+.countdown__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  max-width: 360px;
+  margin: 2.5rem auto 0;
+}
+
+.countdown__tile {
+  background: rgba(253, 251, 246, 0.12);
+  border: 1px solid rgba(253, 251, 246, 0.28);
+  border-radius: 14px;
+  backdrop-filter: blur(4px);
+  padding: 1.4rem 0.5rem 1.2rem;
+  text-align: center;
+  color: var(--white);
+}
+
+.countdown__num {
+  display: block;
+  font-family: var(--font-serif);
+  font-size: 2.6rem;
+  font-weight: 500;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.countdown__label {
+  display: block;
+  margin-top: 0.55rem;
+  font-family: var(--font-sans);
+  font-weight: 300;
+  font-size: 0.68rem;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  opacity: 0.85;
+}
+
+/* ============================================================
+   4. Details / Ablauf
+   ============================================================ */
+.details {
+  padding: 4.5rem 1.5rem 3.5rem;
+  background: var(--paper);
+}
+
+.details__champagne {
+  width: 74px;
+  margin: 0 auto 1.2rem;
+  color: var(--terracotta);
+  opacity: 0.9;
+}
+
+.timeline {
+  list-style: none;
+  max-width: 340px;
+  margin: 2.8rem auto 0;
+  position: relative;
+  padding-left: 0;
+}
+
+.timeline::before {
+  content: "";
+  position: absolute;
+  left: 27px;
+  top: 8px;
+  bottom: 8px;
+  width: 1px;
+  background: linear-gradient(to bottom, transparent, var(--gold) 12%, var(--gold) 88%, transparent);
+}
+
+.timeline__item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  padding: 1.1rem 0;
+}
+
+.timeline__icon {
+  position: relative;
+  z-index: 1;
+  flex: 0 0 56px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--white);
+  border: 1px solid rgba(194, 168, 120, 0.55);
+  box-shadow: 0 4px 14px rgba(74, 66, 56, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--sage-deep);
+}
+
+.timeline__icon svg { width: 26px; height: 26px; }
+
+.timeline__time {
+  font-family: var(--font-serif);
+  font-size: 1.5rem;
+  font-weight: 600;
+  min-width: 3.2rem;
+}
+
+.timeline__label {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 1.12rem;
+  color: var(--ink-soft);
+}
+
+/* ============================================================
+   5. Location
+   ============================================================ */
+.location {
+  background: var(--paper-deep);
+  padding: 3.5rem 1.25rem 4rem;
+}
+
+.location__card {
+  background: var(--white);
+  border-radius: 20px;
+  box-shadow: 0 18px 45px rgba(74, 66, 56, 0.12);
+  padding: 2.5rem 1.5rem 2.2rem;
+  text-align: center;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.location__pin {
+  width: 62px;
+  height: 62px;
+  margin: 0 auto 1.2rem;
+  border-radius: 50%;
+  background: rgba(125, 140, 111, 0.16);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--sage-deep);
+}
+
+.location__pin svg { width: 28px; height: 28px; }
+
+.location__title {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  font-size: 1.9rem;
+}
+
+.location__name {
+  font-family: var(--font-serif);
+  font-size: 1.25rem;
+  margin-top: 0.5rem;
+}
+
+.location__time {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  margin-top: 0.7rem;
+  font-style: italic;
+  color: var(--ink-soft);
+}
+
+.location__time svg { width: 17px; height: 17px; }
+
+.location__photo {
+  margin: 1.5rem 0 1rem;
+  border-radius: 14px;
+  overflow: hidden;
+  aspect-ratio: 4 / 3;
+}
+
+.location__photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.location__address {
+  font-size: 0.98rem;
+  color: var(--ink-soft);
+  margin-bottom: 1.4rem;
+}
+
+/* ---------- Buttons ---------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: 0.82rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border-radius: 999px;
+  padding: 0.85rem 1.7rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.btn:active { transform: scale(0.97); }
+
+.btn svg { width: 15px; height: 15px; }
+
+.btn--outline {
+  color: var(--sage-deep);
+  border: 1px solid var(--sage-deep);
+  background: transparent;
+}
+
+.btn--outline:hover { background: rgba(125, 140, 111, 0.1); }
+
+.btn--solid {
+  color: var(--white);
+  background: var(--terracotta);
+  border: 1px solid var(--terracotta);
+  box-shadow: 0 10px 25px rgba(179, 113, 78, 0.35);
+}
+
+.btn--solid:hover { background: #a2643f; }
+
+.btn--light {
+  color: var(--white);
+  border-color: rgba(253, 251, 246, 0.7);
+}
+
+.btn--light:hover { background: rgba(253, 251, 246, 0.12); }
+
+/* ============================================================
+   Musik-Button (unten rechts)
+   ============================================================ */
+.music-toggle {
+  position: fixed;
+  right: max(1rem, env(safe-area-inset-right));
+  bottom: max(1rem, env(safe-area-inset-bottom));
+  z-index: 60;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 1px solid rgba(253, 251, 246, 0.35);
+  background: rgba(58, 52, 44, 0.55);
+  backdrop-filter: blur(6px);
+  color: var(--white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 6px 20px rgba(40, 35, 25, 0.35);
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.music-toggle:active { transform: scale(0.92); }
+
+.music-toggle svg { width: 22px; height: 22px; }
+
+.music-toggle .music-toggle__off { display: none; }
+.music-toggle--muted .music-toggle__on { display: none; }
+.music-toggle--muted .music-toggle__off { display: block; }
+
+/* ============================================================
+   6. Dresscode
+   ============================================================ */
+.dresscode {
+  background: var(--paper);
+  padding: 4.5rem 1.5rem 4rem;
+  text-align: center;
+}
+
+.dresscode__icon {
+  width: 64px;
+  margin: 0 auto 1.1rem;
+  color: var(--sage-deep);
+  opacity: 0.9;
+}
+
+.dresscode__text {
+  max-width: 330px;
+  margin: 1.6rem auto 0;
+  font-size: 1.08rem;
+  line-height: 1.65;
+  color: var(--ink-soft);
+}
+
+.dresscode__colors {
+  display: flex;
+  justify-content: center;
+  gap: 0.8rem;
+  margin-top: 1.8rem;
+}
+
+.dresscode__dot {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 2px solid var(--white);
+  box-shadow: 0 4px 12px rgba(74, 66, 56, 0.25);
+}
+
+/* ============================================================
+   7. FAQ
+   ============================================================ */
+.faq {
+  background: var(--paper-deep);
+  padding: 4.5rem 1.5rem 4.5rem;
+}
+
+.faq__list {
+  max-width: 400px;
+  margin: 2.2rem auto 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.faq__item {
+  background: var(--white);
+  border-radius: 14px;
+  box-shadow: 0 8px 22px rgba(74, 66, 56, 0.08);
+  overflow: hidden;
+}
+
+.faq__question {
+  list-style: none;
+  cursor: pointer;
+  padding: 1.05rem 2.8rem 1.05rem 1.2rem;
+  font-family: var(--font-serif);
+  font-size: 1.12rem;
+  font-weight: 600;
+  position: relative;
+}
+
+.faq__question::-webkit-details-marker { display: none; }
+
+.faq__question::after {
+  content: "";
+  position: absolute;
+  right: 1.2rem;
+  top: 50%;
+  width: 8px;
+  height: 8px;
+  border-right: 1.5px solid var(--terracotta);
+  border-bottom: 1.5px solid var(--terracotta);
+  transform: translateY(-70%) rotate(45deg);
+  transition: transform 0.25s ease;
+}
+
+.faq__item[open] .faq__question::after {
+  transform: translateY(-30%) rotate(225deg);
+}
+
+.faq__answer {
+  padding: 0 1.2rem 1.15rem;
+  font-style: italic;
+  color: var(--ink-soft);
+  line-height: 1.6;
+}
+
+/* ============================================================
+   8. RSVP / Rückmeldebogen
+   ============================================================ */
+.rsvp {
+  background:
+    radial-gradient(130% 100% at 80% 0%, rgba(253, 251, 246, 0.12), transparent 55%),
+    var(--sage-deep);
+  padding: 4.5rem 1.5rem 5rem;
+  text-align: center;
+}
+
+.rsvp__text {
+  max-width: 320px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ---------- Formular ---------- */
+.rsvp__form {
+  max-width: 380px;
+  margin: 2.2rem auto 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+  text-align: left;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.field__label {
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: 0.72rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(253, 251, 246, 0.85);
+}
+
+.field__input {
+  width: 100%;
+  font-family: var(--font-serif);
+  font-size: 1.05rem;
+  color: var(--ink);
+  background: rgba(253, 251, 246, 0.94);
+  border: 1px solid rgba(253, 251, 246, 0.4);
+  border-radius: 12px;
+  padding: 0.8rem 1rem;
+  outline: none;
+  transition: box-shadow 0.2s ease;
+}
+
+.field__input:focus {
+  box-shadow: 0 0 0 3px rgba(194, 168, 120, 0.45);
+}
+
+.field__input--area { resize: vertical; }
+
+.field--choice {
+  border: none;
+  gap: 0.55rem;
+}
+
+.choice {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  background: rgba(253, 251, 246, 0.12);
+  border: 1px solid rgba(253, 251, 246, 0.3);
+  border-radius: 12px;
+  padding: 0.75rem 1rem;
+  color: var(--white);
+  font-size: 1.05rem;
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.choice:has(input:checked) {
+  background: rgba(253, 251, 246, 0.24);
+  border-color: rgba(253, 251, 246, 0.75);
+}
+
+.choice input {
+  accent-color: var(--terracotta);
+  width: 17px;
+  height: 17px;
+}
+
+.rsvp__submit {
+  margin-top: 0.4rem;
+  border: none;
+  cursor: pointer;
+  font-size: 0.85rem;
+  padding: 1rem 1.7rem;
+}
+
+.rsvp__hint {
+  font-size: 0.88rem;
+  font-style: italic;
+  color: rgba(253, 251, 246, 0.75);
+  text-align: center;
+}
+
+.rsvp__form .btn--light { align-self: center; }
+
+/* ============================================================
+   Fußzeile
+   ============================================================ */
+.footer {
+  padding: 3.5rem 1.5rem 4rem;
+  text-align: center;
+  background: var(--paper);
+}
+
+.footer__dove {
+  width: 54px;
+  margin: 0 auto 1rem;
+  color: var(--terracotta);
+  opacity: 0.85;
+}
+
+.footer__names {
+  font-family: var(--font-script);
+  font-size: 1.9rem;
+}
+
+.footer__text {
+  margin-top: 0.4rem;
+  font-style: italic;
+  color: var(--ink-soft);
+}
+
+/* ---------- Sanftes Einblenden der Sektionen ---------- */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.9s ease, transform 0.9s ease;
+}
+
+.reveal--visible {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; transition: none; }
+  .hero__chevron, .envelope__pulse { animation: none; }
+}

@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Einladung</title>
+  <meta name="description" content="Unsere Einladung – wir freuen uns auf euch!" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Parisienne&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🕊️</text></svg>" />
+</head>
+<body>
+
+  <!-- ======= 1. BRIEFUMSCHLAG (Intro) ======= -->
+  <div id="envelope" class="envelope" aria-label="Einladung öffnen" role="button" tabindex="0">
+    <video id="envelopeVideo" class="envelope__video" muted playsinline preload="auto"></video>
+    <div class="envelope__pulse" aria-hidden="true"></div>
+  </div>
+
+  <!-- Hintergrundmusik + Stummschalt-Button (unten rechts) -->
+  <audio id="bgMusic" loop preload="auto"></audio>
+  <button id="musicToggle" class="music-toggle" type="button" aria-label="Musik stummschalten" hidden>
+    <svg class="music-toggle__on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M11 5L6.5 9H3v6h3.5L11 19z"/>
+      <path d="M15 9.5a4 4 0 010 5"/>
+      <path d="M17.5 7a7.5 7.5 0 010 10"/>
+    </svg>
+    <svg class="music-toggle__off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M11 5L6.5 9H3v6h3.5L11 19z"/>
+      <path d="M16 9.5l5 5M21 9.5l-5 5"/>
+    </svg>
+  </button>
+
+  <!-- ======= EINLADUNG ======= -->
+  <main id="invitation" class="invitation" hidden>
+
+    <!-- 2. Hero: animiertes Aquarell mit zwei weißen Tauben -->
+    <section class="hero">
+      <video class="hero__video" muted loop playsinline autoplay preload="auto"></video>
+      <div class="hero__overlay"></div>
+      <div class="hero__content">
+        <p class="hero__announce" data-config="announcement"></p>
+        <h1 class="hero__names">
+          <span class="hero__name" data-config="nameOne"></span>
+          <span class="hero__amp">&amp;</span>
+          <span class="hero__name" data-config="nameTwo"></span>
+        </h1>
+        <div class="hero__divider" aria-hidden="true"></div>
+        <p class="hero__date" data-config="dateDisplay"></p>
+      </div>
+      <a class="hero__cta" href="#rsvp">
+        <span>Bestätige deine Teilnahme</span>
+        <svg class="hero__chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+      </a>
+    </section>
+
+    <!-- 3. Countdown -->
+    <section class="countdown">
+      <div class="countdown__inner">
+        <h2 class="section-title section-title--light" data-config="countdownTitle"></h2>
+        <p class="section-sub section-sub--light" data-config="countdownSubtitle"></p>
+        <div class="countdown__grid" id="countdownGrid">
+          <div class="countdown__tile"><span class="countdown__num" id="cdDays">0</span><span class="countdown__label">Tage</span></div>
+          <div class="countdown__tile"><span class="countdown__num" id="cdHours">0</span><span class="countdown__label">Stunden</span></div>
+          <div class="countdown__tile"><span class="countdown__num" id="cdMins">0</span><span class="countdown__label">Minuten</span></div>
+          <div class="countdown__tile"><span class="countdown__num" id="cdSecs">0</span><span class="countdown__label">Sekunden</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. Details / Ablauf -->
+    <section class="details">
+      <div class="details__champagne" aria-hidden="true">
+        <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+          <path d="M22 8l6 1M25 8.5L21 30c-.8 4 1.5 7 5 7s6.5-2.5 6-6.5L29.5 9.5z"/>
+          <path d="M26 37v14M20 52h12" />
+          <path d="M44 10l-6 2M41 11L46 32c1 4-1 7.2-4.5 7.6S35 37.5 35 33.5L38 12z"/>
+          <path d="M42 40v12M36 53l12-2" />
+          <circle cx="33" cy="6" r="1"/><circle cx="37" cy="3" r="1"/><circle cx="30" cy="2.5" r="1"/>
+        </svg>
+      </div>
+      <h2 class="section-title" data-config="scheduleTitle"></h2>
+      <p class="section-sub" data-config="scheduleSubtitle"></p>
+      <ol class="timeline" id="timeline"></ol>
+    </section>
+
+    <!-- 5. Location -->
+    <section class="location">
+      <div class="location__card">
+        <div class="location__pin" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 21s-7-5.1-7-11a7 7 0 1114 0c0 5.9-7 11-7 11z"/><circle cx="12" cy="10" r="2.6"/></svg>
+        </div>
+        <h2 class="location__title" data-config="locationTitle"></h2>
+        <p class="location__name" data-config="locationName"></p>
+        <p class="location__time">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+          <span data-config="locationTime"></span>
+        </p>
+        <figure class="location__photo">
+          <img alt="Unsere Location" loading="lazy" />
+        </figure>
+        <p class="location__address" data-config="locationAddress"></p>
+        <a class="btn btn--outline" id="mapsLink" href="#" target="_blank" rel="noopener">
+          In Maps öffnen
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8"/></svg>
+        </a>
+      </div>
+    </section>
+
+    <!-- 6. Dresscode -->
+    <section class="dresscode">
+      <div class="dresscode__icon" aria-hidden="true">
+        <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M26 10c0 4 2.5 6 6 6s6-2 6-6"/>
+          <path d="M26 10l-9 5 3 9 5-2-1 26c4 2 12 2 16 0l-1-26 5 2 3-9-9-5"/>
+        </svg>
+      </div>
+      <h2 class="section-title" data-config="dresscodeTitle"></h2>
+      <p class="section-sub" data-config="dresscodeSubtitle"></p>
+      <p class="dresscode__text" data-config="dresscodeText"></p>
+      <div class="dresscode__colors" id="dresscodeColors" aria-label="Farbpalette"></div>
+    </section>
+
+    <!-- 7. FAQ -->
+    <section class="faq">
+      <h2 class="section-title" data-config="faqTitle"></h2>
+      <p class="section-sub" data-config="faqSubtitle"></p>
+      <div class="faq__list" id="faqList"></div>
+    </section>
+
+    <!-- 8. Rückmeldebogen -->
+    <section class="rsvp" id="rsvp">
+      <h2 class="section-title section-title--light" data-config="rsvpTitle"></h2>
+      <p class="section-sub section-sub--light rsvp__text" data-config="rsvpText"></p>
+      <form class="rsvp__form" id="rsvpForm">
+        <label class="field">
+          <span class="field__label">Euer Name / Eure Namen</span>
+          <input class="field__input" type="text" name="name" required autocomplete="name" />
+        </label>
+        <fieldset class="field field--choice">
+          <legend class="field__label">Seid ihr dabei?</legend>
+          <label class="choice"><input type="radio" name="attendance" value="Ja, wir feiern mit!" required /><span>Ja, wir feiern mit! 🥂</span></label>
+          <label class="choice"><input type="radio" name="attendance" value="Leider nein" /><span>Leider können wir nicht 😢</span></label>
+        </fieldset>
+        <label class="field">
+          <span class="field__label">Anzahl Personen</span>
+          <input class="field__input" type="number" name="persons" min="1" max="12" value="2" required />
+        </label>
+        <label class="field">
+          <span class="field__label">Essenswünsche / Allergien</span>
+          <input class="field__input" type="text" name="food" placeholder="z. B. vegetarisch, Nussallergie …" />
+        </label>
+        <label class="field">
+          <span class="field__label">Nachricht an uns</span>
+          <textarea class="field__input field__input--area" name="message" rows="3" placeholder="Wir freuen uns auf eure Zeilen …"></textarea>
+        </label>
+        <button class="btn btn--solid rsvp__submit" type="submit">Rückmeldung senden</button>
+        <p class="rsvp__hint">Beim Absenden öffnet sich euer E-Mail-Programm mit der fertigen Rückmeldung – nur noch abschicken.</p>
+        <a class="btn btn--outline btn--light" id="rsvpWhatsapp" href="#" hidden>Oder per WhatsApp zusagen</a>
+      </form>
+    </section>
+
+    <!-- Fußzeile -->
+    <footer class="footer">
+      <svg class="footer__dove" viewBox="0 0 64 40" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" aria-hidden="true">
+        <path d="M8 22c8-2 14-8 17-16 2 6 1 11-1 15 6-2 12-1 16 2-5 1-8 3-10 6 8 0 14 2 18 7-10-2-19-1-26 3-6 3-12 2-16-3 3-1 5-3 6-6-2-1-4-3-4-8z"/>
+      </svg>
+      <p class="footer__names"><span data-config="nameOne"></span> &amp; <span data-config="nameTwo"></span></p>
+      <p class="footer__text" data-config="footerText"></p>
+    </footer>
+  </main>
+
+  <script src="js/config.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
