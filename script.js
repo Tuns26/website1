@@ -60,6 +60,42 @@
     setInterval(update, 30000);
   }
 
+  // Design-Demo-Modal: Karte anklicken → Einladung im Handy-Rahmen durchklicken
+  const modal = document.getElementById("demoModal");
+  if (modal) {
+    const frame = document.getElementById("demoFrame");
+    const cta = document.getElementById("demoCta");
+
+    const openDemo = (card) => {
+      frame.src = card.dataset.demo;
+      // CTA führt zur Bestellseite mit vorgewähltem Stil
+      const stil = card.dataset.stil;
+      cta.href = "bestellen.html" + (stil ? "?stil=" + encodeURIComponent(stil) : "");
+      modal.classList.add("open");
+      modal.setAttribute("aria-hidden", "false");
+      document.body.classList.add("demo-open");
+    };
+    const closeDemo = () => {
+      modal.classList.remove("open");
+      modal.setAttribute("aria-hidden", "true");
+      document.body.classList.remove("demo-open");
+      frame.src = ""; // stoppt Animationen/Timer der Demo
+    };
+
+    document.querySelectorAll(".design-card[data-demo]").forEach((card) => {
+      card.addEventListener("click", () => openDemo(card));
+      card.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); openDemo(card); }
+      });
+    });
+    modal.querySelectorAll("[data-demo-close]").forEach((el) =>
+      el.addEventListener("click", closeDemo)
+    );
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && modal.classList.contains("open")) closeDemo();
+    });
+  }
+
   // Contact form (front-end only demo)
   const form = document.getElementById("contactForm");
   const note = document.getElementById("formNote");

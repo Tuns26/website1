@@ -18,7 +18,7 @@ Bordeaux-Akzente und feine Serifen-Typografie — inspiriert von handgefertigten
 - **Kollektion** — vier Design-Stile
 - **Kundenstimmen**
 - **Team & Ablauf**
-- **Preise** — Essentiell (175 €), Prämie (375 €), Exzellent (975 €)
+- **Preise** — Essentiell (175 €), Premium (375 €), Exzellent (975 €)
 - **Kontaktformular** & Footer
 
 ## Lokal ansehen

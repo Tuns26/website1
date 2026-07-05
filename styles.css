@@ -402,6 +402,54 @@ em { font-style: italic; }
 .footer__bar a { color: rgba(247,241,232,0.75); text-decoration: none; }
 .footer__bar a:hover { color: var(--white); }
 
+/* ---------- Demo-Modal ---------- */
+.design-card[data-demo] { cursor: pointer; }
+.design-card__demo {
+  display: inline-block; margin-top: 0.7rem;
+  font-size: 0.82rem; font-weight: 500; letter-spacing: 0.06em;
+  color: var(--wine); border-bottom: 1px solid rgba(109,31,47,0.35);
+  transition: border-color 0.2s;
+}
+.design-card[data-demo]:hover .design-card__demo { border-color: var(--wine); }
+
+.demo-modal {
+  position: fixed; inset: 0; z-index: 300;
+  display: none; place-items: center; padding: 1rem;
+}
+.demo-modal.open { display: grid; }
+.demo-modal__backdrop {
+  position: absolute; inset: 0;
+  background: rgba(42, 35, 32, 0.65);
+  backdrop-filter: blur(8px);
+}
+.demo-modal__stage {
+  position: relative; z-index: 1;
+  display: flex; flex-direction: column; align-items: center; gap: 1.1rem;
+  animation: modalIn 0.35s ease;
+}
+@keyframes modalIn { from { opacity: 0; transform: translateY(18px) scale(0.97); } }
+.demo-modal__frame {
+  position: relative;
+  width: min(380px, 92vw); height: min(760px, 80vh);
+  background: linear-gradient(160deg, #2a2320, #453a34);
+  border-radius: 40px; padding: 11px;
+  box-shadow: 0 40px 100px -30px rgba(0,0,0,0.6), 0 0 0 2px rgba(200,169,106,0.25);
+}
+.demo-modal__iframe {
+  width: 100%; height: 100%; border: 0; border-radius: 30px;
+  background: var(--cream); display: block;
+}
+.demo-modal__close {
+  position: absolute; top: -14px; right: -14px; z-index: 2;
+  width: 42px; height: 42px; border-radius: 50%;
+  background: var(--wine); color: var(--white);
+  border: 2px solid var(--cream); cursor: pointer; font-size: 1rem;
+  transition: transform 0.2s, background 0.2s;
+}
+.demo-modal__close:hover { background: var(--wine-dark); transform: scale(1.08); }
+.demo-modal__cta { box-shadow: 0 16px 40px -12px rgba(0,0,0,0.5); }
+body.demo-open { overflow: hidden; }
+
 /* ---------- Reveal animation ---------- */
 .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s ease, transform 0.7s ease; }
 .reveal.visible { opacity: 1; transform: none; }

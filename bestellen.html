@@ -84,9 +84,9 @@
               </span>
             </label>
             <label>
-              <input type="radio" name="paket" value="praemie" checked />
+              <input type="radio" name="paket" value="premium" checked />
               <span class="pick__card">
-                <span class="pick__name">Prämie</span>
+                <span class="pick__name">Premium</span>
                 <span class="pick__price" style="display:block">375 €</span>
                 <span class="pick__hint" style="display:block">Maßgeschneidert + RSVP</span>
               </span>
@@ -191,7 +191,7 @@
       var SHOP_DOMAIN = "bb0c62-3.myshopify.com";
       var VARIANTS = {
         essentiell: "55794559058246",
-        praemie:    "55794576425286",
+        premium:    "55794576425286",
         exzellent:  "56913980424518"
       };
       /* ========================================================== */
@@ -202,6 +202,15 @@
       if (pre) {
         var radio = document.querySelector('input[name="paket"][value="' + pre + '"]');
         if (radio) radio.checked = true;
+      }
+
+      // Stil aus URL vorwählen: bestellen.html?stil=Botanische%20Ruhe%20(…)
+      var stilPre = params.get("stil");
+      if (stilPre) {
+        var stilSelect = document.getElementById("stil");
+        for (var i = 0; i < stilSelect.options.length; i++) {
+          if (stilSelect.options[i].text === stilPre) { stilSelect.selectedIndex = i; break; }
+        }
       }
 
       var form = document.getElementById("orderForm");

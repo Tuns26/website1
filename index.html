@@ -120,7 +120,7 @@
       <h2 class="section-title">Unsere digitalen Hochzeitseinladungen</h2>
       <p class="section-sub">Handverlesene Designs für jeden Stil und jeden Anlass.</p>
       <div class="cards">
-        <article class="design-card">
+        <article class="design-card" data-demo="designs/design-1/index.html" data-stil="Botanische Ruhe (Grün &amp; Creme)" tabindex="0" role="button" aria-label="Demo von Botanische Ruhe ansehen">
           <div class="design-card__phone design-card__phone--sage">
             <div class="mini-invite">
               <span>❀</span>
@@ -130,8 +130,9 @@
           </div>
           <h3>Botanische Ruhe</h3>
           <p>Zarte Eukalyptus-Illustrationen auf cremefarbenem Grund.</p>
+          <span class="design-card__demo">▶ Demo ansehen</span>
         </article>
-        <article class="design-card">
+        <article class="design-card" data-demo="einladung.html" data-stil="Klassische Eleganz (Bordeaux &amp; Gold)" tabindex="0" role="button" aria-label="Demo von Klassische Eleganz ansehen">
           <div class="design-card__phone design-card__phone--wine">
             <div class="mini-invite mini-invite--light">
               <span>❦</span>
@@ -141,8 +142,9 @@
           </div>
           <h3>Klassische Eleganz</h3>
           <p>Tiefes Bordeaux mit goldenen Serifen — zeitlos und festlich.</p>
+          <span class="design-card__demo">▶ Demo ansehen</span>
         </article>
-        <article class="design-card">
+        <article class="design-card" data-demo="designs/design-2/index.html" data-stil="Zarte Romantik (Rosé &amp; Puder)" tabindex="0" role="button" aria-label="Demo von Zarte Romantik ansehen">
           <div class="design-card__phone design-card__phone--blush">
             <div class="mini-invite">
               <span>✿</span>
@@ -152,6 +154,7 @@
           </div>
           <h3>Zarte Romantik</h3>
           <p>Aquarell-Blüten in Rosé und Puder für einen verträumten Look.</p>
+          <span class="design-card__demo">▶ Demo ansehen</span>
         </article>
         <article class="design-card">
           <div class="design-card__phone design-card__phone--noir">
@@ -258,7 +261,7 @@
 
         <article class="plan plan--featured">
           <div class="plan__badge">Beliebteste Wahl</div>
-          <h3 class="plan__name">Prämie</h3>
+          <h3 class="plan__name">Premium</h3>
           <div class="plan__price">375 €<span>einmalig</span></div>
           <p class="plan__desc">Für Paare, die eine rundum persönliche Einladung möchten.</p>
           <ul class="plan__list">
@@ -269,7 +272,7 @@
             <li>Foto-Galerie</li>
             <li>3 Korrekturrunden</li>
           </ul>
-          <a href="bestellen.html?paket=praemie" class="btn btn--primary plan__btn">Prämie wählen</a>
+          <a href="bestellen.html?paket=premium" class="btn btn--primary plan__btn">Premium wählen</a>
         </article>
 
         <article class="plan">
@@ -277,7 +280,7 @@
           <div class="plan__price">975 €<span>einmalig</span></div>
           <p class="plan__desc">Das Rundum-sorglos-Erlebnis mit persönlicher Begleitung.</p>
           <ul class="plan__list">
-            <li>Alles aus <b>Prämie</b></li>
+            <li>Alles aus <b>Premium</b></li>
             <li>Handgezeichnete Illustrationen</li>
             <li>Eigene Animationen &amp; Musik</li>
             <li>Passende Save-the-Dates &amp; Dankeskarten</li>
@@ -344,6 +347,18 @@
       <p><a href="#">Impressum</a> · <a href="#">Datenschutz</a></p>
     </div>
   </footer>
+
+  <!-- Demo-Modal: Design im Handy-Rahmen durchklicken -->
+  <div class="demo-modal" id="demoModal" aria-hidden="true" role="dialog" aria-label="Design-Demo">
+    <div class="demo-modal__backdrop" data-demo-close></div>
+    <div class="demo-modal__stage">
+      <div class="demo-modal__frame">
+        <button class="demo-modal__close" data-demo-close aria-label="Demo schließen">✕</button>
+        <iframe class="demo-modal__iframe" id="demoFrame" title="Einladungs-Demo"></iframe>
+      </div>
+      <a class="btn btn--primary demo-modal__cta" id="demoCta" href="bestellen.html">Dieses Design wählen ✦</a>
+    </div>
+  </div>
 
   <script src="script.js"></script>
 </body>
