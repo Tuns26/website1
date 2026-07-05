@@ -65,8 +65,23 @@
   if (modal) {
     const frame = document.getElementById("demoFrame");
     const cta = document.getElementById("demoCta");
+    const phone = modal.querySelector(".demo-modal__frame");
+
+    // Display bleibt intern immer 360×640 (9:16) und wird nur optisch skaliert,
+    // damit die Demos exakt wie auf einem echten Handy umbrechen
+    const SCREEN_W = 360, SCREEN_H = 640, BEZEL = 11;
+    const fitDemoFrame = () => {
+      const maxW = window.innerWidth * 0.92;
+      const maxH = window.innerHeight - 140; // Platz für CTA-Button und Abstände
+      const s = Math.min(1, maxW / (SCREEN_W + 2 * BEZEL), maxH / (SCREEN_H + 2 * BEZEL));
+      phone.style.width = SCREEN_W * s + 2 * BEZEL + "px";
+      phone.style.height = SCREEN_H * s + 2 * BEZEL + "px";
+      frame.style.transform = "scale(" + s + ")";
+    };
+    window.addEventListener("resize", fitDemoFrame);
 
     const openDemo = (card) => {
+      fitDemoFrame();
       frame.src = card.dataset.demo;
       // CTA führt zur Bestellseite mit vorgewähltem Stil
       const stil = card.dataset.stil;
