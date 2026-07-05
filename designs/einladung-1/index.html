@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Sophia &amp; Alexander – 12. September 2026</title>
+<meta name="description" content="Digitale Hochzeitseinladung von Sophia & Alexander – 12. September 2026, The Peninsula Hotel İstanbul">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Great+Vibes&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ════════ Feste UI ════════ -->
+<div class="lang-toggle" role="group" aria-label="Sprache">
+  <button id="langEn" data-lang="en">EN</button>
+  <button id="langDe" data-lang="de" class="active">DE</button>
+</div>
+
+<button id="soundBtn" class="sound-btn" aria-label="Musik an/aus" aria-pressed="false">
+  <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" fill="currentColor" stroke="none"></polygon>
+    <path class="snd-wave" d="M15.5 8.5a5 5 0 0 1 0 7"></path>
+    <path class="snd-wave" d="M18 6a8.5 8.5 0 0 1 0 12"></path>
+    <line class="snd-off" x1="16" y1="9" x2="21" y2="15" style="display:none"></line>
+    <line class="snd-off" x1="21" y1="9" x2="16" y2="15" style="display:none"></line>
+  </svg>
+</button>
+
+<audio id="bgMusic" src="music.mp3" loop preload="auto"></audio>
+
+<!-- ════════ Umschlag (Vollbild, Hochformat) ════════ -->
+<section id="stage-envelope">
+  <div class="envelope-fill" id="envelopeWrap" role="button" tabindex="0" aria-label="Einladung öffnen">
+    <img id="envelopeImg" src="https://d8j0ntlcm91z4.cloudfront.net/user_3FvydqbGOOHUpbISUQX0A2zheMB/hf_20260702_072642_df783c17-1c76-4016-9d07-e5b5f477dd79.png" alt="Verschlossener Hochzeitsumschlag mit Wachssiegel">
+    <video id="envelopeVideo" src="https://d8j0ntlcm91z4.cloudfront.net/user_3FvydqbGOOHUpbISUQX0A2zheMB/hf_20260702_153622_b21140f7-a12c-4972-92fa-90d5ad509c6e.mp4" poster="https://d8j0ntlcm91z4.cloudfront.net/user_3FvydqbGOOHUpbISUQX0A2zheMB/hf_20260702_072642_df783c17-1c76-4016-9d07-e5b5f477dd79.png" preload="auto" muted playsinline></video>
+  </div>
+  <p class="envelope-hint" id="envelopeHint">
+    <span class="hint-ring"></span>
+    <span data-i18n="envelope.hint">Tippe auf das Siegel, um die Einladung zu öffnen</span>
+  </p>
+</section>
+
+<!-- ════════ Schleife (Vollbild-Video: bindet sich von selbst auf) ════════ -->
+<section id="stage-bow" aria-hidden="true">
+  <video id="bowVideo" src="https://d8j0ntlcm91z4.cloudfront.net/user_3FvydqbGOOHUpbISUQX0A2zheMB/hf_20260702_152833_832bda7c-b405-49be-82d1-75bb61f40115.mp4" poster="https://d8j0ntlcm91z4.cloudfront.net/user_3FvydqbGOOHUpbISUQX0A2zheMB/hf_20260702_075209_d7774a50-f937-423b-be50-2b1f7f191790.png" preload="auto" muted playsinline></video>
+  <div class="bow-overlay">
+    <p class="bow-kicker" data-i18n="bow.kicker">Wir heiraten</p>
+    <p class="bow-name script">Sophia</p>
+    <p class="bow-amp script">&amp;</p>
+    <p class="bow-name script">Alexander</p>
+  </div>
+</section>
+
+<!-- ════════ Einladung (Scroll-Seite) ════════ -->
+<main id="invitation">
+
+  <!-- Hero -->
+  <section class="hero">
+    <video class="hero-bg" src="https://d8j0ntlcm91z4.cloudfront.net/user_3FvydqbGOOHUpbISUQX0A2zheMB/hf_20260702_152224_505b75ee-e099-4ff8-9962-a93b92355daa.mp4" poster="https://d8j0ntlcm91z4.cloudfront.net/user_3FvydqbGOOHUpbISUQX0A2zheMB/hf_20260702_072644_6714b135-2c37-4e18-a06b-329eedad0eaa.png" autoplay muted loop playsinline></video>
+    <div class="hero-content">
+      <div class="monogram reveal" aria-hidden="true"><span>S</span><span class="mono-amp">&amp;</span><span>A</span></div>
+      <h1 class="names reveal">Sophia <span class="amp">&amp;</span> Alexander</h1>
+      <p class="hero-request reveal" data-i18n="hero.request">Wir bitten um die Ehre Ihrer Anwesenheit,<br>um unsere Hochzeit zu feiern am</p>
+      <div class="date-block reveal">
+        <div class="date-row">
+          <span class="date-line"></span>
+          <span class="date-month" data-i18n="hero.month">September</span>
+          <span class="date-day">12</span>
+          <span class="date-year">2026</span>
+          <span class="date-line"></span>
+        </div>
+        <p class="date-weekday" data-i18n="hero.weekday">Samstag</p>
+      </div>
+      <p class="hero-held" data-i18n="hero.heldAt">im</p>
+      <p class="hero-venue script reveal">The Peninsula Hotel İstanbul</p>
+      <p class="hero-time reveal" data-i18n="hero.time">um sechs Uhr abends</p>
+    </div>
+    <div class="scroll-cue">
+      <span data-i18n="hero.scroll">Weiterscrollen &amp; RSVP</span>
+      <span class="cue-arrow">⌄</span>
+    </div>
+  </section>
+
+  <!-- Countdown -->
+  <section class="countdown-sec">
+    <img class="columns-bg" src="https://d8j0ntlcm91z4.cloudfront.net/user_3FvydqbGOOHUpbISUQX0A2zheMB/hf_20260702_075218_d6c6ed7f-9c7e-4405-bd58-1050d305e620.png" alt="">
+    <div class="sec-inner">
+      <h2 class="script reveal" data-i18n="countdown.title">Countdown</h2>
+      <p class="sub reveal"><span data-i18n="countdown.until">bis zum 12. September 2026</span></p>
+      <div class="count-grid reveal" id="countdown">
+        <div class="count-cell"><span class="count-num" id="cdDays">–</span><span class="count-label" data-i18n="countdown.days">Tage</span></div>
+        <div class="count-sep"></div>
+        <div class="count-cell"><span class="count-num" id="cdHours">–</span><span class="count-label" data-i18n="countdown.hours">Stunden</span></div>
+        <div class="count-sep"></div>
+        <div class="count-cell"><span class="count-num" id="cdMins">–</span><span class="count-label" data-i18n="countdown.minutes">Minuten</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Feierlichkeiten -->
+  <section class="events-sec">
+    <div class="sec-inner">
+      <h2 class="script reveal" data-i18n="events.title">Die Feierlichkeiten</h2>
+      <div class="reveal yacht-wrap"><img class="yacht-img" src="https://d8j0ntlcm91z4.cloudfront.net/user_3FvydqbGOOHUpbISUQX0A2zheMB/hf_20260702_105916_0cac0dff-63cf-4c6e-9aaa-dbd2352bb4e9.png" alt="Aquarell-Illustration einer Yacht"></div>
+      <div class="event-card reveal">
+        <p class="card-kicker" data-i18n="events.cruiseKicker">Willkommensfahrt auf dem Bosporus</p>
+        <p class="script card-script">The Peninsula<br>Private Quay</p>
+        <p class="card-detail" data-i18n="events.cruiseDetail">Abfahrt vom The Peninsula Private Quay</p>
+        <p class="card-date" data-i18n="events.cruiseDate">11. September 2026</p>
+      </div>
+      <div class="event-card reveal">
+        <p class="card-kicker" data-i18n="events.ceremonyKicker">Trauung &amp; Empfang</p>
+        <p class="script card-script">The Peninsula<br>Hotel İstanbul</p>
+        <p class="card-detail" data-i18n="events.ceremonyDetail">Trauung am Wasser mit anschließendem Empfang</p>
+        <p class="card-date" data-i18n="events.ceremonyDate">12. September 2026 · 18:00 Uhr</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Ablauf -->
+  <section class="program-sec">
+    <img class="curtain-bg" src="https://d8j0ntlcm91z4.cloudfront.net/user_3FvydqbGOOHUpbISUQX0A2zheMB/hf_20260702_075225_587eeabe-6de5-4995-a8c8-ae08036ce64a.png" alt="">
+    <div class="sec-inner">
+      <h2 class="script reveal" data-i18n="program.title">Hochzeitswochenende</h2>
+      <p class="sub reveal" data-i18n="program.sub">Ablauf</p>
+      <p class="program-dates reveal" data-i18n="program.dates">11. – 12. September 2026</p>
+
+      <div class="program-day reveal">
+        <h3 class="script day-title" data-i18n="program.day1Title">Willkommensfahrt auf dem Bosporus</h3>
+        <p class="day-date" data-i18n="program.day1Date">11. September 2026</p>
+        <p class="day-desc" data-i18n="program.day1Desc">Begleiten Sie uns zu Cocktails und Häppchen auf unserer Fahrt über den Bosporus</p>
+        <div class="timeline">
+          <div class="tl-item">
+            <span class="tl-dot"></span>
+            <div><p class="tl-time">18:30</p><p class="tl-text" data-i18n="program.day1a">Abfahrt vom The Peninsula Private Quay</p></div>
+          </div>
+          <div class="tl-item">
+            <span class="tl-dot"></span>
+            <div><p class="tl-time">18:30 – 21:30</p><p class="tl-text" data-i18n="program.day1b">Sonnenuntergangs-Cocktails &amp; Häppchen</p></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="program-day reveal">
+        <h3 class="script day-title" data-i18n="program.day2Title">Trauung &amp; Empfang</h3>
+        <p class="day-date" data-i18n="program.day2Date">12. September 2026</p>
+        <div class="timeline">
+          <div class="tl-item">
+            <span class="tl-dot"></span>
+            <div><p class="tl-time">18:00</p><p class="tl-text" data-i18n="program.day2a">Trauung am Wasser</p></div>
+          </div>
+          <div class="tl-item">
+            <span class="tl-dot"></span>
+            <div><p class="tl-time">19:00</p><p class="tl-text" data-i18n="program.day2b">Empfang &amp; festliches Dinner</p></div>
+          </div>
+          <div class="tl-item">
+            <span class="tl-dot"></span>
+            <div><p class="tl-time">22:00</p><p class="tl-text" data-i18n="program.day2c">Party unter den Sternen</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Unterkünfte -->
+  <section class="hotels-sec">
+    <div class="sec-inner">
+      <h2 class="script reveal" data-i18n="hotels.title">Unterkünfte</h2>
+      <p class="sub reveal" data-i18n="hotels.sub">Empfohlene Hotels in der Nähe des Veranstaltungsortes</p>
+
+      <div class="hotel-card reveal">
+        <img src="https://d8j0ntlcm91z4.cloudfront.net/user_3FvydqbGOOHUpbISUQX0A2zheMB/hf_20260702_105919_b2c400cf-7bd3-41e3-a2a7-7220bf34e0a6.png" alt="Aquarell-Illustration The Peninsula İstanbul">
+        <p class="script hotel-name">The Peninsula İstanbul</p>
+        <p class="hotel-price">€735</p>
+        <p class="hotel-detail" data-i18n="hotels.detail">pro Nacht · Doppelzimmer Standard · inkl. Steuern &amp; Frühstück</p>
+        <p class="hotel-link" data-i18n="hotels.linkSoon">Buchungslink folgt in Kürze</p>
+      </div>
+
+      <div class="hotel-card reveal">
+        <img src="https://d8j0ntlcm91z4.cloudfront.net/user_3FvydqbGOOHUpbISUQX0A2zheMB/hf_20260702_105926_68c4f5db-3e27-4a7a-b524-f25abd60a31c.png" alt="Aquarell-Illustration JW Marriott İstanbul">
+        <p class="script hotel-name">JW Marriott İstanbul</p>
+        <p class="hotel-price">€314</p>
+        <p class="hotel-detail" data-i18n="hotels.detail2">pro Nacht · Doppelzimmer Standard · inkl. Steuern &amp; Frühstück</p>
+        <p class="hotel-link" data-i18n="hotels.linkSoon2">Buchungslink folgt in Kürze</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- RSVP -->
+  <section class="rsvp-sec">
+    <div class="sec-inner">
+      <h2 class="script reveal">Rsvp</h2>
+      <p class="sub reveal" data-i18n="rsvp.deadline">Wir bitten höflichst um Ihre Rückmeldung bis zum ersten August 2026</p>
+
+      <form id="rsvpForm" class="rsvp-form reveal" novalidate>
+        <fieldset>
+          <legend data-i18n="rsvp.attendQ">Werden Sie uns beehren? *</legend>
+          <label class="radio">
+            <input type="radio" name="attend" value="yes" checked>
+            <span class="control"></span>
+            <span data-i18n="rsvp.attendYes">Mit Freude nehme ich an</span>
+          </label>
+          <label class="radio">
+            <input type="radio" name="attend" value="no">
+            <span class="control"></span>
+            <span data-i18n="rsvp.attendNo">Leider bin ich verhindert</span>
+          </label>
+        </fieldset>
+
+        <fieldset id="eventsField">
+          <legend data-i18n="rsvp.eventsQ">An welchen Veranstaltungen werden Sie teilnehmen? *</legend>
+          <label class="check">
+            <input type="checkbox" name="events" value="cruise">
+            <span class="control"></span>
+            <span data-i18n="rsvp.eventCruise">Willkommensfahrt – 11. September</span>
+          </label>
+          <label class="check">
+            <input type="checkbox" name="events" value="ceremony">
+            <span class="control"></span>
+            <span data-i18n="rsvp.eventCeremony">Trauung &amp; Empfang – 12. September</span>
+          </label>
+        </fieldset>
+
+        <fieldset>
+          <legend data-i18n="rsvp.guestsQ">Anzahl der Gäste in Ihrer Begleitung</legend>
+          <div class="stepper">
+            <button type="button" id="stepMinus" aria-label="Weniger">−</button>
+            <span id="guestCount">0</span>
+            <button type="button" id="stepPlus" aria-label="Mehr">+</button>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend data-i18n="rsvp.mainGuest">Hauptgast</legend>
+          <input type="text" id="guestName" name="name" data-i18n-ph="rsvp.namePh" placeholder="Vollständiger Name" autocomplete="name" required>
+          <input type="email" id="guestEmail" name="email" data-i18n-ph="rsvp.emailPh" placeholder="E-Mail-Adresse" autocomplete="email" required>
+        </fieldset>
+
+        <button type="submit" class="rsvp-submit" data-i18n="rsvp.submit">Rückmeldung senden</button>
+        <p class="rsvp-note" data-i18n="rsvp.note">Es öffnet sich Ihr E-Mail-Programm mit der fertigen Rückmeldung.</p>
+      </form>
+
+      <p class="closing script reveal">Sophia &amp; Alexander</p>
+    </div>
+  </section>
+
+</main>
+
+<script src="script.js"></script>
+</body>
+</html>

@@ -256,6 +256,13 @@ em { font-style: italic; }
   border: 8px solid #2a2320;
 }
 .design-card:hover .design-card__phone { transform: translateY(-8px) rotate(-1deg); }
+.design-card__phone--photo { padding: 0; overflow: hidden; }
+.design-card__phone--photo img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  border-radius: 18px;
+  display: block;
+}
 .design-card__phone--sage { background: linear-gradient(160deg, #e7ede1, #d4e0cf); }
 .design-card__phone--wine { background: linear-gradient(160deg, #7a2333, #521623); }
 .design-card__phone--blush { background: linear-gradient(160deg, #f6e3e1, #ecc9c8); }
