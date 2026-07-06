@@ -267,6 +267,19 @@ em { font-style: italic; }
 .design-card__phone--wine { background: linear-gradient(160deg, #7a2333, #521623); }
 .design-card__phone--blush { background: linear-gradient(160deg, #f6e3e1, #ecc9c8); }
 .design-card__phone--noir { background: linear-gradient(160deg, #2f2a2e, #4a3f45); }
+.design-card__phone--theater {
+  position: relative; overflow: hidden; border-radius: 26px;
+  background: radial-gradient(120% 85% at 50% 18%, #8a3a48 0%, #521623 55%, #260a10 100%);
+}
+.theater-drape {
+  position: absolute; top: 0; height: 100%; width: auto; max-width: 58%;
+  object-fit: cover; z-index: 1; pointer-events: none;
+}
+.theater-drape--l { left: 0; object-position: left center; }
+.theater-drape--r { right: 0; object-position: left center; transform: scaleX(-1); }
+.design-card__phone--theater .mini-invite { position: relative; z-index: 2; }
+.mini-invite--stage h4 { font-size: 1.5rem; }
+.mini-invite--stage p { color: var(--gold); }
 .mini-invite { text-align: center; color: var(--wine); padding: 1rem; }
 .mini-invite--light { color: var(--cream); }
 .mini-invite span { font-size: 1.5rem; color: var(--gold); }

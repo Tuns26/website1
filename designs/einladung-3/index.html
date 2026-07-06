@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Isabella &amp; Maximilian – Hochzeitseinladung</title>
+<meta name="description" content="Digitale Hochzeitseinladung von Isabella & Maximilian – Villa Cora, Florenz">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8E%AD%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=Great+Vibes&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ════════ Feste UI ════════ -->
+<div class="scroll-progress" aria-hidden="true"><span id="scrollBar"></span></div>
+
+<div class="lang-toggle" role="group" aria-label="Sprache">
+  <button id="langEn" data-lang="en">EN</button>
+  <button id="langDe" data-lang="de" class="active">DE</button>
+</div>
+
+<button id="soundBtn" class="sound-btn" aria-label="Musik an/aus" aria-pressed="false">
+  <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" fill="currentColor" stroke="none"></polygon>
+    <path class="snd-wave" d="M15.5 8.5a5 5 0 0 1 0 7"></path>
+    <path class="snd-wave" d="M18 6a8.5 8.5 0 0 1 0 12"></path>
+    <line class="snd-off" x1="16" y1="9" x2="21" y2="15" style="display:none"></line>
+    <line class="snd-off" x1="21" y1="9" x2="16" y2="15" style="display:none"></line>
+  </svg>
+</button>
+
+<audio id="bgMusic" src="music.mp3" loop preload="auto"></audio>
+
+<!-- Konfetti-Ebene (Canvas, wird bei Bedarf gezündet) -->
+<canvas id="confettiCanvas" aria-hidden="true"></canvas>
+
+<!-- ════════ Bühne: Vorhang (öffnet sich erst nach Klick) ════════ -->
+<section id="stage-curtain">
+  <div class="curtain-fill" id="curtainWrap" role="button" tabindex="0" aria-label="Vorhang öffnen und Einladung ansehen">
+    <img id="curtainImg" src="https://d8j0ntlcm91z4.cloudfront.net/user_3FvydqbGOOHUpbISUQX0A2zheMB/hf_20260705_183449_99f75d45-0091-43ec-8474-19c5a24af080.png" alt="Geschlossener burgunderroter Theatervorhang">
+    <video id="curtainVideo" src="https://d8j0ntlcm91z4.cloudfront.net/user_3FvydqbGOOHUpbISUQX0A2zheMB/hf_20260705_185350_f1c62637-37c4-40a6-a7d6-193ef1ab30cd.mp4" poster="https://d8j0ntlcm91z4.cloudfront.net/user_3FvydqbGOOHUpbISUQX0A2zheMB/hf_20260705_183449_99f75d45-0091-43ec-8474-19c5a24af080.png" preload="auto" muted playsinline></video>
+    <div class="spotlight" aria-hidden="true"></div>
+    <div class="curtain-overlay" id="curtainOverlay">
+      <p class="curtain-kicker" data-i18n="curtain.kicker">Die Hochzeit von</p>
+      <div class="curtain-monogram" aria-hidden="true"><span>I</span><span class="mono-amp">&amp;</span><span>M</span></div>
+      <p class="curtain-names script">Isabella &amp; Maximilian</p>
+    </div>
+  </div>
+  <p class="curtain-hint" id="curtainHint">
+    <span class="hint-ring"></span>
+    <span data-i18n="curtain.hint">Tippe, um den Vorhang zu öffnen</span>
+  </p>
+</section>
+
+<!-- Geöffnete Vorhang-Bahnen bleiben links & rechts stehen (nur erste Seite) -->
+<img class="stage-drape drape-l" src="https://d8j0ntlcm91z4.cloudfront.net/user_3FvydqbGOOHUpbISUQX0A2zheMB/hf_20260706_104818_470ee0f0-514c-4307-b123-089076ef0062.png" alt="" aria-hidden="true">
+<img class="stage-drape drape-r" src="https://d8j0ntlcm91z4.cloudfront.net/user_3FvydqbGOOHUpbISUQX0A2zheMB/hf_20260706_104818_470ee0f0-514c-4307-b123-089076ef0062.png" alt="" aria-hidden="true">
+
+<!-- ════════ Einladung (Scroll-Seite) ════════ -->
+<main id="invitation">
+
+  <!-- Hero -->
+  <section class="hero">
+    <canvas id="dustCanvas" aria-hidden="true"></canvas>
+    <img class="hero-flourish fl-tl" src="https://d8j0ntlcm91z4.cloudfront.net/user_3FvydqbGOOHUpbISUQX0A2zheMB/hf_20260705_183642_334719d0-6c5c-4f6c-a402-cc2fc956d0b2.png" alt="" aria-hidden="true">
+    <img class="hero-flourish fl-br" src="https://d8j0ntlcm91z4.cloudfront.net/user_3FvydqbGOOHUpbISUQX0A2zheMB/hf_20260705_183642_334719d0-6c5c-4f6c-a402-cc2fc956d0b2.png" alt="" aria-hidden="true">
+    <div class="hero-content">
+      <p class="hero-kicker reveal" data-i18n="hero.kicker">Sie sind herzlich eingeladen zur Hochzeit von</p>
+      <h1 class="names reveal"><span id="nameA" class="script">Isabella</span><span class="amp script">&amp;</span><span id="nameB" class="script">Maximilian</span></h1>
+      <p class="hero-request reveal" data-i18n="hero.request">Wir möchten den schönsten Tag unseres Lebens mit Ihnen feiern – es wäre uns eine große Ehre, Sie an diesem besonderen Moment an unserer Seite zu wissen.</p>
+      <p class="hero-held" data-i18n="hero.heldAt">in der</p>
+      <p class="hero-venue script reveal">Villa Cora · Florenz</p>
+      <p class="hero-time reveal" data-i18n="hero.time">Trauung um fünf Uhr nachmittags</p>
+    </div>
+    <div class="scroll-cue">
+      <span data-i18n="hero.scroll">Weiterscrollen &amp; entdecken</span>
+      <span class="cue-arrow">⌄</span>
+    </div>
+  </section>
+
+  <!-- Rubbel-Überraschung -->
+  <section class="scratch-sec">
+    <div class="sec-inner">
+      <h2 class="script reveal" data-i18n="scratch.title">Enthüllung</h2>
+      <p class="sub reveal" id="scratchSub" data-i18n="scratch.sub">Rubbeln Sie die goldenen Kreise frei und entdecken Sie unser Datum</p>
+      <div class="scratch-row reveal" id="scratchRow">
+        <div class="scratch-cell"><span class="scratch-value">10</span><canvas class="scratch-canvas" width="220" height="220"></canvas></div>
+        <div class="scratch-cell"><span class="scratch-value" data-i18n="scratch.month">Juli</span><canvas class="scratch-canvas" width="220" height="220"></canvas></div>
+        <div class="scratch-cell"><span class="scratch-value">2027</span><canvas class="scratch-canvas" width="220" height="220"></canvas></div>
+      </div>
+      <p class="scratch-done script" id="scratchDone" data-i18n="scratch.done">Wir heiraten!</p>
+    </div>
+  </section>
+
+  <!-- Countdown -->
+  <section class="countdown-sec">
+    <div class="sec-inner">
+      <h2 class="script reveal" data-i18n="countdown.title">Countdown</h2>
+      <p class="sub reveal" data-i18n="countdown.until">bis zum großen Tag</p>
+      <div class="count-grid reveal" id="countdown">
+        <div class="count-cell"><span class="count-num" id="cdDays">–</span><span class="count-label" data-i18n="countdown.days">Tage</span></div>
+        <div class="count-sep"></div>
+        <div class="count-cell"><span class="count-num" id="cdHours">–</span><span class="count-label" data-i18n="countdown.hours">Stunden</span></div>
+        <div class="count-sep"></div>
+        <div class="count-cell"><span class="count-num" id="cdMins">–</span><span class="count-label" data-i18n="countdown.minutes">Minuten</span></div>
+        <div class="count-sep"></div>
+        <div class="count-cell"><span class="count-num" id="cdSecs">–</span><span class="count-label" data-i18n="countdown.seconds">Sekunden</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Ort -->
+  <section class="venue-sec">
+    <div class="sec-inner">
+      <h2 class="script reveal" data-i18n="venue.title">Die Feier</h2>
+      <p class="sub reveal" data-i18n="venue.sub">findet statt in der</p>
+      <div class="reveal parallax venue-wrap"><img class="venue-img" src="https://d8j0ntlcm91z4.cloudfront.net/user_3FvydqbGOOHUpbISUQX0A2zheMB/hf_20260705_183507_be370f29-8fe5-436a-a28e-1846b1df5bfa.png" alt="Illustration der Villa Cora in Florenz"></div>
+      <p class="venue-name script reveal">Villa Cora</p>
+      <p class="venue-detail reveal">Viale Machiavelli 18 · Florenz · Italien</p>
+      <p class="venue-note reveal" data-i18n="venue.note">Trauung und Empfang unter freiem Himmel in den Gärten der Villa – anschließend festliches Dinner im Spiegelsaal.</p>
+    </div>
+  </section>
+
+  <!-- Ablauf -->
+  <section class="program-sec">
+    <div class="sec-inner">
+      <h2 class="script reveal" data-i18n="program.title">Der Abend</h2>
+      <p class="sub reveal" data-i18n="program.sub">Ablauf des Hochzeitstages</p>
+      <p class="program-dates reveal" data-i18n="program.dates">Samstag, 10. Juli 2027</p>
+      <div class="timeline reveal" id="timeline">
+        <span class="tl-line" aria-hidden="true"></span>
+        <div class="tl-item"><span class="tl-dot"></span><div><p class="tl-time">16:30</p><p class="tl-text" data-i18n="program.a">Ankunft der Gäste &amp; Willkommensdrink</p></div></div>
+        <div class="tl-item"><span class="tl-dot"></span><div><p class="tl-time">17:00</p><p class="tl-text" data-i18n="program.b">Freie Trauung im Garten</p></div></div>
+        <div class="tl-item"><span class="tl-dot"></span><div><p class="tl-time">18:00</p><p class="tl-text" data-i18n="program.c">Aperitivo &amp; Cocktails auf der Terrasse</p></div></div>
+        <div class="tl-item"><span class="tl-dot"></span><div><p class="tl-time">20:00</p><p class="tl-text" data-i18n="program.d">Festliches Dinner im Spiegelsaal</p></div></div>
+        <div class="tl-item"><span class="tl-dot"></span><div><p class="tl-time">22:30</p><p class="tl-text" data-i18n="program.e">Eröffnungstanz</p></div></div>
+        <div class="tl-item"><span class="tl-dot"></span><div><p class="tl-time">23:00</p><p class="tl-text" data-i18n="program.f">Party unter den Sternen</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Menü -->
+  <section class="menu-sec">
+    <div class="sec-inner">
+      <h2 class="script reveal" data-i18n="menu.title">Das Menü</h2>
+      <p class="sub reveal" data-i18n="menu.sub">Ein Abend voller Genuss</p>
+      <div class="menu-card reveal">
+        <img class="menu-frame" src="https://d8j0ntlcm91z4.cloudfront.net/user_3FvydqbGOOHUpbISUQX0A2zheMB/hf_20260705_183648_d94f8b16-4367-4f50-8e3d-dc7d2f84763d.png" alt="" aria-hidden="true">
+        <div class="menu-body">
+          <div class="menu-course"><p class="menu-course-name" data-i18n="menu.c1">Aperitivo</p><p class="menu-course-desc" data-i18n="menu.c1d">Prosecco, Cocktails &amp; toskanische Häppchen</p></div>
+          <div class="menu-course"><p class="menu-course-name" data-i18n="menu.c2">Primo</p><p class="menu-course-desc" data-i18n="menu.c2d">Hausgemachte Tagliatelle mit Trüffel</p></div>
+          <div class="menu-course"><p class="menu-course-name" data-i18n="menu.c3">Secondo</p><p class="menu-course-desc" data-i18n="menu.c3d">Branzino vom Grill oder Rinderfilet in Barolo</p></div>
+          <div class="menu-course"><p class="menu-course-name" data-i18n="menu.c4">Dolce</p><p class="menu-course-desc" data-i18n="menu.c4d">Hochzeitstorte, Tiramisù &amp; Mitternachtssnack</p></div>
+        </div>
+      </div>
+      <div class="reveal parallax table-wrap"><img class="table-img" src="https://d8j0ntlcm91z4.cloudfront.net/user_3FvydqbGOOHUpbISUQX0A2zheMB/hf_20260705_183509_9cd9ca81-2c59-442c-9477-fdffc47fc9dd.png" alt="Illustration einer festlich gedeckten Hochzeitstafel"></div>
+      <p class="menu-note reveal" data-i18n="menu.note">Vegetarische Alternativen sind selbstverständlich vorbereitet – teilen Sie uns Unverträglichkeiten gerne im RSVP mit.</p>
+    </div>
+  </section>
+
+  <!-- Dresscode -->
+  <section class="dress-sec">
+    <div class="sec-inner">
+      <h2 class="script reveal" data-i18n="dress.title">Dresscode</h2>
+      <div class="reveal parallax dress-wrap"><img class="dress-img" src="https://d8j0ntlcm91z4.cloudfront.net/user_3FvydqbGOOHUpbISUQX0A2zheMB/hf_20260705_183511_ad26df06-6c45-4945-b08b-3b79e61c684f.png" alt="Illustration elegant gekleideter Hochzeitsgäste"></div>
+      <p class="dress-main reveal" data-i18n="dress.main">Elegante Abendgarderobe</p>
+      <p class="dress-note reveal" data-i18n="dress.note">Wir freuen uns, wenn Sie sich festlich kleiden.<br>Bitte verzichten Sie auf Weiß – das gehört an diesem Tag der Braut.</p>
+    </div>
+  </section>
+
+  <!-- Geschenke -->
+  <section class="gift-sec">
+    <div class="sec-inner">
+      <h2 class="script reveal" data-i18n="gift.title">Geschenke</h2>
+      <div class="reveal parallax gift-wrap"><video class="gift-img" src="https://d8j0ntlcm91z4.cloudfront.net/user_3FvydqbGOOHUpbISUQX0A2zheMB/hf_20260705_183722_cefed5c6-7e28-42ac-8326-b51d47de532d.mp4" poster="https://d8j0ntlcm91z4.cloudfront.net/user_3FvydqbGOOHUpbISUQX0A2zheMB/hf_20260705_183518_9f7d5839-35e5-4850-9ab0-de85fc0b4092.png" autoplay muted loop playsinline aria-label="Animierte Illustration eines Geschenks mit Schleife"></video></div>
+      <p class="gift-text reveal" data-i18n="gift.text">Ihre Anwesenheit ist das größte Geschenk für uns. Wer uns darüber hinaus eine Freude machen möchte, darf gerne einen Beitrag zu unserer Hochzeitsreise beisteuern.</p>
+      <div class="bank-card reveal">
+        <p class="bank-kicker" data-i18n="gift.bank">Bankverbindung</p>
+        <p class="bank-line">Isabella &amp; Maximilian</p>
+        <p class="bank-line mono">IBAN&nbsp;· DE00 0000 0000 0000 0000 00</p>
+        <p class="bank-line" data-i18n="gift.ref">Verwendungszweck: Hochzeit Isabella &amp; Maximilian</p>
+      </div>
+      <p class="gift-love script reveal" data-i18n="gift.love">In Liebe</p>
+    </div>
+  </section>
+
+  <!-- Transport -->
+  <section class="transport-sec">
+    <div class="sec-inner">
+      <h2 class="script reveal" data-i18n="transport.title">Anreise</h2>
+      <p class="sub reveal" data-i18n="transport.sub">Shuttle-Service für unsere Gäste</p>
+      <div class="reveal parallax bus-wrap"><video class="bus-img" src="https://d8j0ntlcm91z4.cloudfront.net/user_3FvydqbGOOHUpbISUQX0A2zheMB/hf_20260705_183720_e7f467f7-2809-4ec5-8d59-57c4dd3a7efa.mp4" poster="https://d8j0ntlcm91z4.cloudfront.net/user_3FvydqbGOOHUpbISUQX0A2zheMB/hf_20260705_183526_7826ac3a-d3ee-4060-9c43-6fefa9403ed4.png" autoplay muted loop playsinline aria-label="Animierte Illustration eines Oldtimer-Busses"></video></div>
+      <div class="transport-grid reveal">
+        <div class="transport-card">
+          <p class="tc-kicker" data-i18n="transport.thereK">Hinfahrt</p>
+          <p class="tc-time">15:30</p>
+          <p class="tc-detail" data-i18n="transport.there">Abfahrt Piazzale Michelangelo, Florenz</p>
+        </div>
+        <div class="transport-card">
+          <p class="tc-kicker" data-i18n="transport.backK">Rückfahrt</p>
+          <p class="tc-time">01:00</p>
+          <p class="tc-detail" data-i18n="transport.back">Rückfahrt ins Stadtzentrum von Florenz</p>
+        </div>
+      </div>
+      <p class="transport-note reveal" data-i18n="transport.note">Bitte geben Sie in Ihrer Rückmeldung an, ob Sie den Shuttle nutzen möchten.</p>
+    </div>
+  </section>
+
+  <!-- RSVP -->
+  <section class="rsvp-sec">
+    <div class="sec-inner">
+      <h2 class="script reveal">Rsvp</h2>
+      <p class="sub reveal" data-i18n="rsvp.deadline">Wir bitten höflichst um Ihre Rückmeldung bis zum 1. Mai 2027</p>
+
+      <form id="rsvpForm" class="rsvp-form reveal" novalidate>
+        <fieldset>
+          <legend data-i18n="rsvp.attendQ">Werden Sie uns beehren? *</legend>
+          <label class="radio">
+            <input type="radio" name="attend" value="yes" checked>
+            <span class="control"></span>
+            <span data-i18n="rsvp.attendYes">Mit Freude nehme ich an</span>
+          </label>
+          <label class="radio">
+            <input type="radio" name="attend" value="no">
+            <span class="control"></span>
+            <span data-i18n="rsvp.attendNo">Leider bin ich verhindert</span>
+          </label>
+        </fieldset>
+
+        <fieldset id="extrasField">
+          <legend data-i18n="rsvp.extrasQ">Was dürfen wir für Sie vormerken?</legend>
+          <label class="check">
+            <input type="checkbox" name="extras" value="shuttle">
+            <span class="control"></span>
+            <span data-i18n="rsvp.extraShuttle">Ich nutze den Shuttle-Service</span>
+          </label>
+          <label class="check">
+            <input type="checkbox" name="extras" value="veggie">
+            <span class="control"></span>
+            <span data-i18n="rsvp.extraVeggie">Vegetarisches Menü</span>
+          </label>
+        </fieldset>
+
+        <fieldset>
+          <legend data-i18n="rsvp.guestsQ">Anzahl der Gäste in Ihrer Begleitung</legend>
+          <div class="stepper">
+            <button type="button" id="stepMinus" aria-label="Weniger">−</button>
+            <span id="guestCount">0</span>
+            <button type="button" id="stepPlus" aria-label="Mehr">+</button>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend data-i18n="rsvp.mainGuest">Hauptgast</legend>
+          <input type="text" id="guestName" name="name" data-i18n-ph="rsvp.namePh" placeholder="Vollständiger Name" autocomplete="name" required>
+          <input type="email" id="guestEmail" name="email" data-i18n-ph="rsvp.emailPh" placeholder="E-Mail-Adresse" autocomplete="email" required>
+          <textarea id="guestMsg" name="message" rows="3" data-i18n-ph="rsvp.msgPh" placeholder="Eine Nachricht an das Brautpaar (optional)"></textarea>
+        </fieldset>
+
+        <button type="submit" class="rsvp-submit" data-i18n="rsvp.submit">Rückmeldung senden</button>
+        <p class="rsvp-note" data-i18n="rsvp.note">Es öffnet sich Ihr E-Mail-Programm mit der fertigen Rückmeldung.</p>
+      </form>
+    </div>
+  </section>
+
+  <!-- Finale -->
+  <section class="finale-sec" id="finaleSec">
+    <video id="finaleVideo" class="finale-bg" src="https://d8j0ntlcm91z4.cloudfront.net/user_3FvydqbGOOHUpbISUQX0A2zheMB/hf_20260706_104602_9fa9547a-f529-4214-8c83-c45adfa26815.mp4" preload="none" muted playsinline></video>
+    <div class="finale-card reveal">
+      <div class="reveal couple-wrap"><img class="couple-img" src="https://d8j0ntlcm91z4.cloudfront.net/user_3FvydqbGOOHUpbISUQX0A2zheMB/hf_20260705_183532_00fcf927-e369-4556-98e5-127904109b0a.png" alt="Illustration eines tanzenden Brautpaars"></div>
+      <p class="finale-thanks script" data-i18n="finale.thanks">Danke</p>
+      <p class="finale-text" data-i18n="finale.text">dass Sie diesen besonderen Tag mit uns teilen.<br>Wir zählen die Tage!</p>
+      <p class="finale-names script">Isabella &amp; Maximilian</p>
+    </div>
+  </section>
+
+</main>
+
+<script src="script.js"></script>
+</body>
+</html>
