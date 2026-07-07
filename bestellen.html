@@ -4,253 +4,803 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Einladung bestellen — WeddingLink</title>
-  <meta name="description" content="Wählen Sie Ihr Paket und erzählen Sie uns von Ihrer Hochzeit — danach geht es direkt zur sicheren Kasse." />
+  <meta name="description" content="Nur die wichtigsten Angaben, Ihre Extras — und dann direkt zur sicheren Kasse. Alles Weitere erzählen Sie uns nach der Zahlung." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:wght@300;400;500;600&family=Tangerine:wght@700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
   <style>
-    /* ---- Bestellseite ---- */
-    .order { padding: 9rem 0 6rem; min-height: 100vh; }
-    .order__grid { display: grid; grid-template-columns: 1fr; gap: 2rem; max-width: 720px; margin: 3rem auto 0; }
+    /* =========================================
+       Bestellseite — Checkout im Boutique-Stil
+       ========================================= */
+    body { background: var(--cream); }
 
-    .order-step { background: var(--white); border: 1px solid var(--sand); border-radius: var(--radius); padding: 2.2rem 2rem; }
-    .order-step__head { display: flex; align-items: baseline; gap: 0.8rem; margin-bottom: 1.4rem; }
-    .order-step__num { font-family: var(--serif); font-size: 1.6rem; font-weight: 600; color: var(--wine); opacity: 0.4; }
-    .order-step__title { font-family: var(--serif); font-size: 1.5rem; font-weight: 600; }
+    /* ---- Kopfleiste ---- */
+    .co-top {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(247, 241, 232, 0.94);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(232, 220, 201, 0.8);
+    }
+    .co-top__row {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 1rem; padding: 0.8rem 0 0.55rem;
+    }
+    .co-top__back {
+      display: inline-flex; align-items: center; gap: 0.45rem;
+      background: var(--cream-2); border-radius: 100px;
+      padding: 0.5rem 1.1rem; text-decoration: none;
+      color: var(--ink); font-size: 0.9rem; font-weight: 400;
+      transition: background 0.2s;
+    }
+    .co-top__back:hover { background: var(--sand); }
+    .co-top__plan {
+      font-family: var(--serif); font-size: 1.35rem; font-weight: 600;
+      color: var(--ink); display: inline-flex; align-items: center; gap: 0.45rem;
+    }
+    .co-top__plan .spark { color: var(--wine); font-size: 1rem; }
+    .co-top__price { font-family: var(--serif); font-size: 1.3rem; font-weight: 600; color: var(--ink); white-space: nowrap; }
+    .co-top__price s { color: var(--ink-soft); opacity: 0.6; font-size: 0.95rem; font-weight: 400; margin-right: 0.35rem; }
+    .co-top__progress { display: flex; justify-content: center; gap: 0.7rem; padding-bottom: 0.7rem; }
+    .co-top__seg { width: 74px; height: 5px; border-radius: 4px; background: var(--sand); transition: background 0.3s; }
+    .co-top__seg.on { background: var(--wine-dark); }
 
-    /* Paketwahl */
-    .pick { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 0.9rem; }
+    /* ---- Layout ---- */
+    .checkout { padding: 7.5rem 0 16rem; }
+    .co-grid { display: grid; grid-template-columns: 1fr; gap: 2.2rem; max-width: 760px; margin: 0 auto; }
+    .co-card {
+      background: var(--white); border: 1px solid var(--sand);
+      border-radius: var(--radius); padding: 2.2rem 2rem;
+    }
+    .co-card__title { font-family: var(--serif); font-size: 1.7rem; font-weight: 500; text-align: center; }
+    .co-card__sub { text-align: center; color: var(--ink-soft); font-size: 0.95rem; margin-top: 0.3rem; }
+    .co-card__rule { border: none; border-top: 1px solid var(--cream-2); margin: 1.5rem 0; }
+
+    /* ---- Paketwahl ---- */
+    .pick { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 0.9rem; }
     .pick label { position: relative; display: block; cursor: pointer; }
     .pick input { position: absolute; opacity: 0; }
-    .pick__card { display: block; background: var(--white); border: 1px solid var(--sand); border-radius: 14px; padding: 1.2rem 1rem; text-align: center; transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s; }
+    .pick__card {
+      display: block; background: var(--white); border: 1px solid var(--sand);
+      border-radius: 14px; padding: 1.1rem 0.9rem; text-align: center;
+      transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+    }
     .pick input:checked + .pick__card { border-color: var(--wine); box-shadow: 0 0 0 2px rgba(109,31,47,0.15), var(--shadow); transform: translateY(-3px); }
     .pick input:focus-visible + .pick__card { outline: 2px solid var(--wine); outline-offset: 2px; }
-    .pick__name { font-family: var(--serif); font-size: 1.25rem; font-weight: 600; }
-    .pick__price { color: var(--wine); font-family: var(--serif); font-size: 1.5rem; font-weight: 600; margin-top: 0.2rem; }
-    .pick__hint { font-size: 0.78rem; color: var(--ink-soft); margin-top: 0.3rem; }
+    .pick__name { font-family: var(--serif); font-size: 1.2rem; font-weight: 600; }
+    .pick__price { display: block; color: var(--wine); font-family: var(--serif); font-size: 1.45rem; font-weight: 600; margin-top: 0.15rem; }
+    .pick__hint { display: block; font-size: 0.76rem; color: var(--ink-soft); margin-top: 0.25rem; }
 
-    /* Formular */
-    .ofield { margin-bottom: 1.1rem; }
-    .ofield label { display: block; font-size: 0.85rem; font-weight: 500; letter-spacing: 0.03em; margin-bottom: 0.35rem; color: var(--ink); }
-    .ofield label small { color: var(--ink-soft); font-weight: 300; }
-    .ofield input, .ofield textarea, .ofield select {
-      width: 100%; padding: 0.85rem 1.1rem; border: 1px solid var(--sand); border-radius: 12px;
-      background: var(--white); font-family: var(--sans); font-size: 0.95rem; color: var(--ink); resize: vertical;
+    /* ---- Felder ---- */
+    .ofield { margin-bottom: 1.05rem; }
+    .ofield input, .ofield select {
+      width: 100%; padding: 0.95rem 1.15rem; border: 1px solid var(--sand); border-radius: 14px;
+      background: var(--white); font-family: var(--sans); font-size: 0.98rem; color: var(--ink);
     }
-    .ofield input:focus, .ofield textarea:focus, .ofield select:focus { outline: none; border-color: var(--wine); box-shadow: 0 0 0 3px rgba(109,31,47,0.1); }
+    .ofield input::placeholder { color: var(--ink-soft); opacity: 0.75; }
+    .ofield input:focus, .ofield select:focus { outline: none; border-color: var(--wine); box-shadow: 0 0 0 3px rgba(109,31,47,0.1); }
+    .ofield input.miss { border-color: #c4526a; background: #fdf6f7; }
     .ofield--row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .ofield label { display: block; font-size: 0.82rem; font-weight: 500; letter-spacing: 0.03em; margin-bottom: 0.35rem; color: var(--ink-soft); }
     @media (max-width: 560px) { .ofield--row { grid-template-columns: 1fr; } }
 
-    .order__submit { text-align: center; }
-    .order__submit .btn { font-size: 1rem; padding: 1rem 2.4rem; }
-    .order__secure { margin-top: 0.9rem; font-size: 0.8rem; color: var(--ink-soft); }
-    .order__error { color: var(--wine); font-size: 0.9rem; margin-top: 0.8rem; display: none; }
-    .order__back { text-align: center; margin-top: 2rem; }
-    .order__back a { color: var(--wine); font-size: 0.9rem; }
+    /* ---- Sprachen-Hinweis ---- */
+    .langs {
+      position: relative; overflow: hidden; text-align: center;
+      border-radius: var(--radius); border: 1px solid var(--sand);
+      background: linear-gradient(135deg, #f6ede4, #f2e6dd);
+      padding: 3.2rem 1.5rem;
+    }
+    .langs__bg span {
+      position: absolute; font-family: var(--serif); font-style: italic;
+      color: var(--wine); opacity: 0.18; font-size: 0.95rem; white-space: nowrap;
+    }
+    .langs__panel {
+      position: relative; background: rgba(255, 253, 249, 0.88);
+      backdrop-filter: blur(4px); border-radius: 16px;
+      max-width: 520px; margin: 0 auto; padding: 1.6rem 1.4rem;
+      box-shadow: 0 14px 40px -22px rgba(82,22,35,0.35);
+    }
+    .langs__eyebrow { text-transform: uppercase; letter-spacing: 0.28em; font-size: 0.75rem; font-weight: 500; color: var(--ink); }
+    .langs__title { font-family: var(--serif); font-style: italic; font-size: 1.55rem; font-weight: 500; margin-top: 0.4rem; }
+    .langs__text { color: var(--ink-soft); font-size: 0.93rem; margin-top: 0.4rem; }
+
+    /* ---- Extras ---- */
+    .upsell-note {
+      background: var(--cream-2); border: 1px solid var(--sand); border-radius: 12px;
+      text-align: center; font-size: 0.9rem; color: var(--ink-soft);
+      padding: 0.65rem 1rem; margin-bottom: 1.1rem;
+    }
+    .bundle { border: 1px solid var(--wine); border-radius: 16px; overflow: hidden; margin-bottom: 1.2rem; }
+    .bundle__ribbon {
+      display: flex; justify-content: space-between; align-items: center;
+      background: var(--wine); color: var(--white);
+      font-size: 0.75rem; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase;
+      padding: 0.5rem 1.1rem;
+    }
+    .bundle__body { padding: 1.3rem 1.2rem 1.2rem; background: linear-gradient(150deg, #fffdf9, #faf3ec); }
+    .bundle__head { display: flex; gap: 0.9rem; align-items: flex-start; }
+    .bundle__icon {
+      flex: 0 0 auto; width: 52px; height: 52px; display: grid; place-items: center;
+      background: var(--cream-2); border-radius: 14px; font-size: 1.4rem;
+    }
+    .bundle__name { font-family: var(--serif); font-size: 1.45rem; font-weight: 600; }
+    .bundle__name .spark { color: var(--gold); font-size: 1rem; }
+    .bundle__desc { font-style: italic; color: var(--ink-soft); font-size: 0.92rem; margin-top: 0.2rem; }
+    .bundle__items { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.7rem; margin: 1.1rem 0; }
+    .bundle__item {
+      background: var(--white); border: 1px solid var(--sand); border-radius: 12px;
+      text-align: center; padding: 0.9rem 0.4rem; font-size: 0.85rem;
+    }
+    .bundle__item .ic { display: block; font-size: 1.25rem; margin-bottom: 0.25rem; }
+    .bundle__item s { display: block; color: var(--ink-soft); font-size: 0.8rem; }
+    .bundle__foot { display: flex; align-items: flex-end; justify-content: space-between; gap: 1rem; }
+    .bundle__price { font-size: 0.8rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink); }
+    .bundle__price .big { font-family: var(--serif); font-size: 2rem; font-weight: 600; color: var(--wine); letter-spacing: 0; text-transform: none; margin: 0 0.3rem; }
+    .bundle__price s { color: var(--ink-soft); font-size: 0.95rem; letter-spacing: 0; }
+    .bundle__save { color: #2e7d4f; font-size: 0.88rem; margin-top: 0.15rem; }
+    @media (max-width: 560px) { .bundle__items { grid-template-columns: 1fr 1fr; } }
+
+    .addbtn {
+      display: inline-flex; align-items: center; gap: 0.45rem;
+      background: var(--wine); color: var(--white);
+      border: none; border-radius: 14px; cursor: pointer;
+      font-family: var(--sans); font-weight: 500; font-size: 0.88rem; letter-spacing: 0.08em;
+      padding: 0.85rem 1.5rem; transition: background 0.2s, transform 0.2s;
+    }
+    .addbtn:hover { background: var(--wine-dark); transform: translateY(-1px); }
+    .addbtn.added { background: #2e7d4f; }
+
+    /* Express */
+    .express { border: 1px solid #e04a63; border-radius: 16px; overflow: hidden; margin-bottom: 1.4rem; }
+    .express__ribbon {
+      display: flex; justify-content: space-between; align-items: center;
+      background: #e04a63; color: #fff;
+      font-size: 0.75rem; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase;
+      padding: 0.5rem 1.1rem;
+    }
+    .express__body { padding: 1.2rem; background: linear-gradient(150deg, #fffdf9, #fdf1f3); }
+    .express__head { display: flex; gap: 0.9rem; }
+    .express__icon { flex: 0 0 auto; width: 46px; height: 46px; display: grid; place-items: center; background: #fbe3e8; border-radius: 12px; font-size: 1.2rem; }
+    .express__name { font-family: var(--serif); font-size: 1.3rem; font-weight: 600; }
+    .express__desc { color: var(--ink-soft); font-size: 0.9rem; }
+    .express__eta { color: #c2334d; font-size: 0.9rem; font-weight: 500; margin-top: 0.6rem; }
+    .express__foot { display: flex; align-items: flex-end; justify-content: space-between; gap: 1rem; margin-top: 0.6rem; }
+    .express__price { font-size: 0.8rem; letter-spacing: 0.12em; text-transform: uppercase; }
+    .express__price .big { font-family: var(--serif); font-size: 1.7rem; font-weight: 600; color: #c2334d; letter-spacing: 0; margin-left: 0.3rem; }
+    .express .addbtn { background: #e04a63; }
+    .express .addbtn:hover { background: #c2334d; }
+    .express .addbtn.added { background: #2e7d4f; }
+
+    /* Einzelne Extras */
+    .solo-title { font-size: 0.78rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--ink-soft); display: flex; align-items: center; gap: 0.8rem; margin: 1.6rem 0 0.9rem; }
+    .solo-title::after { content: ""; flex: 1; border-top: 1px solid var(--sand); }
+    .solo { border: 1px solid var(--sand); border-radius: 16px; overflow: hidden; }
+    .solo__row { display: flex; align-items: center; gap: 0.9rem; padding: 1rem 1.1rem; background: var(--white); }
+    .solo__row + .solo__row { border-top: 1px solid var(--cream-2); }
+    .solo__icon { flex: 0 0 auto; width: 46px; height: 46px; display: grid; place-items: center; background: var(--cream-2); border-radius: 12px; font-size: 1.15rem; }
+    .solo__info { flex: 1 1 auto; min-width: 0; }
+    .solo__name { font-weight: 500; font-size: 0.98rem; display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
+    .solo__badge { font-size: 0.68rem; font-weight: 500; letter-spacing: 0.04em; background: #e5f4ea; color: #2e7d4f; border-radius: 100px; padding: 0.15rem 0.6rem; }
+    .solo__desc { font-style: italic; color: var(--ink-soft); font-size: 0.85rem; }
+    .solo__price { font-weight: 500; color: var(--ink); white-space: nowrap; }
+    .solo__toggle {
+      flex: 0 0 auto; width: 42px; height: 42px; border-radius: 50%;
+      border: 1px solid var(--sand); background: var(--cream-2);
+      font-size: 1.2rem; line-height: 1; color: var(--ink); cursor: pointer;
+      transition: background 0.2s, color 0.2s, transform 0.15s;
+    }
+    .solo__toggle:hover { transform: scale(1.06); }
+    .solo__row.on { background: #fbf5ee; }
+    .solo__row.on .solo__toggle { background: var(--wine); border-color: var(--wine); color: var(--white); }
+    .music-note { font-style: italic; color: var(--ink-soft); font-size: 0.85rem; margin-top: 0.8rem; }
+    .assure { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.4rem 1.4rem; margin-top: 1rem; font-size: 0.85rem; color: var(--ink-soft); }
+    .assure span::before { content: "✓ "; color: #2e7d4f; }
+
+    /* ---- Zusammenfassung ---- */
+    .sum-eyebrow { text-align: center; font-size: 0.78rem; letter-spacing: 0.28em; text-transform: uppercase; color: var(--ink-soft); }
+    .sum-title { font-family: var(--serif); font-style: italic; font-size: clamp(1.7rem, 4vw, 2.3rem); font-weight: 500; text-align: center; line-height: 1.25; margin: 0.5rem 0 1.6rem; }
+    .sum-plan { text-align: center; font-family: var(--serif); font-size: 1.6rem; font-weight: 600; margin-bottom: 1.2rem; }
+    .sum-line { display: flex; align-items: baseline; gap: 0.7rem; font-size: 0.9rem; padding: 0.45rem 0; }
+    .sum-line .k { letter-spacing: 0.14em; text-transform: uppercase; font-size: 0.75rem; color: var(--ink-soft); }
+    .sum-line .dots { flex: 1; border-bottom: 1px dotted var(--sand); transform: translateY(-3px); }
+    .sum-line .v { font-weight: 500; }
+    .sum-total { display: flex; align-items: baseline; gap: 0.7rem; border-top: 2px solid var(--sand); margin-top: 0.9rem; padding-top: 1rem; }
+    .sum-total .k { letter-spacing: 0.18em; text-transform: uppercase; font-size: 0.85rem; font-weight: 500; }
+    .sum-total .v { margin-left: auto; font-family: var(--serif); font-size: 2.1rem; font-weight: 600; color: var(--ink); }
+    .promise { background: var(--cream-2); border-radius: 14px; padding: 1.2rem 1.3rem; margin-top: 1.4rem; display: flex; gap: 0.9rem; }
+    .promise__icon { flex: 0 0 auto; width: 38px; height: 38px; display: grid; place-items: center; background: var(--white); border-radius: 50%; }
+    .promise__title { font-size: 0.8rem; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; }
+    .promise__text { font-size: 0.9rem; color: var(--ink-soft); margin-top: 0.25rem; }
+    .promise__quote { font-style: italic; font-size: 0.86rem; color: var(--ink-soft); border-top: 1px solid var(--sand); margin-top: 0.7rem; padding-top: 0.7rem; }
+
+    .after { background: #f2e7e2; border-radius: var(--radius); text-align: center; padding: 1.5rem 1.4rem; }
+    .after__title { font-size: 0.8rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; }
+    .after__text { color: var(--ink-soft); font-size: 0.95rem; margin-top: 0.4rem; }
+    .after__text b { color: var(--ink); font-weight: 500; }
+    .info-row { display: flex; gap: 0.9rem; align-items: center; background: var(--white); border: 1px solid var(--sand); border-radius: 14px; padding: 1rem 1.2rem; font-size: 0.93rem; color: var(--ink-soft); }
+    .info-row .ic { flex: 0 0 auto; width: 38px; height: 38px; display: grid; place-items: center; background: var(--cream-2); border-radius: 50%; }
+    .co-stack { display: grid; gap: 0.9rem; }
+
+    .legal-note { text-align: center; font-size: 0.8rem; color: var(--ink-soft); }
+    .legal-note a { color: var(--wine); }
+
+    /* ---- Sticky Bezahlleiste ---- */
+    .paybar {
+      position: fixed; left: 0; right: 0; bottom: 0; z-index: 110;
+      background: linear-gradient(to top, var(--cream) 78%, rgba(247,241,232,0));
+      padding: 1.6rem 0 0.9rem;
+    }
+    .paybar__inner { width: min(760px, 92%); margin-inline: auto; }
+    .paybar__missing { display: flex; align-items: center; gap: 0.6rem; font-size: 0.88rem; color: var(--ink-soft); margin-bottom: 0.5rem; }
+    .paybar__chip {
+      background: #fbe9ec; color: #c2334d; border: 1px solid #f3c9d1;
+      border-radius: 100px; padding: 0.15rem 0.8rem; font-size: 0.82rem; font-weight: 500;
+      cursor: pointer; font-family: var(--sans);
+    }
+    .paybar__trust { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.3rem 1.3rem; font-size: 0.82rem; color: var(--ink); margin-bottom: 0.6rem; }
+    .paybar__trust span::before { content: "✓ "; color: #2e7d4f; }
+    .paybar__save {
+      display: none; align-items: center; justify-content: center; gap: 0.6rem;
+      font-size: 0.8rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--wine);
+      margin-bottom: 0.7rem;
+    }
+    .paybar__save::before, .paybar__save::after { content: ""; width: 60px; border-top: 1px solid var(--sand); }
+    .paybar__save b { color: #2e7d4f; letter-spacing: 0; text-transform: none; font-weight: 500; }
+    .paybar__save.show { display: flex; }
+    .paybar__row { display: flex; gap: 0.8rem; align-items: stretch; }
+    .paybar__backbtn {
+      flex: 0 0 auto; width: 58px; border-radius: 16px;
+      background: var(--white); border: 1px solid var(--sand);
+      display: grid; place-items: center; text-decoration: none;
+      color: var(--ink); font-size: 1.2rem; transition: background 0.2s;
+    }
+    .paybar__backbtn:hover { background: var(--cream-2); }
+    .paybar__pay {
+      flex: 1; border: none; cursor: pointer;
+      background: var(--wine-dark); color: var(--white);
+      border-radius: 18px; padding: 1.15rem 1.4rem;
+      font-family: var(--sans); font-weight: 500; letter-spacing: 0.2em; font-size: 1.05rem;
+      display: flex; align-items: center; justify-content: center; gap: 0.9rem;
+      box-shadow: 0 16px 34px -12px rgba(82, 22, 35, 0.55);
+      transition: background 0.2s, transform 0.2s;
+    }
+    .paybar__pay:hover { background: var(--wine); transform: translateY(-1px); }
+    .paybar__pay .total { font-family: var(--serif); font-size: 1.35rem; letter-spacing: 0; font-weight: 600; }
+    .paybar__pay .arrow { letter-spacing: 0; }
+    .paybar__methods { display: flex; align-items: center; justify-content: center; gap: 0.5rem; margin-top: 0.7rem; font-size: 0.85rem; color: var(--ink-soft); flex-wrap: wrap; }
+    .pm { display: inline-grid; place-items: center; height: 24px; padding: 0 0.55rem; border-radius: 5px; font-size: 0.68rem; font-weight: 600; letter-spacing: 0.02em; }
+    .pm--apple { background: #000; color: #fff; }
+    .pm--google { background: #fff; border: 1px solid #dcd3c6; color: #444; }
+    .pm--visa { background: #1a1f71; color: #fff; font-style: italic; }
+    .pm--mc { background: linear-gradient(90deg, #eb001b 45%, #f79e1b 55%); color: transparent; width: 34px; }
+    @media (max-width: 560px) {
+      .paybar__trust { font-size: 0.74rem; gap: 0.2rem 0.9rem; }
+      .paybar__pay { letter-spacing: 0.12em; font-size: 0.95rem; }
+    }
   </style>
 </head>
 <body>
-  <header class="nav scrolled" id="nav">
-    <div class="container nav__inner">
-      <a href="index.html" class="brand">
-        <span class="brand__mark">WL</span>
-        <span class="brand__name">WeddingLink</span>
-      </a>
-      <a href="index.html#preise" class="btn btn--nav">Zurück zu den Paketen</a>
+
+  <!-- Kopfleiste -->
+  <header class="co-top">
+    <div class="container">
+      <div class="co-top__row">
+        <a href="index.html#preise" class="co-top__back">← Pakete</a>
+        <span class="co-top__plan"><span class="spark">✻</span> <span id="topPlanName">Premium</span></span>
+        <span class="co-top__price" id="topPrice">375&nbsp;€</span>
+      </div>
+      <div class="co-top__progress" aria-hidden="true">
+        <span class="co-top__seg on"></span>
+        <span class="co-top__seg" id="segDetails"></span>
+      </div>
     </div>
   </header>
 
-  <main class="order">
+  <main class="checkout">
     <div class="container">
-      <p class="eyebrow eyebrow--center">Nur noch zwei Schritte</p>
-      <h1 class="section-title">Erzählen Sie uns von <em>Ihrer Hochzeit</em></h1>
-      <p class="section-sub">Ihre Angaben wandern automatisch mit in die Bestellung — danach geht es direkt zur sicheren Kasse.</p>
+      <form class="co-grid" id="orderForm" novalidate>
 
-      <form class="order__grid" id="orderForm" novalidate>
-        <!-- Schritt 1: Paket -->
-        <section class="order-step">
-          <div class="order-step__head">
-            <span class="order-step__num">1</span>
-            <h2 class="order-step__title">Ihr Paket</h2>
-          </div>
+        <!-- Paket -->
+        <section class="co-card">
+          <h2 class="co-card__title">Ihr Paket</h2>
+          <p class="co-card__sub">Sie können hier noch wechseln.</p>
+          <hr class="co-card__rule" />
           <div class="pick">
             <label>
               <input type="radio" name="paket" value="essentiell" />
               <span class="pick__card">
                 <span class="pick__name">Essentiell</span>
-                <span class="pick__price" style="display:block">175 €</span>
-                <span class="pick__hint" style="display:block">Design aus der Kollektion</span>
+                <span class="pick__price">175&nbsp;€</span>
+                <span class="pick__hint">Design aus der Kollektion</span>
               </span>
             </label>
             <label>
               <input type="radio" name="paket" value="premium" checked />
               <span class="pick__card">
                 <span class="pick__name">Premium</span>
-                <span class="pick__price" style="display:block">375 €</span>
-                <span class="pick__hint" style="display:block">Maßgeschneidert + RSVP</span>
+                <span class="pick__price">375&nbsp;€</span>
+                <span class="pick__hint">Maßgeschneidert + RSVP</span>
               </span>
             </label>
             <label>
               <input type="radio" name="paket" value="exzellent" />
               <span class="pick__card">
                 <span class="pick__name">Exzellent</span>
-                <span class="pick__price" style="display:block">975 €</span>
-                <span class="pick__hint" style="display:block">Rundum-sorglos</span>
+                <span class="pick__price">975&nbsp;€</span>
+                <span class="pick__hint">Rundum-sorglos</span>
               </span>
             </label>
           </div>
         </section>
 
-        <!-- Schritt 2: Details -->
-        <section class="order-step">
-          <div class="order-step__head">
-            <span class="order-step__num">2</span>
-            <h2 class="order-step__title">Ihre Details</h2>
-          </div>
+        <!-- Details -->
+        <section class="co-card" id="detailsCard">
+          <h2 class="co-card__title">Ihre Details</h2>
+          <p class="co-card__sub">Nur das Wichtigste für den Start</p>
+          <hr class="co-card__rule" />
 
           <div class="ofield ofield--row">
             <div>
-              <label for="brautpaar">Ihre Namen *</label>
-              <input type="text" id="brautpaar" name="Brautpaar" placeholder="z. B. Emma & Lukas" required />
+              <input type="text" id="name1" name="Name" placeholder="Ihr Name *" autocomplete="given-name" required />
             </div>
             <div>
-              <label for="datum">Hochzeitsdatum *</label>
-              <input type="date" id="datum" name="Hochzeitsdatum" required />
+              <input type="text" id="name2" name="Partner" placeholder="Name Ihres Partners / Ihrer Partnerin *" required />
             </div>
           </div>
-
           <div class="ofield">
-            <label for="ort">Ort &amp; Location <small>(falls schon bekannt)</small></label>
-            <input type="text" id="ort" name="Ort" placeholder="z. B. Schloss Rosenau, Rödental" />
+            <input type="email" id="kontaktmail" name="Kontakt" placeholder="Ihre E-Mail *" autocomplete="email" required />
           </div>
-
           <div class="ofield ofield--row">
             <div>
-              <label for="stil">Gewünschter Stil *</label>
-              <select id="stil" name="Stil" required>
-                <option value="">Bitte wählen…</option>
+              <label for="datum">Hochzeitsdatum <small>(falls schon bekannt)</small></label>
+              <input type="date" id="datum" name="Hochzeitsdatum" />
+            </div>
+            <div>
+              <label for="stil">Design aus der Kollektion</label>
+              <select id="stil" name="Stil">
+                <option value="">Wähle ich später…</option>
                 <option>Botanische Ruhe (Grün & Creme)</option>
                 <option>Aquarell-Sommer (Tauben & Landgut)</option>
                 <option>Klassische Eleganz (Bordeaux & Gold)</option>
                 <option>Zarte Romantik (Rosé & Puder)</option>
-                <option>Eigener Stil — beschreibe ich unten</option>
+                <option>Eigener Stil — besprechen wir danach</option>
               </select>
             </div>
-            <div>
-              <label for="sprache">Sprache der Einladung</label>
-              <select id="sprache" name="Sprache">
-                <option>Deutsch</option>
-                <option>Englisch</option>
-                <option>Zweisprachig</option>
-                <option>Andere — siehe Wünsche</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="ofield">
-            <label for="farben">Farbwünsche <small>(Hochzeitsfarben, Blumen, Motto …)</small></label>
-            <input type="text" id="farben" name="Farben" placeholder="z. B. Salbeigrün mit Gold, Eukalyptus" />
-          </div>
-
-          <div class="ofield">
-            <label for="wuensche">Ihre Wünsche &amp; Ideen</label>
-            <textarea id="wuensche" name="Wuensche" rows="4" placeholder="Was soll Ihre Einladung erzählen? Besondere Elemente, Programm, Dresscode, Musik beim Öffnen …"></textarea>
-          </div>
-
-          <div class="ofield">
-            <label for="kontaktmail">E-Mail für Rückfragen *</label>
-            <input type="email" id="kontaktmail" name="Kontakt" placeholder="ihre@mail.de" required />
           </div>
         </section>
 
-        <!-- Absenden -->
-        <div class="order__submit">
-          <button type="submit" class="btn btn--primary">Weiter zur sicheren Kasse ✦</button>
-          <p class="order__secure">🔒 Bezahlung über unseren Shop — Ihre Angaben werden automatisch an die Bestellung angehängt.</p>
-          <p class="order__secure">Es gelten unsere <a href="agb.html" style="color:var(--wine)">AGB</a> und die <a href="widerruf.html" style="color:var(--wine)">Widerrufsbelehrung</a>. Hinweise zur Datenverarbeitung: <a href="datenschutz.html" style="color:var(--wine)">Datenschutzerklärung</a>.</p>
-          <p class="order__error" id="orderError">Bitte füllen Sie alle Pflichtfelder (*) aus.</p>
-        </div>
-      </form>
+        <!-- Sprachen-Hinweis -->
+        <section class="langs" aria-label="Sprachen">
+          <div class="langs__bg" aria-hidden="true">
+            <span style="top:12%; left:8%;">Español</span>
+            <span style="top:8%;  left:46%;">日本語</span>
+            <span style="top:14%; right:8%;">English</span>
+            <span style="top:34%; left:20%;">עברית</span>
+            <span style="top:30%; right:14%;">Polski</span>
+            <span style="bottom:30%; left:6%;">Português</span>
+            <span style="bottom:34%; right:10%;">Deutsch</span>
+            <span style="bottom:12%; left:12%;">Italiano</span>
+            <span style="bottom:8%;  left:46%;">हिन्दी</span>
+            <span style="bottom:14%; right:12%;">Français</span>
+          </div>
+          <div class="langs__panel">
+            <p class="langs__eyebrow">🌐 Sprachen</p>
+            <p class="langs__title">Ihre Sprachen wählen Sie nach der Zahlung</p>
+            <p class="langs__text">Jede Sprache der Welt. Sie wählen sie bequem im Formular, das wir Ihnen nach der Zahlung senden.</p>
+          </div>
+        </section>
 
-      <p class="order__back"><a href="index.html">← Zurück zur Übersicht</a></p>
+        <!-- Extras -->
+        <section class="co-card">
+          <h2 class="co-card__title">Machen Sie sie einzigartig — <em>daran erinnern sich Ihre Gäste</em></h2>
+          <p class="co-card__sub">Jedes Detail zählt. Wählen Sie die Extras, die sich nach Ihnen anfühlen.</p>
+          <hr class="co-card__rule" />
+
+          <p class="upsell-note">✨ Die meisten Paare wählen das <b>Alles-drin-Paket</b>, um ihre Einladung perfekt zu machen.</p>
+
+          <!-- Bundle -->
+          <div class="bundle">
+            <div class="bundle__ribbon"><span>♛ Am häufigsten gewählt</span><span>Spart 26&nbsp;€</span></div>
+            <div class="bundle__body">
+              <div class="bundle__head">
+                <span class="bundle__icon">🎁</span>
+                <div>
+                  <p class="bundle__name">Alles-drin-Paket <span class="spark">✻</span></p>
+                  <p class="bundle__desc">Personalisieren Sie Ihr Einladungs-Cover: Ihre Location illustriert, ein animiertes Video derselben Illustration — und Ihr Lied.</p>
+                </div>
+              </div>
+              <div class="bundle__items">
+                <div class="bundle__item"><span class="ic">🖼️</span>Illustration<s>45&nbsp;€</s></div>
+                <div class="bundle__item"><span class="ic">🎬</span>Animiertes Video<s>55&nbsp;€</s></div>
+                <div class="bundle__item"><span class="ic">🎵</span>Eigene Musik<s>15&nbsp;€</s></div>
+              </div>
+              <div class="bundle__foot">
+                <div>
+                  <p class="bundle__price">Alles für <span class="big">89&nbsp;€</span> <s>115&nbsp;€</s></p>
+                  <p class="bundle__save">Sie sparen 26&nbsp;€</p>
+                </div>
+                <button type="button" class="addbtn" data-addon="bundle">＋ Hinzufügen</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Express -->
+          <div class="express">
+            <div class="express__ribbon"><span>⚡ Schnelle Lieferung</span><span>1–4 Werktage</span></div>
+            <div class="express__body">
+              <div class="express__head">
+                <span class="express__icon">⚡</span>
+                <div>
+                  <p class="express__name">Express-Lieferung</p>
+                  <p class="express__desc">Höchste Priorität für kurzfristige Hochzeiten. Ihr Design rückt an die Spitze der Warteschlange.</p>
+                </div>
+              </div>
+              <p class="express__eta">⏱ Lieferung in 1–4 Werktagen</p>
+              <div class="express__foot">
+                <div>
+                  <p class="express__price">Alles für <span class="big">85&nbsp;€</span></p>
+                  <p class="bundle__save">Sie sparen Zeit</p>
+                </div>
+                <button type="button" class="addbtn" data-addon="express">＋ Hinzufügen</button>
+              </div>
+            </div>
+          </div>
+
+          <p class="solo-title">Oder einzeln hinzufügen</p>
+          <div class="solo">
+            <div class="solo__row" data-row="illustration">
+              <span class="solo__icon">🖼️</span>
+              <div class="solo__info">
+                <p class="solo__name">Eigene Illustration <span class="solo__badge">78 % wählen es</span></p>
+                <p class="solo__desc">Ihre Location, von Hand gezeichnet</p>
+              </div>
+              <span class="solo__price">+45&nbsp;€</span>
+              <button type="button" class="solo__toggle" data-addon="illustration" aria-label="Eigene Illustration hinzufügen">＋</button>
+            </div>
+            <div class="solo__row" data-row="video">
+              <span class="solo__icon">🎬</span>
+              <div class="solo__info">
+                <p class="solo__name">Animiertes Video <span class="solo__badge">71 % wählen es</span></p>
+                <p class="solo__desc">Ein Auftakt, der alle sprachlos macht</p>
+              </div>
+              <span class="solo__price">+55&nbsp;€</span>
+              <button type="button" class="solo__toggle" data-addon="video" aria-label="Animiertes Video hinzufügen">＋</button>
+            </div>
+            <div class="solo__row" data-row="duplikat">
+              <span class="solo__icon">🗂️</span>
+              <div class="solo__info">
+                <p class="solo__name">Zweite Einladung <span class="solo__badge">Beliebt</span></p>
+                <p class="solo__desc">Perfekt für Hochzeiten mit mehreren Events</p>
+              </div>
+              <span class="solo__price">+75&nbsp;€</span>
+              <button type="button" class="solo__toggle" data-addon="duplikat" aria-label="Zweite Einladung hinzufügen">＋</button>
+            </div>
+            <div class="solo__row" data-row="monogramm">
+              <span class="solo__icon">🪶</span>
+              <div class="solo__info">
+                <p class="solo__name">Logo / Monogramm <span class="solo__badge">Beliebt</span></p>
+                <p class="solo__desc">Ihr Siegel, Ihre Handschrift</p>
+              </div>
+              <span class="solo__price">+25&nbsp;€</span>
+              <button type="button" class="solo__toggle" data-addon="monogramm" aria-label="Logo oder Monogramm hinzufügen">＋</button>
+            </div>
+            <div class="solo__row" data-row="musik">
+              <span class="solo__icon">🎵</span>
+              <div class="solo__info">
+                <p class="solo__name">Eigene Musik</p>
+                <p class="solo__desc">Ihr Lied beim Öffnen der Einladung</p>
+              </div>
+              <span class="solo__price">+15&nbsp;€</span>
+              <button type="button" class="solo__toggle" data-addon="musik" aria-label="Eigene Musik hinzufügen">＋</button>
+            </div>
+            <div class="solo__row" data-row="domain">
+              <span class="solo__icon">🌐</span>
+              <div class="solo__info">
+                <p class="solo__name">Eigene Domain</p>
+                <p class="solo__desc">Eine Adresse nur für Sie</p>
+              </div>
+              <span class="solo__price">+65&nbsp;€</span>
+              <button type="button" class="solo__toggle" data-addon="domain" aria-label="Eigene Domain hinzufügen">＋</button>
+            </div>
+          </div>
+          <p class="music-note">* Ohne das Musik-Extra hat Ihre Einladung keine Musik.</p>
+          <div class="assure">
+            <span>Keine Verpflichtungen</span>
+            <span>Einmalige Zahlung</span>
+            <span>Korrekturen inklusive</span>
+          </div>
+        </section>
+
+        <!-- Zusammenfassung -->
+        <section class="co-card">
+          <p class="sum-eyebrow">Ein letzter Schritt</p>
+          <h2 class="sum-title">Die Einladung Ihrer Träume<br />nimmt gleich Gestalt an.</h2>
+          <p class="sum-plan" id="sumPlanName">Premium</p>
+
+          <div id="sumLines">
+            <div class="sum-line"><span class="k">Paket</span><span class="dots"></span><span class="v" id="sumPlanPrice">375&nbsp;€</span></div>
+            <div class="sum-line"><span class="k">Design</span><span class="dots"></span><span class="v" id="sumStil">—</span></div>
+          </div>
+          <div id="sumAddons"></div>
+
+          <div class="sum-total">
+            <span class="k">Gesamt</span>
+            <span class="v" id="sumTotal">375&nbsp;€</span>
+          </div>
+
+          <div class="promise">
+            <span class="promise__icon">🤍</span>
+            <div>
+              <p class="promise__title">Sie-werden-es-lieben-Versprechen</p>
+              <p class="promise__text">Wir überarbeiten mit Ihnen, bis jedes Detail berührt. Sie verschicken nichts, das sich nicht genau so anfühlt, wie Sie es erträumt haben.</p>
+              <p class="promise__quote">✻ „Ich habe geweint, als ich den ersten Entwurf sah. Unsere Gäste fragen bis heute, wie wir das gemacht haben.“ — Sofía &amp; Marc · ★★★★★</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- Nach der Zahlung -->
+        <div class="co-stack">
+          <div class="after">
+            <p class="after__title">Nach der Zahlung</p>
+            <p class="after__text">Sie erhalten ein <b>einfaches Formular</b>, in dem Sie uns alle Details geben: Sprachen, Datum, Abschnitte, Fotos und alles Weitere.</p>
+          </div>
+          <div class="info-row"><span class="ic">✻</span><span>Nach der Zahlung sprechen Sie mit uns — und ein persönlicher Designer wird Ihnen zugeteilt.</span></div>
+          <div class="info-row"><span class="ic">💌</span><span>Im Formular wählen Sie Ihren animierten Umschlag mit Ihren Initialen und Farben.</span></div>
+        </div>
+
+        <p class="legal-note">
+          🔒 Bezahlung über unseren Shop — Ihre Angaben wandern automatisch mit in die Bestellung.<br />
+          Es gelten unsere <a href="agb.html">AGB</a> und die <a href="widerruf.html">Widerrufsbelehrung</a>. Hinweise zur Datenverarbeitung: <a href="datenschutz.html">Datenschutzerklärung</a>.
+        </p>
+      </form>
     </div>
   </main>
+
+  <!-- Sticky Bezahlleiste -->
+  <div class="paybar">
+    <div class="paybar__inner">
+      <div class="paybar__missing" id="missingRow">
+        <span>Noch offen:</span>
+        <button type="button" class="paybar__chip" id="missingChip">Details</button>
+      </div>
+      <div class="paybar__trust">
+        <span>Sichere Zahlung</span>
+        <span>Sofortige Bestätigung</span>
+        <span>Vom Designer gestaltet</span>
+      </div>
+      <p class="paybar__save" id="saveRow">✻ Extras-Vorteil · <b id="saveAmount">Sie sparen 26&nbsp;€</b></p>
+      <div class="paybar__row">
+        <a class="paybar__backbtn" href="index.html#preise" aria-label="Zurück zu den Paketen">←</a>
+        <button type="submit" form="orderForm" class="paybar__pay" id="payBtn">
+          <span>Bezahlen &amp; starten</span>
+          <span class="total" id="payTotal">375&nbsp;€</span>
+          <span class="arrow">→</span>
+        </button>
+      </div>
+      <div class="paybar__methods">
+        <span>1 Tap mit</span>
+        <span class="pm pm--apple"> Pay</span>
+        <span class="pm pm--google">G Pay</span>
+        <span class="pm pm--visa">VISA</span>
+        <span class="pm pm--mc">MC</span>
+      </div>
+    </div>
+  </div>
 
   <script>
     (function () {
       "use strict";
 
       /* ================= SHOPIFY-KONFIGURATION =================
-         1. SHOP_DOMAIN durch eure myshopify-Adresse ersetzen
-            (oder eigene Domain, wenn der Shop darüber läuft).
-         2. In Shopify die drei Produkte anlegen und je Produkt die
-            VARIANTEN-ID eintragen. Die findet ihr im Admin unter
-            Produkt → Varianten (Zahl in der URL) oder per
-            "Copy variant ID"-Link.
+         1. SHOP_DOMAIN = eure myshopify-Adresse (oder eigene Domain).
+         2. Pakete: die drei Produkte sind bereits verbunden.
+         3. Extras: in Shopify je ein Produkt anlegen (z. B.
+            „Extra: Eigene Illustration“, 45 €) und die Varianten-ID
+            unten bei variant eintragen. Solange eine ID fehlt,
+            erscheint beim Bezahlen ein Hinweis statt eines
+            falschen Warenkorbs.
          ========================================================== */
       var SHOP_DOMAIN = "bb0c62-3.myshopify.com";
-      var VARIANTS = {
-        essentiell: "55794559058246",
-        premium:    "55794576425286",
-        exzellent:  "56913980424518"
+
+      var PLANS = {
+        essentiell: { name: "Essentiell", price: 175, variant: "55794559058246" },
+        premium:    { name: "Premium",    price: 375, variant: "55794576425286" },
+        exzellent:  { name: "Exzellent",  price: 975, variant: "56913980424518" }
       };
+
+      var ADDONS = {
+        bundle:       { name: "Alles-drin-Paket (Illustration + Video + Musik)", price: 89, variant: "" },
+        express:      { name: "Express-Lieferung (1–4 Werktage)",                price: 85, variant: "" },
+        illustration: { name: "Eigene Illustration",                             price: 45, variant: "" },
+        video:        { name: "Animiertes Video",                                price: 55, variant: "" },
+        duplikat:     { name: "Zweite Einladung",                                price: 75, variant: "" },
+        monogramm:    { name: "Logo / Monogramm",                                price: 25, variant: "" },
+        musik:        { name: "Eigene Musik",                                    price: 15, variant: "" },
+        domain:       { name: "Eigene Domain",                                   price: 65, variant: "" }
+      };
+
+      /* Das Bundle ersetzt diese Einzel-Extras: */
+      var BUNDLE_COVERS = ["illustration", "video", "musik"];
+      var BUNDLE_SAVING = 26;
       /* ========================================================== */
 
-      // Paket aus URL vorwählen: bestellen.html?paket=essentiell
-      var params = new URLSearchParams(location.search);
-      var pre = params.get("paket");
-      if (pre) {
-        var radio = document.querySelector('input[name="paket"][value="' + pre + '"]');
-        if (radio) radio.checked = true;
+      var form = document.getElementById("orderForm");
+      var selected = {}; // addon-id -> true
+
+      function euro(n) { return n + " €"; }
+
+      function currentPlan() {
+        return PLANS[form.querySelector('input[name="paket"]:checked').value];
       }
 
-      // Stil aus URL vorwählen: bestellen.html?stil=Botanische%20Ruhe%20(…)
+      /* ---------- Vorauswahl aus der URL ---------- */
+      var params = new URLSearchParams(location.search);
+      var pre = params.get("paket");
+      if (pre && PLANS[pre]) {
+        var radio = form.querySelector('input[name="paket"][value="' + pre + '"]');
+        if (radio) radio.checked = true;
+      }
       var stilPre = params.get("stil");
+      var stilSelect = document.getElementById("stil");
       if (stilPre) {
-        var stilSelect = document.getElementById("stil");
         for (var i = 0; i < stilSelect.options.length; i++) {
           if (stilSelect.options[i].text === stilPre) { stilSelect.selectedIndex = i; break; }
         }
       }
 
-      var form = document.getElementById("orderForm");
-      var errEl = document.getElementById("orderError");
+      /* ---------- Extras umschalten ---------- */
+      function setAddonUI(id, on) {
+        document.querySelectorAll('[data-addon="' + id + '"]').forEach(function (btn) {
+          if (btn.classList.contains("solo__toggle")) {
+            btn.textContent = on ? "✓" : "＋";
+            var row = btn.closest(".solo__row");
+            if (row) row.classList.toggle("on", on);
+          } else {
+            btn.classList.toggle("added", on);
+            btn.textContent = on ? "✓ Hinzugefügt" : "＋ Hinzufügen";
+          }
+        });
+      }
 
+      function toggleAddon(id) {
+        var on = !selected[id];
+        if (on && id === "bundle") {
+          BUNDLE_COVERS.forEach(function (k) { delete selected[k]; setAddonUI(k, false); });
+        }
+        if (on && BUNDLE_COVERS.indexOf(id) !== -1 && selected.bundle) {
+          delete selected.bundle; setAddonUI("bundle", false);
+        }
+        if (on) selected[id] = true; else delete selected[id];
+        setAddonUI(id, on);
+        render();
+      }
+
+      document.querySelectorAll("[data-addon]").forEach(function (btn) {
+        btn.addEventListener("click", function () { toggleAddon(btn.dataset.addon); });
+      });
+
+      /* ---------- Live-Zusammenfassung & Summe ---------- */
+      function render() {
+        var plan = currentPlan();
+        var total = plan.price;
+
+        document.getElementById("topPlanName").textContent = plan.name;
+        document.getElementById("sumPlanName").textContent = plan.name;
+        document.getElementById("sumPlanPrice").textContent = euro(plan.price);
+        document.getElementById("sumStil").textContent = stilSelect.value || "—";
+
+        var box = document.getElementById("sumAddons");
+        box.innerHTML = "";
+        Object.keys(ADDONS).forEach(function (id) {
+          if (!selected[id]) return;
+          total += ADDONS[id].price;
+          var line = document.createElement("div");
+          line.className = "sum-line";
+          line.innerHTML = '<span class="k">Extra</span><span class="dots"></span>';
+          var v = document.createElement("span");
+          v.className = "v";
+          v.textContent = ADDONS[id].name.split(" (")[0] + " · " + euro(ADDONS[id].price);
+          line.appendChild(v);
+          box.appendChild(line);
+        });
+
+        document.getElementById("topPrice").textContent = euro(total);
+        document.getElementById("sumTotal").textContent = euro(total);
+        document.getElementById("payTotal").textContent = euro(total);
+        document.getElementById("saveRow").classList.toggle("show", !!selected.bundle);
+
+        updateMissing();
+      }
+
+      /* ---------- „Noch offen“-Hinweis ---------- */
+      var required = ["name1", "name2", "kontaktmail"];
+      function detailsComplete() {
+        return required.every(function (id) {
+          var el = document.getElementById(id);
+          return el.value.trim() !== "" && el.checkValidity();
+        });
+      }
+      function updateMissing() {
+        var ok = detailsComplete();
+        document.getElementById("missingRow").style.display = ok ? "none" : "flex";
+        document.getElementById("segDetails").classList.toggle("on", ok);
+      }
+      required.forEach(function (id) {
+        document.getElementById(id).addEventListener("input", function () {
+          this.classList.remove("miss");
+          updateMissing();
+        });
+      });
+      document.getElementById("missingChip").addEventListener("click", function () {
+        var card = document.getElementById("detailsCard");
+        card.scrollIntoView({ behavior: "smooth", block: "center" });
+        for (var i = 0; i < required.length; i++) {
+          var el = document.getElementById(required[i]);
+          if (el.value.trim() === "" || !el.checkValidity()) { el.focus({ preventScroll: true }); break; }
+        }
+      });
+
+      form.querySelectorAll('input[name="paket"]').forEach(function (r) {
+        r.addEventListener("change", render);
+      });
+      stilSelect.addEventListener("change", render);
+
+      /* ---------- Absenden → Shopify-Warenkorb ---------- */
       form.addEventListener("submit", function (e) {
         e.preventDefault();
-        errEl.style.display = "none";
 
-        if (!form.checkValidity()) {
-          errEl.style.display = "block";
+        if (!detailsComplete()) {
+          required.forEach(function (id) {
+            var el = document.getElementById(id);
+            if (el.value.trim() === "" || !el.checkValidity()) el.classList.add("miss");
+          });
+          document.getElementById("detailsCard").scrollIntoView({ behavior: "smooth", block: "center" });
           form.reportValidity();
           return;
         }
 
-        var paket = form.querySelector('input[name="paket"]:checked').value;
-        var variantId = VARIANTS[paket];
+        var plan = currentPlan();
 
-        // Cart-Permalink mit den Details als Bestellattribute bauen
+        // Warenkorb-Positionen: Paket + gewählte Extras
+        var items = [plan.variant + ":1"];
+        var missingVariants = [];
+        Object.keys(ADDONS).forEach(function (id) {
+          if (!selected[id]) return;
+          if (ADDONS[id].variant) items.push(ADDONS[id].variant + ":1");
+          else missingVariants.push(ADDONS[id].name + " (" + ADDONS[id].price + " €)");
+        });
+
+        // Details als Bestellattribute anhängen
+        var brautpaar = document.getElementById("name1").value.trim() + " & " + document.getElementById("name2").value.trim();
         var attrs = [];
-        ["Brautpaar", "Hochzeitsdatum", "Ort", "Stil", "Sprache", "Farben", "Wuensche", "Kontakt"]
-          .forEach(function (name) {
-            var field = form.elements[name];
-            if (field && field.value.trim()) {
-              attrs.push("attributes[" + encodeURIComponent(name) + "]=" + encodeURIComponent(field.value.trim()));
-            }
-          });
-        attrs.push("attributes[Paket]=" + encodeURIComponent(paket));
+        function attr(k, v) { if (v) attrs.push("attributes[" + encodeURIComponent(k) + "]=" + encodeURIComponent(v)); }
+        attr("Brautpaar", brautpaar);
+        attr("Kontakt", document.getElementById("kontaktmail").value.trim());
+        attr("Hochzeitsdatum", document.getElementById("datum").value);
+        attr("Stil", stilSelect.value);
+        attr("Paket", plan.name);
+        var extraNames = Object.keys(ADDONS).filter(function (id) { return selected[id]; })
+          .map(function (id) { return ADDONS[id].name; });
+        attr("Extras", extraNames.join(", "));
 
-        var url = "https://" + SHOP_DOMAIN + "/cart/" + variantId + ":1?" + attrs.join("&");
+        var url = "https://" + SHOP_DOMAIN + "/cart/" + items.join(",") + "?" + attrs.join("&");
 
-        if (SHOP_DOMAIN.indexOf("DEIN-SHOP") === 0 || variantId.indexOf("VARIANTE_ID") === 0) {
-          // Platzhalter noch nicht ersetzt → Hinweis statt kaputtem Link
-          alert("Shopify ist noch nicht verbunden.\n\nIn bestellen.html oben im <script> die SHOP_DOMAIN und die drei Varianten-IDs eintragen — dann führt dieser Button direkt in euren Shopify-Warenkorb.\n\nDieser Link würde aufgerufen:\n" + url);
+        if (!plan.variant || SHOP_DOMAIN.indexOf("DEIN-SHOP") === 0) {
+          alert("Shopify ist noch nicht verbunden.\n\nIn bestellen.html oben im <script> die SHOP_DOMAIN und die Varianten-IDs eintragen — dann führt dieser Button direkt in euren Shopify-Warenkorb.\n\nDieser Link würde aufgerufen:\n" + url);
+          return;
+        }
+
+        if (missingVariants.length) {
+          alert("Für diese Extras fehlt noch die Shopify-Varianten-ID:\n\n– " + missingVariants.join("\n– ") +
+            "\n\nBitte in Shopify je ein Produkt anlegen und die Varianten-ID in bestellen.html bei ADDONS eintragen. Solange würden diese Extras im Warenkorb nicht berechnet — die Bestellung wurde deshalb noch nicht gestartet.");
           return;
         }
 
         window.location.href = url;
       });
+
+      render();
     })();
   </script>
 </body>
