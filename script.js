@@ -42,6 +42,48 @@
     revealEls.forEach((el) => el.classList.add("visible"));
   }
 
+  // Design-Slider: horizontal swipen, Pfeile blättern kartenweise
+  const carousel = document.querySelector(".cards-carousel");
+  if (carousel) {
+    const track = carousel.querySelector(".cards");
+    const prevBtn = carousel.querySelector(".cards-nav--prev");
+    const nextBtn = carousel.querySelector(".cards-nav--next");
+
+    const cardStep = () => {
+      const card = track.querySelector(".design-card");
+      if (!card) return track.clientWidth;
+      const gap = parseFloat(getComputedStyle(track).columnGap) || 0;
+      return card.getBoundingClientRect().width + gap;
+    };
+
+    const goTo = (dir) => {
+      const step = cardStep();
+      const idx = Math.round(track.scrollLeft / step) + dir;
+      track.scrollTo({ left: idx * step, behavior: "smooth" });
+    };
+    prevBtn.addEventListener("click", () => goTo(-1));
+    nextBtn.addEventListener("click", () => goTo(1));
+
+    const updateNav = () => {
+      prevBtn.disabled = track.scrollLeft <= 4;
+      nextBtn.disabled = track.scrollLeft >= track.scrollWidth - track.clientWidth - 4;
+    };
+    track.addEventListener("scroll", updateNav, { passive: true });
+    window.addEventListener("resize", updateNav);
+    updateNav();
+
+    // Alle Karten gemeinsam einblenden, damit beim Swipen keine leere Karte auftaucht
+    if ("IntersectionObserver" in window) {
+      const cardsIo = new IntersectionObserver((entries, obs) => {
+        if (entries.some((e) => e.isIntersecting)) {
+          track.querySelectorAll(".design-card").forEach((c) => c.classList.add("visible"));
+          obs.disconnect();
+        }
+      }, { threshold: 0.1 });
+      cardsIo.observe(track);
+    }
+  }
+
   // Live countdown in the hero phone mockup
   const target = new Date("2026-08-23T15:00:00");
   const counters = document.querySelectorAll(".invite__count b");
