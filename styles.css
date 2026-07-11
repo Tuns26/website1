@@ -241,11 +241,37 @@ em { font-style: italic; }
 
 /* ---------- Collection ---------- */
 .collection { padding: 6rem 0; background: linear-gradient(180deg, var(--cream) 0%, var(--cream-2) 100%); }
+.cards-carousel { position: relative; }
 .cards {
-  display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  display: grid; grid-auto-flow: column;
+  grid-auto-columns: calc((100% - 2 * 1.8rem) / 3);
   gap: 1.8rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  padding: 1rem 0 1.5rem;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
 }
-.design-card { text-align: center; }
+.cards::-webkit-scrollbar { display: none; }
+.cards-nav {
+  position: absolute; top: 40%; transform: translateY(-50%);
+  z-index: 3;
+  width: 46px; height: 46px; border-radius: 50%;
+  border: 1px solid rgba(122, 35, 51, 0.25);
+  background: rgba(255, 253, 248, 0.95);
+  color: var(--wine);
+  font-size: 1.6rem; line-height: 1;
+  display: grid; place-items: center;
+  cursor: pointer;
+  box-shadow: var(--shadow);
+  transition: background 0.3s ease, opacity 0.3s ease;
+}
+.cards-nav:hover { background: var(--cream-2); }
+.cards-nav:disabled { opacity: 0.25; cursor: default; }
+.cards-nav--prev { left: -14px; }
+.cards-nav--next { right: -14px; }
+.design-card { text-align: center; scroll-snap-align: start; }
 .design-card__phone {
   width: 100%; max-width: 230px; aspect-ratio: 9 / 17;
   margin: 0 auto 1.2rem;
@@ -487,6 +513,8 @@ body.demo-open { overflow: hidden; }
 
 /* ---------- Responsive ---------- */
 @media (max-width: 860px) {
+  .cards { grid-auto-columns: min(78%, 260px); }
+  .cards-nav { display: none; }
   .nav__links, .btn--nav { display: none; }
   .nav__toggle { display: flex; }
   .nav.open .nav__links {
