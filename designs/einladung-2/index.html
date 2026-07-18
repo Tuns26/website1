@@ -139,6 +139,10 @@
           <span class="field__label">Euer Name / Eure Namen</span>
           <input class="field__input" type="text" name="name" required autocomplete="name" />
         </label>
+        <label class="field">
+          <span class="field__label">E-Mail (für Rückfragen)</span>
+          <input class="field__input" type="email" name="email" autocomplete="email" />
+        </label>
         <fieldset class="field field--choice">
           <legend class="field__label">Seid ihr dabei?</legend>
           <label class="choice"><input type="radio" name="attendance" value="Ja, wir feiern mit!" required /><span>Ja, wir feiern mit! 🥂</span></label>
@@ -173,6 +177,8 @@
   </main>
 
   <script src="js/config.js"></script>
+  <script src="js/rsvp-config.js"></script>
+  <script src="js/rsvp.js"></script>
   <script src="js/main.js"></script>
 </body>
 </html>

@@ -303,6 +303,68 @@
     if (e.key === "Enter" || e.key === " ") openEnvelope();
   });
 
+  /* ---------- Rückmeldebogen: zentrale Speicherung, sonst E-Mail ---------- */
+  const rsvpForm = document.getElementById("rsvpForm");
+  if (rsvpForm) {
+    const central = window.WeddingRsvp && window.WeddingRsvp.configured();
+    const hint = rsvpForm.querySelector(".rsvp__hint");
+    if (central && hint) hint.textContent = "Eure Rückmeldung wird direkt an uns übermittelt.";
+
+    const weekendChoice = document.getElementById("weekendChoice");
+    if (weekendChoice && cfg.rsvpWeekendLabel) weekendChoice.hidden = false;
+
+    const buildMailto = (data) => {
+      const lines = [
+        "Rückmeldung zur Einladung",
+        "",
+        "Name: " + (data.get("name") || ""),
+        "E-Mail: " + (data.get("email") || "-"),
+        "Teilnahme: " + (data.get("attendance") || ""),
+        "Anzahl Personen: " + (data.get("persons") || ""),
+        "Vorabend: " + (data.get("weekend") ? "ja" : "nein"),
+        "Essenswünsche/Allergien: " + (data.get("food") || "keine"),
+        "",
+        "Nachricht:",
+        data.get("message") || "-",
+      ];
+      const subject = encodeURIComponent(
+        "Rückmeldung – " + (cfg.nameOne || "") + " & " + (cfg.nameTwo || "")
+      );
+      return "mailto:" + (cfg.rsvpEmail || "") + "?subject=" + subject +
+        "&body=" + encodeURIComponent(lines.join("\n"));
+    };
+
+    rsvpForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const data = new FormData(rsvpForm);
+      if (!central) {
+        window.location.href = buildMailto(data);
+        return;
+      }
+      const btn = rsvpForm.querySelector(".rsvp__submit");
+      btn.disabled = true;
+      btn.textContent = "Wird gesendet …";
+      window.WeddingRsvp.submit({
+        name: data.get("name"),
+        email: data.get("email"),
+        attendance: data.get("attendance") === "Leider nein" ? "no" : "yes",
+        persons: data.get("persons"),
+        events: data.get("weekend") ? [cfg.rsvpWeekendLabel || "Vorabend"] : [],
+        food: data.get("food"),
+        message: data.get("message"),
+      }).then(() => {
+        const ok = document.createElement("p");
+        ok.className = "rsvp__success";
+        ok.textContent = "Vielen Dank! Eure Rückmeldung ist bei uns angekommen.";
+        rsvpForm.replaceWith(ok);
+      }).catch(() => {
+        btn.disabled = false;
+        btn.textContent = "Rückmeldung senden";
+        window.location.href = buildMailto(data);
+      });
+    });
+  }
+
   /* ---------- Sektionen sanft einblenden ---------- */
   function initReveal() {
     const sections = document.querySelectorAll(".reveal, .footer");

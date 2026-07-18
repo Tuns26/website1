@@ -34,7 +34,13 @@
 <section id="stage-envelope">
   <div class="envelope-fill" id="envelopeWrap" role="button" tabindex="0" aria-label="Einladung öffnen">
     <img id="envelopeImg" src="https://d8j0ntlcm91z4.cloudfront.net/user_3FvydqbGOOHUpbISUQX0A2zheMB/hf_20260702_072642_df783c17-1c76-4016-9d07-e5b5f477dd79.png" alt="Verschlossener Hochzeitsumschlag mit Wachssiegel">
-    <video id="envelopeVideo" src="https://d8j0ntlcm91z4.cloudfront.net/user_3FvydqbGOOHUpbISUQX0A2zheMB/hf_20260702_153622_b21140f7-a12c-4972-92fa-90d5ad509c6e.mp4" poster="https://d8j0ntlcm91z4.cloudfront.net/user_3FvydqbGOOHUpbISUQX0A2zheMB/hf_20260702_072642_df783c17-1c76-4016-9d07-e5b5f477dd79.png" preload="auto" muted playsinline></video>
+    <div class="env-inside" aria-hidden="true"></div>
+    <div class="env-flap" id="envFlap" aria-hidden="true">
+      <div class="env-face env-flap-front">
+        <img src="https://d8j0ntlcm91z4.cloudfront.net/user_3FvydqbGOOHUpbISUQX0A2zheMB/hf_20260702_072642_df783c17-1c76-4016-9d07-e5b5f477dd79.png" alt="">
+      </div>
+      <div class="env-face env-flap-back"></div>
+    </div>
   </div>
   <p class="envelope-hint" id="envelopeHint">
     <span class="hint-ring"></span>
@@ -58,7 +64,7 @@
 
   <!-- Hero -->
   <section class="hero">
-    <video class="hero-bg" src="https://d8j0ntlcm91z4.cloudfront.net/user_3FvydqbGOOHUpbISUQX0A2zheMB/hf_20260702_152224_505b75ee-e099-4ff8-9962-a93b92355daa.mp4" poster="https://d8j0ntlcm91z4.cloudfront.net/user_3FvydqbGOOHUpbISUQX0A2zheMB/hf_20260702_072644_6714b135-2c37-4e18-a06b-329eedad0eaa.png" autoplay muted loop playsinline></video>
+    <video class="hero-bg" src="https://d8j0ntlcm91z4.cloudfront.net/user_3FvydqbGOOHUpbISUQX0A2zheMB/hf_20260706_174913_157dbbd4-1b11-4d4d-96f5-25f46496b965.mp4" poster="https://d8j0ntlcm91z4.cloudfront.net/user_3FvydqbGOOHUpbISUQX0A2zheMB/hf_20260702_072644_6714b135-2c37-4e18-a06b-329eedad0eaa.png" autoplay muted loop playsinline></video>
     <div class="hero-content">
       <div class="monogram reveal" aria-hidden="true"><span>S</span><span class="mono-amp">&amp;</span><span>A</span></div>
       <h1 class="names reveal">Sophia <span class="amp">&amp;</span> Alexander</h1>
@@ -236,6 +242,8 @@
           <legend data-i18n="rsvp.mainGuest">Hauptgast</legend>
           <input type="text" id="guestName" name="name" data-i18n-ph="rsvp.namePh" placeholder="Vollständiger Name" autocomplete="name" required>
           <input type="email" id="guestEmail" name="email" data-i18n-ph="rsvp.emailPh" placeholder="E-Mail-Adresse" autocomplete="email" required>
+          <input type="text" id="guestFood" name="food" data-i18n-ph="rsvp.foodPh" placeholder="Essenswünsche / Allergien (optional)">
+          <textarea id="guestMsg" name="message" rows="3" data-i18n-ph="rsvp.msgPh" placeholder="Eine Nachricht an das Brautpaar (optional)"></textarea>
         </fieldset>
 
         <button type="submit" class="rsvp-submit" data-i18n="rsvp.submit">Rückmeldung senden</button>
@@ -248,6 +256,8 @@
 
 </main>
 
+<script src="rsvp-config.js"></script>
+<script src="rsvp.js"></script>
 <script src="script.js"></script>
 </body>
 </html>

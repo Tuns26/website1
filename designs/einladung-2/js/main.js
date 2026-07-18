@@ -41,16 +41,19 @@
     rsvpWhatsapp.hidden = false;
   }
 
-  /* ---------- Rückmeldebogen: öffnet E-Mail mit fertigem Text ---------- */
+  /* ---------- Rückmeldebogen: zentrale Speicherung, sonst E-Mail ---------- */
   const rsvpForm = document.getElementById("rsvpForm");
   if (rsvpForm) {
-    rsvpForm.addEventListener("submit", (e) => {
-      e.preventDefault();
-      const data = new FormData(rsvpForm);
+    const central = window.WeddingRsvp && window.WeddingRsvp.configured();
+    const hint = rsvpForm.querySelector(".rsvp__hint");
+    if (central && hint) hint.textContent = "Eure Rückmeldung wird direkt an uns übermittelt.";
+
+    const buildMailto = (data) => {
       const lines = [
         "Rückmeldung zur Einladung",
         "",
         "Name: " + (data.get("name") || ""),
+        "E-Mail: " + (data.get("email") || "-"),
         "Teilnahme: " + (data.get("attendance") || ""),
         "Anzahl Personen: " + (data.get("persons") || ""),
         "Essenswünsche/Allergien: " + (data.get("food") || "keine"),
@@ -62,8 +65,37 @@
         "Rückmeldung – " + (cfg.nameOne || "") + " & " + (cfg.nameTwo || "")
       );
       const body = encodeURIComponent(lines.join("\n"));
-      window.location.href =
-        "mailto:" + (cfg.rsvpEmail || "") + "?subject=" + subject + "&body=" + body;
+      return "mailto:" + (cfg.rsvpEmail || "") + "?subject=" + subject + "&body=" + body;
+    };
+
+    rsvpForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const data = new FormData(rsvpForm);
+      if (!central) {
+        window.location.href = buildMailto(data);
+        return;
+      }
+      const btn = rsvpForm.querySelector(".rsvp__submit");
+      btn.disabled = true;
+      btn.textContent = "Wird gesendet …";
+      window.WeddingRsvp.submit({
+        name: data.get("name"),
+        email: data.get("email"),
+        attendance: data.get("attendance") === "Leider nein" ? "no" : "yes",
+        persons: data.get("persons"),
+        events: [],
+        food: data.get("food"),
+        message: data.get("message"),
+      }).then(() => {
+        const ok = document.createElement("p");
+        ok.className = "rsvp__success";
+        ok.textContent = "Vielen Dank! Eure Rückmeldung ist bei uns angekommen.";
+        rsvpForm.replaceWith(ok);
+      }).catch(() => {
+        btn.disabled = false;
+        btn.textContent = "Rückmeldung senden";
+        window.location.href = buildMailto(data);
+      });
     });
   }
 

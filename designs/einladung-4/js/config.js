@@ -107,6 +107,12 @@ window.INVITE_CONFIG = {
   // Fußzeile
   footerText: "Wir freuen uns auf euch",
 
+  // ——— Rückmeldung (RSVP) ———
+  rsvpTitle: "Seid ihr dabei?",
+  rsvpText: "Bitte gebt uns bis zum 1. August 2026 Bescheid, ob ihr mit uns feiert.",
+  rsvpEmail: "", // Fallback: öffnet das E-Mail-Programm, wenn keine Datenbank konfiguriert ist (js/rsvp-config.js)
+  rsvpWeekendLabel: "Wir sind auch am Vorabend (26. September) dabei", // leer lassen, um die Option auszublenden
+
   // Medien (generierte Aquarell-Assets)
   assets: {
     envelopeImage: "https://d8j0ntlcm91z4.cloudfront.net/user_3FvydqbGOOHUpbISUQX0A2zheMB/hf_20260706_200125_1dd0cfd8-345d-494c-940e-7db7643ae5e6.png",

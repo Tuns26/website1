@@ -55,8 +55,13 @@
       'rsvp.mainGuest': 'Hauptgast',
       'rsvp.namePh': 'Vollständiger Name',
       'rsvp.emailPh': 'E-Mail-Adresse',
+      'rsvp.foodPh': 'Essenswünsche / Allergien (optional)',
+      'rsvp.msgPh': 'Eine Nachricht an das Brautpaar (optional)',
       'rsvp.submit': 'Rückmeldung senden',
       'rsvp.note': 'Es öffnet sich Ihr E-Mail-Programm mit der fertigen Rückmeldung.',
+      'rsvp.noteDirect': 'Ihre Rückmeldung wird direkt an das Brautpaar übermittelt.',
+      'rsvp.sending': 'Wird gesendet …',
+      'rsvp.thanks': 'Vielen Dank! Ihre Rückmeldung ist angekommen.',
       'mail.subjectYes': 'Zusage zur Hochzeit von Sophia & Alexander',
       'mail.subjectNo': 'Absage zur Hochzeit von Sophia & Alexander',
       'mail.attendYes': 'Mit Freude nehme ich an.',
@@ -66,7 +71,9 @@
       'mail.ceremony': 'Trauung & Empfang – 12. September',
       'mail.companions': 'Begleitpersonen',
       'mail.name': 'Name',
-      'mail.email': 'E-Mail'
+      'mail.email': 'E-Mail',
+      'mail.food': 'Essenswünsche',
+      'mail.message': 'Nachricht'
     },
     en: {
       'envelope.hint': 'Tap the seal to open the invitation',
@@ -120,8 +127,13 @@
       'rsvp.mainGuest': 'Main guest',
       'rsvp.namePh': 'Full name',
       'rsvp.emailPh': 'Email address',
+      'rsvp.foodPh': 'Dietary wishes / allergies (optional)',
+      'rsvp.msgPh': 'A message for the couple (optional)',
       'rsvp.submit': 'Send reply',
       'rsvp.note': 'Your email app will open with the completed reply.',
+      'rsvp.noteDirect': 'Your reply is sent directly to the couple.',
+      'rsvp.sending': 'Sending …',
+      'rsvp.thanks': 'Thank you! Your reply has been received.',
       'mail.subjectYes': "RSVP – accepting with joy – Sophia & Alexander's wedding",
       'mail.subjectNo': "RSVP – regretfully declining – Sophia & Alexander's wedding",
       'mail.attendYes': 'I joyfully accept.',
@@ -131,7 +143,9 @@
       'mail.ceremony': 'Ceremony & reception – September 12',
       'mail.companions': 'Companions',
       'mail.name': 'Name',
-      'mail.email': 'Email'
+      'mail.email': 'Email',
+      'mail.food': 'Dietary wishes',
+      'mail.message': 'Message'
     }
   };
 
@@ -162,9 +176,64 @@
   /* ═══════════ Umschlag ═══════════ */
   var stage = document.getElementById('stage-envelope');
   var wrap = document.getElementById('envelopeWrap');
-  var video = document.getElementById('envelopeVideo');
+  var flap = document.getElementById('envFlap');
   var bowStage = document.getElementById('stage-bow');
   var opened = false;
+
+  /* Laschenform des Umschlags: Spitze unter dem Wachssiegel, Falzkanten
+     steigen schräg zu den Bildrändern. Wird aus der echten Bildgröße und
+     dem object-fit:cover-Zuschnitt berechnet, damit die Klappe auf jedem
+     Display exakt auf den Falzlinien des Fotos liegt. */
+  var envImg = document.getElementById('envelopeImg');
+  var flapFront = flap.querySelector('.env-flap-front');
+  var flapBack = flap.querySelector('.env-flap-back');
+  var envInside = wrap.querySelector('.env-inside');
+
+  function setFlapClip() {
+    if (!envImg.naturalWidth || !envImg.naturalHeight) return;
+    var W = wrap.clientWidth, H = wrap.clientHeight;
+    if (!W || !H) return;
+    var s = Math.max(W / envImg.naturalWidth, H / envImg.naturalHeight);
+    var iw = envImg.naturalWidth * s;
+    var ih = envImg.naturalHeight * s;
+    var ox = (W - iw) / 2;
+    var oy = (H - ih) / 2;
+
+    // Laschen-Spitze = Siegelmitte; die Form folgt den Falzkanten und
+    // läuft unten um das komplette Wachssiegel herum, damit das Siegel
+    // als Ganzes mit der Lasche aufklappt
+    var slope = 1.1;
+    var cx = 0.5 * iw;              // Siegelmitte
+    var cy = 0.578 * ih;
+    var r = 0.088 * ih;             // Siegelradius (etwas großzügig)
+    var edgeYPx = cy - slope * cx;  // Falzkante am linken/rechten Bildrand
+
+    var pts = [[0, edgeYPx]];
+    for (var a = 200; a >= -20; a -= 20) {
+      var rad = a * Math.PI / 180;
+      pts.push([cx + r * Math.cos(rad), cy + r * Math.sin(rad)]);
+    }
+    pts.push([iw, edgeYPx], [iw, 0], [0, 0]);
+
+    var front = [], back = [];
+    pts.forEach(function (p) {
+      var x = Math.round(ox + p[0]);
+      var y = Math.round(oy + p[1]);
+      front.push(x + 'px ' + y + 'px');
+      back.push(x + 'px ' + (H - y) + 'px'); // Fläche ist um rotateX(180°) gedreht
+    });
+    var fp = 'polygon(' + front.join(', ') + ')';
+    var bp = 'polygon(' + back.join(', ') + ')';
+    flapFront.style.clipPath = fp;
+    flapFront.style.webkitClipPath = fp;
+    envInside.style.clipPath = fp;
+    envInside.style.webkitClipPath = fp;
+    flapBack.style.clipPath = bp;
+    flapBack.style.webkitClipPath = bp;
+  }
+  envImg.addEventListener('load', setFlapClip);
+  window.addEventListener('resize', setFlapClip);
+  setFlapClip();
 
   function openEnvelope() {
     if (opened) return;
@@ -178,16 +247,15 @@
       showBow();
     }
 
-    // Die Nutzergeste startet die durchgehende Hintergrundmusik;
-    // die Videos bleiben stumm, damit nichts dazwischenfunkt.
+    // Die Nutzergeste startet die durchgehende Hintergrundmusik
     startMusic();
-    video.muted = true;
-    var p = video.play();
-    if (p && typeof p.catch === 'function') {
-      p.catch(function () { setTimeout(done, 800); });
-    }
-    video.addEventListener('ended', done);
-    setTimeout(done, 10000); // Sicherheitsnetz
+
+    // Die obere Hälfte klappt komplett nach oben auf (CSS-Transition);
+    // danach geht es weiter zur Schleife
+    flap.addEventListener('transitionend', function (e) {
+      if (e.propertyName === 'transform') setTimeout(done, 250);
+    });
+    setTimeout(done, 3200); // Sicherheitsnetz
   }
 
   wrap.addEventListener('click', openEnvelope);
@@ -340,6 +408,10 @@
     }
     lines.push(t('mail.name') + ': ' + name);
     lines.push(t('mail.email') + ': ' + email);
+    var food = document.getElementById('guestFood').value.trim();
+    var msg = document.getElementById('guestMsg').value.trim();
+    if (food) lines.push(t('mail.food') + ': ' + food);
+    if (msg) { lines.push(''); lines.push(t('mail.message') + ':'); lines.push(msg); }
 
     var subject = attending ? t('mail.subjectYes') : t('mail.subjectNo');
     return 'mailto:' + RSVP_EMAIL +
@@ -348,10 +420,57 @@
   }
   window.buildRsvpMailto = buildRsvpMailto;
 
+  /* Daten für die zentrale Speicherung (einheitlich in allen Designs) */
+  function collectRsvpPayload() {
+    var attending = form.attend.value === 'yes';
+    var events = [];
+    if (attending) {
+      form.querySelectorAll('input[name="events"]:checked').forEach(function (c) {
+        events.push(c.value === 'cruise'
+          ? 'Willkommensfahrt – 11. September'
+          : 'Trauung & Empfang – 12. September');
+      });
+    }
+    return {
+      name: document.getElementById('guestName').value.trim(),
+      email: document.getElementById('guestEmail').value.trim(),
+      attendance: attending ? 'yes' : 'no',
+      persons: 1 + guests,
+      events: events,
+      food: document.getElementById('guestFood').value.trim(),
+      message: document.getElementById('guestMsg').value.trim()
+    };
+  }
+
+  function showRsvpSuccess() {
+    var ok = document.createElement('p');
+    ok.className = 'rsvp-success';
+    ok.textContent = t('rsvp.thanks');
+    form.parentNode.insertBefore(ok, form);
+    form.hidden = true;
+  }
+
   form.addEventListener('submit', function (e) {
     e.preventDefault();
-    location.href = buildRsvpMailto();
+    if (!form.reportValidity()) return;
+    if (window.WeddingRsvp && window.WeddingRsvp.configured()) {
+      var btn = form.querySelector('.rsvp-submit');
+      btn.disabled = true;
+      btn.textContent = t('rsvp.sending');
+      window.WeddingRsvp.submit(collectRsvpPayload()).then(showRsvpSuccess).catch(function () {
+        btn.disabled = false;
+        btn.textContent = t('rsvp.submit');
+        location.href = buildRsvpMailto();
+      });
+    } else {
+      location.href = buildRsvpMailto();
+    }
   });
+
+  if (window.WeddingRsvp && window.WeddingRsvp.configured()) {
+    var noteEl = document.querySelector('.rsvp-note');
+    if (noteEl) noteEl.setAttribute('data-i18n', 'rsvp.noteDirect');
+  }
 
   applyLang();
 })();

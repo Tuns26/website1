@@ -98,10 +98,11 @@ img { display: block; max-width: 100%; }
   z-index: 50;
   background: #e8e4d8;
   opacity: 1;
-  transition: opacity 1.4s var(--ease), visibility 1.4s;
+  transition: opacity 1.4s var(--ease), transform 1.4s var(--ease), visibility 1.4s;
 }
 #stage-envelope.gone {
   opacity: 0;
+  transform: scale(1.06);   /* sanfter Zoom beim Übergang zur Schleife */
   visibility: hidden;
   pointer-events: none;
 }
@@ -111,21 +112,77 @@ img { display: block; max-width: 100%; }
   inset: 0;
   cursor: pointer;
   outline: none;
+  perspective: 1100px;      /* 3D-Tiefe für die Klappe */
 }
-.envelope-fill img,
-.envelope-fill video {
+.envelope-fill > img {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
-.envelope-fill video {
-  opacity: 0;
-  transition: opacity .5s ease;
-}
-#stage-envelope.opening .envelope-fill video { opacity: 1; }
 #stage-envelope.opening .envelope-fill { cursor: default; }
+
+/* Sanfter Zoom während des Öffnens (wie in der Referenz) */
+.envelope-fill {
+  transition: transform 2.6s var(--ease);
+}
+#stage-envelope.opening .envelope-fill {
+  transform: scale(1.035);
+}
+
+/* Innenseite des Umschlags – nur in der Laschenform sichtbar (clip-path
+   wird per JS aus der Umschlaggeometrie berechnet), erst beim Öffnen */
+.env-inside {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(#d9d3c2 30%, #efe9db 60%);
+  clip-path: polygon(0 30%, 0 0, 100% 0, 100% 30%, 50% 58%);
+  opacity: 0;
+}
+#stage-envelope.opening .env-inside { opacity: 1; }
+
+/* Nur die dreieckige Umschlaglasche klappt um die Oberkante nach oben
+   auf – nicht das ganze Bild. Die Form wird per clip-path auf den
+   Gesichtern zugeschnitten (nicht auf dem rotierenden Element selbst,
+   da clip-path preserve-3d aufheben würde). */
+.env-flap {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  transform-origin: 50% 0;
+  transform-style: preserve-3d;
+  transition: transform 2.4s cubic-bezier(.6, .05, .3, 1);
+  will-change: transform;
+}
+#stage-envelope.opening .env-flap {
+  transform: rotateX(178deg);
+}
+.env-face {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+.env-flap-front {
+  clip-path: polygon(0 30%, 0 0, 100% 0, 100% 30%, 50% 58%);
+}
+/* Bildkopie exakt deckungsgleich mit dem Basisbild darunter */
+.env-flap-front img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+/* Rückseite: Polygon vertikal gespiegelt, da die Fläche selbst um
+   rotateX(180deg) gedreht ist */
+.env-flap-back {
+  transform: rotateX(180deg);
+  background: linear-gradient(#ddd6c4 40%, #f4f0e4 70%);
+  clip-path: polygon(0 70%, 0 100%, 100% 100%, 100% 70%, 50% 42%);
+}
 
 .envelope-hint {
   position: absolute;
@@ -175,12 +232,18 @@ img { display: block; max-width: 100%; }
   cursor: pointer;
   background: var(--ivory);
   opacity: 0;
+  transform: scale(1.05);   /* kommt sanft herangezoomt */
   visibility: hidden;
-  transition: opacity 1.2s var(--ease), visibility 1.2s;
+  transition: opacity 1.2s var(--ease), transform 1.2s var(--ease), visibility 1.2s;
 }
-#stage-bow.active { opacity: 1; visibility: visible; }
+#stage-bow.active {
+  opacity: 1;
+  transform: scale(1);
+  visibility: visible;
+}
 #stage-bow.gone {
   opacity: 0;
+  transform: scale(1.06);   /* sanfter Zoom beim Übergang zur Einladung */
   visibility: hidden;
   pointer-events: none;
 }
@@ -231,7 +294,12 @@ img { display: block; max-width: 100%; }
 #stage-bow.open .bow-hint { opacity: 0; }
 
 /* ═══════════════ Layout ═══════════════ */
-#invitation { background: var(--ivory); }
+#invitation {
+  background: var(--ivory);
+  opacity: 0;
+  transition: opacity 1.4s var(--ease);
+}
+body.opened #invitation { opacity: 1; }
 
 section { position: relative; }
 
@@ -773,7 +841,8 @@ h2.script {
 }
 
 .rsvp-form input[type="text"],
-.rsvp-form input[type="email"] {
+.rsvp-form input[type="email"],
+.rsvp-form textarea {
   display: block;
   width: 100%;
   padding: .95rem 1.1rem;
@@ -787,12 +856,15 @@ h2.script {
   color: var(--ink);
   transition: border-color .25s, box-shadow .25s;
 }
-.rsvp-form input:focus {
+.rsvp-form input:focus,
+.rsvp-form textarea:focus {
   outline: none;
   border-color: var(--teal);
   box-shadow: 0 0 0 3px rgba(93, 125, 120, .18);
 }
-.rsvp-form input::placeholder { color: #a8aca6; }
+.rsvp-form input::placeholder,
+.rsvp-form textarea::placeholder { color: #a8aca6; }
+.rsvp-form textarea { resize: vertical; }
 
 .rsvp-submit {
   display: block;
@@ -822,6 +894,18 @@ h2.script {
   color: var(--slate);
   text-align: center;
   margin-top: .9rem;
+}
+
+.rsvp-success {
+  font-family: var(--sans);
+  font-weight: 400;
+  font-size: 1rem;
+  color: var(--ink);
+  text-align: center;
+  padding: 2.2rem 1.4rem;
+  border: 1px solid var(--silver);
+  border-radius: 14px;
+  background: #fffdf8;
 }
 
 .closing {

@@ -1012,6 +1012,119 @@ body:not(.is-open) { overflow: hidden; height: 100dvh; }
 .programme__frame:not(:has(.programme__frameImg)) .programme__list { position: static; }
 
 /* ============================================================
+   9. Rückmeldung (RSVP)
+   ============================================================ */
+.rsvp {
+  padding: 4.5rem 1.4rem 5rem;
+  text-align: center;
+  background: var(--cream-soft);
+}
+
+.rsvp__text {
+  max-width: 340px;
+  margin: 0.8rem auto 0;
+  font-size: 1.1rem;
+}
+
+.rsvp__form {
+  max-width: 400px;
+  margin: 2.2rem auto 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+  text-align: left;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.field__label {
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: 0.72rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--olive-dark);
+}
+
+.field__input {
+  width: 100%;
+  font-family: var(--font-serif);
+  font-size: 1.05rem;
+  color: var(--ink);
+  background: var(--panel-fill);
+  border: 1px solid var(--sage);
+  border-radius: 12px;
+  padding: 0.8rem 1rem;
+  outline: none;
+  transition: box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.field__input:focus {
+  border-color: var(--olive);
+  box-shadow: 0 0 0 3px rgba(92, 109, 61, 0.18);
+}
+
+.field__input--area { resize: vertical; }
+
+.field--choice {
+  border: none;
+  gap: 0.55rem;
+}
+
+.choice {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  background: var(--panel-fill);
+  border: 1px solid var(--sage);
+  border-radius: 12px;
+  padding: 0.75rem 1rem;
+  color: var(--ink);
+  font-size: 1.05rem;
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.choice:has(input:checked) {
+  background: var(--sage);
+  border-color: var(--olive);
+}
+
+.choice input {
+  accent-color: var(--olive-dark);
+  width: 17px;
+  height: 17px;
+}
+
+.rsvp__submit {
+  margin-top: 0.4rem;
+  font-size: 0.85rem;
+  padding: 1rem 1.7rem;
+}
+
+.rsvp__hint {
+  font-size: 0.95rem;
+  font-style: italic;
+  color: var(--olive-dark);
+  text-align: center;
+}
+
+.rsvp__success {
+  max-width: 400px;
+  margin: 2.2rem auto 0;
+  padding: 2rem 1.4rem;
+  border: 1px solid var(--sage);
+  border-radius: 12px;
+  background: var(--panel-fill);
+  font-size: 1.05rem;
+  text-align: center;
+}
+
+/* ============================================================
    Fußzeile
    ============================================================ */
 .footer {

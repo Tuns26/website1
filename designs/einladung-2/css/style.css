@@ -721,6 +721,18 @@ img, video { display: block; max-width: 100%; }
 
 .rsvp__form .btn--light { align-self: center; }
 
+.rsvp__success {
+  max-width: 380px;
+  margin: 2.2rem auto 0;
+  padding: 2rem 1.4rem;
+  border: 1px solid rgba(253, 251, 246, 0.4);
+  border-radius: 12px;
+  background: rgba(253, 251, 246, 0.14);
+  color: var(--white);
+  font-size: 1.05rem;
+  text-align: center;
+}
+
 /* ============================================================
    Fußzeile
    ============================================================ */

@@ -894,6 +894,16 @@ body.opened .scroll-cue { opacity: 0.9; }
   color: var(--wine-soft);
 }
 
+.rsvp-success {
+  text-align: center;
+  font-size: 17px;
+  color: var(--ink);
+  padding: 34px 20px;
+  border: 1px solid var(--gold-light);
+  border-radius: 14px;
+  background: rgba(255, 253, 248, 0.85);
+}
+
 /* ═══════════ Finale ═══════════ */
 .finale-sec {
   min-height: 100svh;

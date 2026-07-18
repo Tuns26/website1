@@ -74,6 +74,9 @@
       'rsvp.msgPh': 'Eine Nachricht an das Brautpaar (optional)',
       'rsvp.submit': 'Rückmeldung senden',
       'rsvp.note': 'Es öffnet sich Ihr E-Mail-Programm mit der fertigen Rückmeldung.',
+      'rsvp.noteDirect': 'Ihre Rückmeldung wird direkt an das Brautpaar übermittelt.',
+      'rsvp.sending': 'Wird gesendet …',
+      'rsvp.thanks': 'Vielen Dank! Ihre Rückmeldung ist angekommen.',
       'finale.thanks': 'Danke',
       'finale.text': 'dass Sie diesen besonderen Tag mit uns teilen.<br>Wir zählen die Tage!',
       'mail.subjectYes': 'Zusage zur Hochzeit von Isabella & Maximilian',
@@ -159,6 +162,9 @@
       'rsvp.msgPh': 'A message for the couple (optional)',
       'rsvp.submit': 'Send reply',
       'rsvp.note': 'Your email app will open with the completed reply.',
+      'rsvp.noteDirect': 'Your reply is sent directly to the couple.',
+      'rsvp.sending': 'Sending …',
+      'rsvp.thanks': 'Thank you! Your reply has been received.',
       'finale.thanks': 'Thank You',
       'finale.text': 'for sharing this special day with us.<br>We are counting the days!',
       'mail.subjectYes': "RSVP – accepting with joy – Isabella & Maximilian's wedding",
@@ -626,10 +632,57 @@
   }
   window.buildRsvpMailto = buildRsvpMailto;
 
+  /* Daten für die zentrale Speicherung (einheitlich in allen Designs) */
+  function collectRsvpPayload() {
+    var attending = form.attend.value === 'yes';
+    var events = [];
+    var food = '';
+    if (attending) {
+      form.querySelectorAll('input[name="extras"]:checked').forEach(function (c) {
+        if (c.value === 'shuttle') events.push('Shuttle-Service');
+        if (c.value === 'veggie') food = 'Vegetarisches Menü';
+      });
+    }
+    return {
+      name: document.getElementById('guestName').value.trim(),
+      email: document.getElementById('guestEmail').value.trim(),
+      attendance: attending ? 'yes' : 'no',
+      persons: 1 + guests,
+      events: events,
+      food: food,
+      message: document.getElementById('guestMsg').value.trim()
+    };
+  }
+
+  function showRsvpSuccess() {
+    var ok = document.createElement('p');
+    ok.className = 'rsvp-success';
+    ok.textContent = t('rsvp.thanks');
+    form.parentNode.insertBefore(ok, form);
+    form.hidden = true;
+  }
+
   form.addEventListener('submit', function (e) {
     e.preventDefault();
-    location.href = buildRsvpMailto();
+    if (!form.reportValidity()) return;
+    if (window.WeddingRsvp && window.WeddingRsvp.configured()) {
+      var btn = form.querySelector('.rsvp-submit');
+      btn.disabled = true;
+      btn.textContent = t('rsvp.sending');
+      window.WeddingRsvp.submit(collectRsvpPayload()).then(showRsvpSuccess).catch(function () {
+        btn.disabled = false;
+        btn.textContent = t('rsvp.submit');
+        location.href = buildRsvpMailto();
+      });
+    } else {
+      location.href = buildRsvpMailto();
+    }
   });
+
+  if (window.WeddingRsvp && window.WeddingRsvp.configured()) {
+    var noteEl = document.querySelector('.rsvp-note');
+    if (noteEl) noteEl.setAttribute('data-i18n', 'rsvp.noteDirect');
+  }
 
   applyLang();
 })();

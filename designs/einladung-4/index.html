@@ -238,6 +238,45 @@
       </div>
     </section>
 
+    <!-- 9. Rückmeldung (RSVP) -->
+    <section class="rsvp" id="rsvp">
+      <h2 class="script-heading reveal" data-config="rsvpTitle"></h2>
+      <p class="rsvp__text reveal" data-config="rsvpText"></p>
+      <form class="rsvp__form reveal" id="rsvpForm">
+        <label class="field">
+          <span class="field__label">Euer Name / Eure Namen</span>
+          <input class="field__input" type="text" name="name" required autocomplete="name" />
+        </label>
+        <label class="field">
+          <span class="field__label">E-Mail (für Rückfragen)</span>
+          <input class="field__input" type="email" name="email" autocomplete="email" />
+        </label>
+        <fieldset class="field field--choice">
+          <legend class="field__label">Seid ihr dabei?</legend>
+          <label class="choice"><input type="radio" name="attendance" value="Ja, wir feiern mit!" required /><span>Ja, wir feiern mit! 🥂</span></label>
+          <label class="choice"><input type="radio" name="attendance" value="Leider nein" /><span>Leider können wir nicht 😢</span></label>
+        </fieldset>
+        <label class="field">
+          <span class="field__label">Anzahl Personen</span>
+          <input class="field__input" type="number" name="persons" min="1" max="12" value="2" required />
+        </label>
+        <label class="choice choice--weekend" id="weekendChoice" hidden>
+          <input type="checkbox" name="weekend" value="yes" />
+          <span data-config="rsvpWeekendLabel"></span>
+        </label>
+        <label class="field">
+          <span class="field__label">Essenswünsche / Allergien</span>
+          <input class="field__input" type="text" name="food" placeholder="z. B. vegetarisch, Nussallergie …" />
+        </label>
+        <label class="field">
+          <span class="field__label">Nachricht an uns</span>
+          <textarea class="field__input field__input--area" name="message" rows="3" placeholder="Wir freuen uns auf eure Zeilen …"></textarea>
+        </label>
+        <button class="btn btn--solid rsvp__submit" type="submit">Rückmeldung senden</button>
+        <p class="rsvp__hint">Beim Absenden öffnet sich euer E-Mail-Programm mit der fertigen Rückmeldung – nur noch abschicken.</p>
+      </form>
+    </section>
+
     <!-- Fußzeile -->
     <footer class="footer">
       <svg class="footer__bird" viewBox="0 0 64 40" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" aria-hidden="true">
@@ -249,6 +288,8 @@
   </main>
 
   <script src="js/config.js?v=4"></script>
+  <script src="js/rsvp-config.js"></script>
+  <script src="js/rsvp.js"></script>
   <script src="js/main.js?v=4"></script>
 </body>
 </html>
