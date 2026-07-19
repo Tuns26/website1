@@ -330,6 +330,25 @@ em { font-style: italic; }
 .design-card h3 { font-family: var(--serif); font-size: 1.45rem; font-weight: 600; }
 .design-card p { font-size: 0.9rem; color: var(--ink-soft); margin-top: 0.3rem; padding: 0 0.5rem; }
 
+/* ---------- RSVP-Dashboard ---------- */
+.dashsec { padding: 6rem 0; background: var(--cream-2); }
+.dashsec__lead { max-width: 720px; margin-inline: auto; }
+.dashsec__shot {
+  max-width: 920px; margin: 0 auto;
+  border: 1px solid var(--sand);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  background: var(--white);
+}
+.dashsec__shot img { width: 100%; display: block; }
+.dashsec__facts {
+  display: flex; flex-wrap: wrap; justify-content: center;
+  gap: 0.5rem 1.8rem; margin-top: 1.8rem;
+  font-size: 0.92rem; color: var(--ink-soft);
+}
+.dashsec__facts span::before { content: "✓ "; color: var(--wine); }
+
 /* ---------- Testimonials ---------- */
 .testimonials {
   position: relative;
