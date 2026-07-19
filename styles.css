@@ -34,7 +34,7 @@ body {
 
 .container { width: min(1140px, 92%); margin-inline: auto; }
 
-img { max-width: 100%; display: block; }
+img, video { max-width: 100%; display: block; }
 
 em { font-style: italic; }
 
