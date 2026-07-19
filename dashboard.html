@@ -123,7 +123,7 @@ td.num { font-variant-numeric: tabular-nums; text-align: right; }
     <div class="dash__head">
       <h1 class="dash__couple" id="coupleName"></h1>
       <div class="dash__actions">
-        <button class="btn btn--ghost" id="csvBtn" type="button">CSV exportieren</button>
+        <button class="btn btn--ghost" id="csvBtn" type="button">Excel-Export (CSV)</button>
         <button class="btn btn--ghost" id="refreshBtn" type="button">Aktualisieren</button>
         <button class="btn btn--ghost" id="logoutBtn" type="button">Abmelden</button>
       </div>
@@ -148,7 +148,7 @@ td.num { font-variant-numeric: tabular-nums; text-align: right; }
           <thead>
             <tr>
               <th>Datum</th><th>Name</th><th>E-Mail</th><th>Teilnahme</th>
-              <th>Personen</th><th>Programmpunkte</th><th>Essenswünsche</th><th>Nachricht</th>
+              <th>Personen</th><th>Programmpunkte</th><th>Menüwunsch / Unverträglichkeiten</th><th>Nachricht</th>
             </tr>
           </thead>
           <tbody></tbody>
@@ -304,7 +304,7 @@ var SUPABASE_ANON_KEY = "sb_publishable_vWjyliPNXn4SNtEwquJzuA_HrkbZHvt";
 
   document.getElementById('csvBtn').addEventListener('click', function () {
     if (!currentData) return;
-    var head = ['Datum', 'Name', 'E-Mail', 'Teilnahme', 'Personen', 'Programmpunkte', 'Essenswuensche', 'Nachricht'];
+    var head = ['Datum', 'Name', 'E-Mail', 'Teilnahme', 'Personen', 'Programmpunkte', 'Menuewunsch/Unvertraeglichkeiten', 'Nachricht'];
     var lines = [head.join(';')];
     (currentData.rsvps || []).forEach(function (r) {
       var cells = [

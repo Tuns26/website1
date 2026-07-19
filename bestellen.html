@@ -48,6 +48,7 @@
     /* ---- Layout ---- */
     .checkout { padding: 7.5rem 0 16rem; }
     .co-grid { display: grid; grid-template-columns: 1fr; gap: 2.2rem; max-width: 760px; margin: 0 auto; }
+    .co-grid > * { min-width: 0; } /* Karten dürfen unter ihre min-content-Breite schrumpfen (kein Overflow auf schmalen Displays) */
     .co-card {
       background: var(--white); border: 1px solid var(--sand);
       border-radius: var(--radius); padding: 2.2rem 2rem;
@@ -105,76 +106,7 @@
     .langs__title { font-family: var(--serif); font-style: italic; font-size: 1.55rem; font-weight: 500; margin-top: 0.4rem; }
     .langs__text { color: var(--ink-soft); font-size: 0.93rem; margin-top: 0.4rem; }
 
-    /* ---- Extras ---- */
-    .upsell-note {
-      background: var(--cream-2); border: 1px solid var(--sand); border-radius: 12px;
-      text-align: center; font-size: 0.9rem; color: var(--ink-soft);
-      padding: 0.65rem 1rem; margin-bottom: 1.1rem;
-    }
-    .bundle { border: 1px solid var(--wine); border-radius: 16px; overflow: hidden; margin-bottom: 1.2rem; }
-    .bundle__ribbon {
-      display: flex; justify-content: space-between; align-items: center;
-      background: var(--wine); color: var(--white);
-      font-size: 0.75rem; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase;
-      padding: 0.5rem 1.1rem;
-    }
-    .bundle__body { padding: 1.3rem 1.2rem 1.2rem; background: linear-gradient(150deg, #fffdf9, #faf3ec); }
-    .bundle__head { display: flex; gap: 0.9rem; align-items: flex-start; }
-    .bundle__icon {
-      flex: 0 0 auto; width: 52px; height: 52px; display: grid; place-items: center;
-      background: var(--cream-2); border-radius: 14px; font-size: 1.4rem;
-    }
-    .bundle__name { font-family: var(--serif); font-size: 1.45rem; font-weight: 600; }
-    .bundle__name .spark { color: var(--gold); font-size: 1rem; }
-    .bundle__desc { font-style: italic; color: var(--ink-soft); font-size: 0.92rem; margin-top: 0.2rem; }
-    .bundle__items { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.7rem; margin: 1.1rem 0; }
-    .bundle__item {
-      background: var(--white); border: 1px solid var(--sand); border-radius: 12px;
-      text-align: center; padding: 0.9rem 0.4rem; font-size: 0.85rem;
-    }
-    .bundle__item .ic { display: block; font-size: 1.25rem; margin-bottom: 0.25rem; }
-    .bundle__item s { display: block; color: var(--ink-soft); font-size: 0.8rem; }
-    .bundle__foot { display: flex; align-items: flex-end; justify-content: space-between; gap: 1rem; }
-    .bundle__price { font-size: 0.8rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink); }
-    .bundle__price .big { font-family: var(--serif); font-size: 2rem; font-weight: 600; color: var(--wine); letter-spacing: 0; text-transform: none; margin: 0 0.3rem; }
-    .bundle__price s { color: var(--ink-soft); font-size: 0.95rem; letter-spacing: 0; }
-    .bundle__save { color: #2e7d4f; font-size: 0.88rem; margin-top: 0.15rem; }
-    @media (max-width: 560px) { .bundle__items { grid-template-columns: 1fr 1fr; } }
-
-    .addbtn {
-      display: inline-flex; align-items: center; gap: 0.45rem;
-      background: var(--wine); color: var(--white);
-      border: none; border-radius: 14px; cursor: pointer;
-      font-family: var(--sans); font-weight: 500; font-size: 0.88rem; letter-spacing: 0.08em;
-      padding: 0.85rem 1.5rem; transition: background 0.2s, transform 0.2s;
-    }
-    .addbtn:hover { background: var(--wine-dark); transform: translateY(-1px); }
-    .addbtn.added { background: #2e7d4f; }
-
-    /* Express */
-    .express { border: 1px solid #e04a63; border-radius: 16px; overflow: hidden; margin-bottom: 1.4rem; }
-    .express__ribbon {
-      display: flex; justify-content: space-between; align-items: center;
-      background: #e04a63; color: #fff;
-      font-size: 0.75rem; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase;
-      padding: 0.5rem 1.1rem;
-    }
-    .express__body { padding: 1.2rem; background: linear-gradient(150deg, #fffdf9, #fdf1f3); }
-    .express__head { display: flex; gap: 0.9rem; }
-    .express__icon { flex: 0 0 auto; width: 46px; height: 46px; display: grid; place-items: center; background: #fbe3e8; border-radius: 12px; font-size: 1.2rem; }
-    .express__name { font-family: var(--serif); font-size: 1.3rem; font-weight: 600; }
-    .express__desc { color: var(--ink-soft); font-size: 0.9rem; }
-    .express__eta { color: #c2334d; font-size: 0.9rem; font-weight: 500; margin-top: 0.6rem; }
-    .express__foot { display: flex; align-items: flex-end; justify-content: space-between; gap: 1rem; margin-top: 0.6rem; }
-    .express__price { font-size: 0.8rem; letter-spacing: 0.12em; text-transform: uppercase; }
-    .express__price .big { font-family: var(--serif); font-size: 1.7rem; font-weight: 600; color: #c2334d; letter-spacing: 0; margin-left: 0.3rem; }
-    .express .addbtn { background: #e04a63; }
-    .express .addbtn:hover { background: #c2334d; }
-    .express .addbtn.added { background: #2e7d4f; }
-
-    /* Einzelne Extras */
-    .solo-title { font-size: 0.78rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--ink-soft); display: flex; align-items: center; gap: 0.8rem; margin: 1.6rem 0 0.9rem; }
-    .solo-title::after { content: ""; flex: 1; border-top: 1px solid var(--sand); }
+    /* ---- Add-ons ---- */
     .solo { border: 1px solid var(--sand); border-radius: 16px; overflow: hidden; }
     .solo__row { display: flex; align-items: center; gap: 0.9rem; padding: 1rem 1.1rem; background: var(--white); }
     .solo__row + .solo__row { border-top: 1px solid var(--cream-2); }
@@ -193,6 +125,23 @@
     .solo__toggle:hover { transform: scale(1.06); }
     .solo__row.on { background: #fbf5ee; }
     .solo__row.on .solo__toggle { background: var(--wine); border-color: var(--wine); color: var(--white); }
+    .solo__row.incl { background: #f7f4ee; }
+    .solo__row.incl .solo__price { color: #2e7d4f; font-size: 0.85rem; letter-spacing: 0.04em; }
+    .solo__row.incl .solo__toggle { opacity: 0.35; cursor: default; }
+    .solo__row.incl .solo__toggle:hover { transform: none; }
+    /* Schmale Displays: Beschreibung volle Breite, Preis darunter */
+    @media (max-width: 560px) {
+      .solo__row {
+        display: grid;
+        grid-template-columns: 46px 1fr auto;
+        grid-template-areas: "icon info toggle" "icon price toggle";
+        row-gap: 0.25rem;
+      }
+      .solo__icon { grid-area: icon; }
+      .solo__info { grid-area: info; }
+      .solo__price { grid-area: price; justify-self: start; }
+      .solo__toggle { grid-area: toggle; align-self: center; }
+    }
     .music-note { font-style: italic; color: var(--ink-soft); font-size: 0.85rem; margin-top: 0.8rem; }
     .assure { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.4rem 1.4rem; margin-top: 1rem; font-size: 0.85rem; color: var(--ink-soft); }
     .assure span::before { content: "✓ "; color: #2e7d4f; }
@@ -240,14 +189,6 @@
     }
     .paybar__trust { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.3rem 1.3rem; font-size: 0.82rem; color: var(--ink); margin-bottom: 0.6rem; }
     .paybar__trust span::before { content: "✓ "; color: #2e7d4f; }
-    .paybar__save {
-      display: none; align-items: center; justify-content: center; gap: 0.6rem;
-      font-size: 0.8rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--wine);
-      margin-bottom: 0.7rem;
-    }
-    .paybar__save::before, .paybar__save::after { content: ""; width: 60px; border-top: 1px solid var(--sand); }
-    .paybar__save b { color: #2e7d4f; letter-spacing: 0; text-transform: none; font-weight: 500; }
-    .paybar__save.show { display: flex; }
     .paybar__row { display: flex; gap: 0.8rem; align-items: stretch; }
     .paybar__backbtn {
       flex: 0 0 auto; width: 58px; border-radius: 16px;
@@ -312,7 +253,7 @@
               <span class="pick__card">
                 <span class="pick__name">Essentiell</span>
                 <span class="pick__price">175&nbsp;€</span>
-                <span class="pick__hint">Design aus der Kollektion</span>
+                <span class="pick__hint">Unsere Kollektion, mit euren Inhalten</span>
               </span>
             </label>
             <label>
@@ -320,7 +261,7 @@
               <span class="pick__card">
                 <span class="pick__name">Premium</span>
                 <span class="pick__price">375&nbsp;€</span>
-                <span class="pick__hint">Maßgeschneidert + RSVP</span>
+                <span class="pick__hint">Euer Stil, unser Design</span>
               </span>
             </label>
             <label>
@@ -328,7 +269,7 @@
               <span class="pick__card">
                 <span class="pick__name">Exzellent</span>
                 <span class="pick__price">975&nbsp;€</span>
-                <span class="pick__hint">Rundum-sorglos</span>
+                <span class="pick__hint">Ein Unikat, von Grund auf entworfen</span>
               </span>
             </label>
           </div>
@@ -387,125 +328,65 @@
           </div>
           <div class="langs__panel">
             <p class="langs__eyebrow">🌐 Sprachen</p>
-            <p class="langs__title">Ihre Sprachen wählen Sie nach der Zahlung</p>
-            <p class="langs__text">Jede Sprache der Welt. Sie wählen sie bequem im Formular, das wir Ihnen nach der Zahlung senden.</p>
+            <p class="langs__title">Ihre Einladung, zweisprachig</p>
+            <p class="langs__text">Mit dem Add-on „Zweite Sprache" gibt es Ihre komplette Einladung in zwei Sprachen — z.&nbsp;B. Deutsch &amp; Türkisch oder Deutsch &amp; Englisch. Im Paket Exzellent ist die zweite Sprache bereits enthalten. Welche Sprachen es werden, wählen Sie bequem nach der Zahlung.</p>
           </div>
         </section>
 
-        <!-- Extras -->
+        <!-- Add-ons -->
         <section class="co-card">
-          <h2 class="co-card__title">Machen Sie sie einzigartig — <em>daran erinnern sich Ihre Gäste</em></h2>
-          <p class="co-card__sub">Jedes Detail zählt. Wählen Sie die Extras, die sich nach Ihnen anfühlen.</p>
+          <h2 class="co-card__title">Add-ons — <em>machen Ihre Einladung komplett</em></h2>
+          <p class="co-card__sub">Optional dazuwählen. Einmalige Zahlung, keine Abos.</p>
           <hr class="co-card__rule" />
 
-          <p class="upsell-note">✨ Die meisten Paare wählen das <b>Alles-drin-Paket</b>, um ihre Einladung perfekt zu machen.</p>
-
-          <!-- Bundle -->
-          <div class="bundle">
-            <div class="bundle__ribbon"><span>♛ Am häufigsten gewählt</span><span>Spart 26&nbsp;€</span></div>
-            <div class="bundle__body">
-              <div class="bundle__head">
-                <span class="bundle__icon">🎁</span>
-                <div>
-                  <p class="bundle__name">Alles-drin-Paket <span class="spark">✻</span></p>
-                  <p class="bundle__desc">Personalisieren Sie Ihr Einladungs-Cover: Ihre Location illustriert, ein animiertes Video derselben Illustration — und Ihr Lied.</p>
-                </div>
-              </div>
-              <div class="bundle__items">
-                <div class="bundle__item"><span class="ic">🖼️</span>Illustration<s>45&nbsp;€</s></div>
-                <div class="bundle__item"><span class="ic">🎬</span>Animiertes Video<s>55&nbsp;€</s></div>
-                <div class="bundle__item"><span class="ic">🎵</span>Eigene Musik<s>15&nbsp;€</s></div>
-              </div>
-              <div class="bundle__foot">
-                <div>
-                  <p class="bundle__price">Alles für <span class="big">89&nbsp;€</span> <s>115&nbsp;€</s></p>
-                  <p class="bundle__save">Sie sparen 26&nbsp;€</p>
-                </div>
-                <button type="button" class="addbtn" data-addon="bundle">＋ Hinzufügen</button>
-              </div>
-            </div>
-          </div>
-
-          <!-- Express -->
-          <div class="express">
-            <div class="express__ribbon"><span>⚡ Schnelle Lieferung</span><span>1–4 Werktage</span></div>
-            <div class="express__body">
-              <div class="express__head">
-                <span class="express__icon">⚡</span>
-                <div>
-                  <p class="express__name">Express-Lieferung</p>
-                  <p class="express__desc">Höchste Priorität für kurzfristige Hochzeiten. Ihr Design rückt an die Spitze der Warteschlange.</p>
-                </div>
-              </div>
-              <p class="express__eta">⏱ Lieferung in 1–4 Werktagen</p>
-              <div class="express__foot">
-                <div>
-                  <p class="express__price">Alles für <span class="big">85&nbsp;€</span></p>
-                  <p class="bundle__save">Sie sparen Zeit</p>
-                </div>
-                <button type="button" class="addbtn" data-addon="express">＋ Hinzufügen</button>
-              </div>
-            </div>
-          </div>
-
-          <p class="solo-title">Oder einzeln hinzufügen</p>
           <div class="solo">
-            <div class="solo__row" data-row="illustration">
-              <span class="solo__icon">🖼️</span>
-              <div class="solo__info">
-                <p class="solo__name">Eigene Illustration <span class="solo__badge">78 % wählen es</span></p>
-                <p class="solo__desc">Ihre Location, von Hand gezeichnet</p>
-              </div>
-              <span class="solo__price">+45&nbsp;€</span>
-              <button type="button" class="solo__toggle" data-addon="illustration" aria-label="Eigene Illustration hinzufügen">＋</button>
-            </div>
-            <div class="solo__row" data-row="video">
-              <span class="solo__icon">🎬</span>
-              <div class="solo__info">
-                <p class="solo__name">Animiertes Video <span class="solo__badge">71 % wählen es</span></p>
-                <p class="solo__desc">Ein Auftakt, der alle sprachlos macht</p>
-              </div>
-              <span class="solo__price">+55&nbsp;€</span>
-              <button type="button" class="solo__toggle" data-addon="video" aria-label="Animiertes Video hinzufügen">＋</button>
-            </div>
-            <div class="solo__row" data-row="duplikat">
-              <span class="solo__icon">🗂️</span>
-              <div class="solo__info">
-                <p class="solo__name">Zweite Einladung <span class="solo__badge">Beliebt</span></p>
-                <p class="solo__desc">Perfekt für Hochzeiten mit mehreren Events</p>
-              </div>
-              <span class="solo__price">+75&nbsp;€</span>
-              <button type="button" class="solo__toggle" data-addon="duplikat" aria-label="Zweite Einladung hinzufügen">＋</button>
-            </div>
-            <div class="solo__row" data-row="monogramm">
-              <span class="solo__icon">🪶</span>
-              <div class="solo__info">
-                <p class="solo__name">Logo / Monogramm <span class="solo__badge">Beliebt</span></p>
-                <p class="solo__desc">Ihr Siegel, Ihre Handschrift</p>
-              </div>
-              <span class="solo__price">+25&nbsp;€</span>
-              <button type="button" class="solo__toggle" data-addon="monogramm" aria-label="Logo oder Monogramm hinzufügen">＋</button>
-            </div>
-            <div class="solo__row" data-row="musik">
-              <span class="solo__icon">🎵</span>
-              <div class="solo__info">
-                <p class="solo__name">Eigene Musik</p>
-                <p class="solo__desc">Ihr Lied beim Öffnen der Einladung</p>
-              </div>
-              <span class="solo__price">+15&nbsp;€</span>
-              <button type="button" class="solo__toggle" data-addon="musik" aria-label="Eigene Musik hinzufügen">＋</button>
-            </div>
             <div class="solo__row" data-row="domain">
               <span class="solo__icon">🌐</span>
               <div class="solo__info">
-                <p class="solo__name">Eigene Domain</p>
-                <p class="solo__desc">Eine Adresse nur für Sie</p>
+                <p class="solo__name">Eigene Domain <span class="solo__badge">Bei Exzellent inklusive</span></p>
+                <p class="solo__desc">Eigene Adresse (z.&nbsp;B. emmaundlukas.de), inkl. 1 Jahr Hosting</p>
               </div>
-              <span class="solo__price">+65&nbsp;€</span>
+              <span class="solo__price">+79&nbsp;€</span>
               <button type="button" class="solo__toggle" data-addon="domain" aria-label="Eigene Domain hinzufügen">＋</button>
             </div>
+            <div class="solo__row" data-row="sprache">
+              <span class="solo__icon">🌍</span>
+              <div class="solo__info">
+                <p class="solo__name">Zweite Sprache <span class="solo__badge">Bei Exzellent inklusive</span></p>
+                <p class="solo__desc">Komplette Einladung zweisprachig, z.&nbsp;B. Deutsch &amp; Türkisch</p>
+              </div>
+              <span class="solo__price">+69&nbsp;€</span>
+              <button type="button" class="solo__toggle" data-addon="sprache" aria-label="Zweite Sprache hinzufügen">＋</button>
+            </div>
+            <div class="solo__row" data-row="qr">
+              <span class="solo__icon">▦</span>
+              <div class="solo__info">
+                <p class="solo__name">QR-Karten druckfertig</p>
+                <p class="solo__desc">Druckfertig im Design Ihrer Einladung</p>
+              </div>
+              <span class="solo__price">+39&nbsp;€</span>
+              <button type="button" class="solo__toggle" data-addon="qr" aria-label="QR-Karten hinzufügen">＋</button>
+            </div>
+            <div class="solo__row" data-row="quiz">
+              <span class="solo__icon">🎉</span>
+              <div class="solo__info">
+                <p class="solo__name">Gäste-Quiz</p>
+                <p class="solo__desc">„Wie gut kennt ihr das Brautpaar?" — Spiel auf Ihrer Website</p>
+              </div>
+              <span class="solo__price">+79&nbsp;€</span>
+              <button type="button" class="solo__toggle" data-addon="quiz" aria-label="Gäste-Quiz hinzufügen">＋</button>
+            </div>
+            <div class="solo__row" data-row="express">
+              <span class="solo__icon">⚡</span>
+              <div class="solo__info">
+                <p class="solo__name">Express 48h</p>
+                <p class="solo__desc">Ihre fertige Einladung in 48 Stunden</p>
+              </div>
+              <span class="solo__price">+69&nbsp;€</span>
+              <button type="button" class="solo__toggle" data-addon="express" aria-label="Express 48h hinzufügen">＋</button>
+            </div>
           </div>
-          <p class="music-note">* Ohne das Musik-Extra hat Ihre Einladung keine Musik.</p>
+          <p class="music-note">Gewählte Add-ons wandern automatisch mit in Ihre Bestellung.</p>
           <div class="assure">
             <span>Keine Verpflichtungen</span>
             <span>Einmalige Zahlung</span>
@@ -570,7 +451,6 @@
         <span>Sofortige Bestätigung</span>
         <span>Vom Designer gestaltet</span>
       </div>
-      <p class="paybar__save" id="saveRow">✻ Extras-Vorteil · <b id="saveAmount">Sie sparen 26&nbsp;€</b></p>
       <div class="paybar__row">
         <a class="paybar__backbtn" href="index.html#preise" aria-label="Zurück zu den Paketen">←</a>
         <button type="submit" form="orderForm" class="paybar__pay" id="payBtn">
@@ -596,8 +476,8 @@
       /* ================= SHOPIFY-KONFIGURATION =================
          1. SHOP_DOMAIN = eure myshopify-Adresse (oder eigene Domain).
          2. Pakete: die drei Produkte sind bereits verbunden.
-         3. Extras: in Shopify je ein Produkt anlegen (z. B.
-            „Extra: Eigene Illustration“, 45 €) und die Varianten-ID
+         3. Add-ons: in Shopify je ein Produkt anlegen (z. B.
+            „Add-on: Eigene Domain“, 79 €) und die Varianten-ID
             unten bei variant eintragen. Solange eine ID fehlt,
             erscheint beim Bezahlen ein Hinweis statt eines
             falschen Warenkorbs.
@@ -611,19 +491,12 @@
       };
 
       var ADDONS = {
-        bundle:       { name: "Alles-drin-Paket (Illustration + Video + Musik)", price: 89, variant: "" },
-        express:      { name: "Express-Lieferung (1–4 Werktage)",                price: 85, variant: "" },
-        illustration: { name: "Eigene Illustration",                             price: 45, variant: "" },
-        video:        { name: "Animiertes Video",                                price: 55, variant: "" },
-        duplikat:     { name: "Zweite Einladung",                                price: 75, variant: "" },
-        monogramm:    { name: "Logo / Monogramm",                                price: 25, variant: "" },
-        musik:        { name: "Eigene Musik",                                    price: 15, variant: "" },
-        domain:       { name: "Eigene Domain",                                   price: 65, variant: "" }
+        domain:  { name: "Eigene Domain (inkl. 1 Jahr Hosting)", price: 79, variant: "", inclExzellent: true },
+        sprache: { name: "Zweite Sprache",                       price: 69, variant: "", inclExzellent: true },
+        qr:      { name: "QR-Karten druckfertig",                price: 39, variant: "" },
+        quiz:    { name: "Gäste-Quiz",                           price: 79, variant: "" },
+        express: { name: "Express 48h",                          price: 69, variant: "" }
       };
-
-      /* Das Bundle ersetzt diese Einzel-Extras: */
-      var BUNDLE_COVERS = ["illustration", "video", "musik"];
-      var BUNDLE_SAVING = 26;
       /* ========================================================== */
 
       var form = document.getElementById("orderForm");
@@ -650,7 +523,13 @@
         }
       }
 
-      /* ---------- Extras umschalten ---------- */
+      /* Bei Exzellent enthaltene Add-ons */
+      function isIncluded(id) {
+        return Boolean(ADDONS[id].inclExzellent) &&
+          form.querySelector('input[name="paket"]:checked').value === "exzellent";
+      }
+
+      /* ---------- Add-ons umschalten ---------- */
       function setAddonUI(id, on) {
         document.querySelectorAll('[data-addon="' + id + '"]').forEach(function (btn) {
           if (btn.classList.contains("solo__toggle")) {
@@ -665,13 +544,8 @@
       }
 
       function toggleAddon(id) {
+        if (isIncluded(id)) return; // im Paket enthalten – nicht separat wählbar
         var on = !selected[id];
-        if (on && id === "bundle") {
-          BUNDLE_COVERS.forEach(function (k) { delete selected[k]; setAddonUI(k, false); });
-        }
-        if (on && BUNDLE_COVERS.indexOf(id) !== -1 && selected.bundle) {
-          delete selected.bundle; setAddonUI("bundle", false);
-        }
         if (on) selected[id] = true; else delete selected[id];
         setAddonUI(id, on);
         render();
@@ -680,6 +554,13 @@
       document.querySelectorAll("[data-addon]").forEach(function (btn) {
         btn.addEventListener("click", function () { toggleAddon(btn.dataset.addon); });
       });
+
+      /* Vorauswahl von Add-ons aus der URL, z. B. bestellen.html?addons=qr,express */
+      (params.get("addons") || "").split(",").concat(params.getAll("addon"))
+        .forEach(function (id) {
+          id = id.trim();
+          if (id && ADDONS[id] && !selected[id]) { selected[id] = true; setAddonUI(id, true); }
+        });
 
       /* ---------- Live-Zusammenfassung & Summe ---------- */
       function render() {
@@ -691,6 +572,18 @@
         document.getElementById("sumPlanPrice").textContent = euro(plan.price);
         document.getElementById("sumStil").textContent = stilSelect.value || "—";
 
+        // Bei Exzellent enthaltene Add-ons abwählen und als „Inklusive" markieren
+        Object.keys(ADDONS).forEach(function (id) {
+          var incl = isIncluded(id);
+          var row = document.querySelector('.solo__row[data-row="' + id + '"]');
+          if (row) {
+            row.classList.toggle("incl", incl);
+            var priceEl = row.querySelector(".solo__price");
+            if (priceEl) priceEl.textContent = incl ? "Inklusive" : "+" + ADDONS[id].price + " €";
+          }
+          if (incl && selected[id]) { delete selected[id]; setAddonUI(id, false); }
+        });
+
         var box = document.getElementById("sumAddons");
         box.innerHTML = "";
         Object.keys(ADDONS).forEach(function (id) {
@@ -698,7 +591,7 @@
           total += ADDONS[id].price;
           var line = document.createElement("div");
           line.className = "sum-line";
-          line.innerHTML = '<span class="k">Extra</span><span class="dots"></span>';
+          line.innerHTML = '<span class="k">Add-on</span><span class="dots"></span>';
           var v = document.createElement("span");
           v.className = "v";
           v.textContent = ADDONS[id].name.split(" (")[0] + " · " + euro(ADDONS[id].price);
@@ -709,7 +602,6 @@
         document.getElementById("topPrice").textContent = euro(total);
         document.getElementById("sumTotal").textContent = euro(total);
         document.getElementById("payTotal").textContent = euro(total);
-        document.getElementById("saveRow").classList.toggle("show", !!selected.bundle);
 
         updateMissing();
       }
@@ -781,9 +673,9 @@
         attr("Hochzeitsdatum", document.getElementById("datum").value);
         attr("Stil", stilSelect.value);
         attr("Paket", plan.name);
-        var extraNames = Object.keys(ADDONS).filter(function (id) { return selected[id]; })
+        var addonNames = Object.keys(ADDONS).filter(function (id) { return selected[id]; })
           .map(function (id) { return ADDONS[id].name; });
-        attr("Extras", extraNames.join(", "));
+        attr("Add-ons", addonNames.join(", "));
 
         var url = "https://" + SHOP_DOMAIN + "/cart/" + items.join(",") + "?" + attrs.join("&");
 
@@ -793,8 +685,8 @@
         }
 
         if (missingVariants.length) {
-          alert("Für diese Extras fehlt noch die Shopify-Varianten-ID:\n\n– " + missingVariants.join("\n– ") +
-            "\n\nBitte in Shopify je ein Produkt anlegen und die Varianten-ID in bestellen.html bei ADDONS eintragen. Solange würden diese Extras im Warenkorb nicht berechnet — die Bestellung wurde deshalb noch nicht gestartet.");
+          alert("Für diese Add-ons fehlt noch die Shopify-Varianten-ID:\n\n– " + missingVariants.join("\n– ") +
+            "\n\nBitte in Shopify je ein Produkt anlegen und die Varianten-ID in bestellen.html bei ADDONS eintragen. Solange würden diese Add-ons im Warenkorb nicht berechnet — die Bestellung wurde deshalb noch nicht gestartet.");
           return;
         }
 

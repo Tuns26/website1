@@ -21,7 +21,7 @@
 
   // Scroll reveal for sections
   const revealEls = document.querySelectorAll(
-    ".feature-card, .design-card, .quote, .step, .plan, .team__photo, .section-title, .section-sub"
+    ".feature-card, .design-card, .quote, .step, .plan, .addon-card, .paper__cta, .team__photo, .section-title, .section-sub"
   );
   revealEls.forEach((el) => el.classList.add("reveal"));
 

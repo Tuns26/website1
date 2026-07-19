@@ -239,6 +239,22 @@ em { font-style: italic; }
 .feature-card h3 { font-family: var(--serif); font-size: 1.4rem; font-weight: 600; margin-bottom: 0.5rem; }
 .feature-card p { font-size: 0.92rem; color: var(--ink-soft); }
 
+/* ---------- Papier-Einladung + QR ---------- */
+.paper { padding: 6rem 0; background: var(--cream); }
+.paper__lead { max-width: 720px; margin-inline: auto; }
+.paper__grid { margin-top: 0.5rem; }
+.paper__cta {
+  margin: 2.6rem auto 0;
+  max-width: 640px;
+  background: var(--white);
+  border: 1px solid var(--sand);
+  border-radius: var(--radius);
+  padding: 1.6rem 1.8rem;
+  text-align: center;
+  display: flex; flex-direction: column; align-items: center; gap: 1rem;
+}
+.paper__cta p { font-family: var(--serif); font-size: 1.15rem; color: var(--ink); }
+
 /* ---------- Collection ---------- */
 .collection { padding: 6rem 0; background: linear-gradient(180deg, var(--cream) 0%, var(--cream-2) 100%); }
 .cards-carousel { position: relative; }
@@ -409,6 +425,46 @@ em { font-style: italic; }
 .plan__list li { padding: 0.55rem 0 0.55rem 1.7rem; position: relative; font-size: 0.94rem; border-bottom: 1px solid var(--cream-2); }
 .plan__list li::before { content: "❦"; position: absolute; left: 0; color: var(--gold); font-size: 0.9rem; }
 .plan__btn { width: 100%; text-align: center; margin-top: auto; }
+
+/* ---------- Add-ons ---------- */
+.addons { margin-top: 4.5rem; }
+.addons__title {
+  font-family: var(--serif); font-weight: 500;
+  font-size: clamp(1.7rem, 3.5vw, 2.3rem);
+  text-align: center; color: var(--ink);
+}
+.addons__sub {
+  text-align: center; color: var(--ink-soft);
+  font-size: 1rem; margin: 0.6rem 0 2.2rem;
+}
+.addons__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 1.2rem;
+}
+.addon-card {
+  background: var(--white);
+  border: 1px solid var(--sand);
+  border-radius: var(--radius);
+  padding: 1.7rem 1.4rem;
+  text-align: center;
+  display: flex; flex-direction: column;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.addon-card:hover { transform: translateY(-5px); box-shadow: var(--shadow); }
+.addon-card__icon {
+  width: 48px; height: 48px; margin: 0 auto 0.9rem;
+  display: grid; place-items: center;
+  background: var(--cream-2); border-radius: 50%;
+  color: var(--wine); font-size: 1.25rem;
+}
+.addon-card h4 { font-family: var(--serif); font-size: 1.3rem; font-weight: 600; margin-bottom: 0.4rem; }
+.addon-card p { font-size: 0.88rem; color: var(--ink-soft); flex: 1; }
+.addon-card__price {
+  margin-top: 1rem;
+  font-family: var(--serif); font-size: 1.5rem; font-weight: 600; color: var(--wine);
+}
+.addons__note { text-align: center; color: var(--ink-soft); font-size: 0.92rem; margin-top: 1.8rem; }
 
 /* ---------- CTA / Contact ---------- */
 .cta { padding: 6rem 0; background: linear-gradient(180deg, var(--cream-2), var(--sand)); text-align: center; }
