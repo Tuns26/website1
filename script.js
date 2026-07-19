@@ -42,6 +42,22 @@
     revealEls.forEach((el) => el.classList.add("visible"));
   }
 
+  // Team-Video: erst abspielen, wenn es ins Bild kommt (spart mobil Datenvolumen)
+  const teamVideo = document.getElementById("teamVideo");
+  if (teamVideo) {
+    if ("IntersectionObserver" in window) {
+      const vio = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) teamVideo.play().catch(() => {});
+          else teamVideo.pause();
+        });
+      }, { threshold: 0.25 });
+      vio.observe(teamVideo);
+    } else {
+      teamVideo.autoplay = true;
+    }
+  }
+
   // Design-Slider: horizontal swipen, Pfeile blättern kartenweise
   const carousel = document.querySelector(".cards-carousel");
   if (carousel) {
