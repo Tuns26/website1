@@ -42,6 +42,15 @@
     revealEls.forEach((el) => el.classList.add("visible"));
   }
 
+  // Partnerprogramm (GoAffPro): Referral-Code aus ?ref=… merken —
+  // bestellen.html gibt ihn beim Bezahlen an den Shop weiter
+  try {
+    const partnerRef = new URLSearchParams(location.search).get("ref");
+    if (partnerRef) {
+      localStorage.setItem("wl_partner_ref", JSON.stringify({ code: partnerRef, ts: Date.now() }));
+    }
+  } catch (e) { /* localStorage gesperrt (z. B. Privatmodus) – dann ohne Tracking */ }
+
   // Team-Video: erst abspielen, wenn es ins Bild kommt (spart mobil Datenvolumen)
   const teamVideo = document.getElementById("teamVideo");
   if (teamVideo) {

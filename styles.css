@@ -520,6 +520,9 @@ em { font-style: italic; }
 .footer__cols h4 { font-family: var(--serif); font-size: 1.15rem; margin-bottom: 0.9rem; color: var(--gold); font-weight: 500; }
 .footer__cols a { display: block; color: rgba(247,241,232,0.8); text-decoration: none; font-size: 0.9rem; padding: 0.25rem 0; transition: color 0.2s; }
 .footer__cols a:hover { color: var(--white); }
+.footer__partner { max-width: 260px; }
+.footer__partner p { color: rgba(247,241,232,0.7); font-size: 0.85rem; margin-bottom: 0.5rem; }
+.footer__partner a { color: var(--gold); }
 .footer__bar {
   width: min(1140px, 92%); margin: 2.5rem auto 0; padding-top: 1.5rem;
   border-top: 1px solid rgba(200,169,106,0.25);

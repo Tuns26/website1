@@ -523,6 +523,26 @@
         }
       }
 
+      /* ---------- Partnerprogramm (GoAffPro) ----------
+         Wedding-Planner teilen Links wie weddinglink.de/?ref=IHRCODE.
+         Der Code wird 30 Tage gemerkt und beim Bezahlen als ?ref=…
+         an die Shop-URL angehängt — die GoAffPro-App im Shop ordnet
+         die Bestellung dann automatisch dem Partner zu. Zusätzlich
+         wandert er als Bestellattribut „Partner-Code" mit. */
+      var partnerRef = "";
+      try {
+        var refParam = params.get("ref");
+        if (refParam) {
+          partnerRef = refParam;
+          localStorage.setItem("wl_partner_ref", JSON.stringify({ code: refParam, ts: Date.now() }));
+        } else {
+          var storedRef = JSON.parse(localStorage.getItem("wl_partner_ref") || "null");
+          if (storedRef && storedRef.code && Date.now() - storedRef.ts < 30 * 24 * 3600 * 1000) {
+            partnerRef = storedRef.code;
+          }
+        }
+      } catch (e) { /* localStorage gesperrt – dann ohne Partner-Tracking */ }
+
       /* Bei Exzellent enthaltene Add-ons */
       function isIncluded(id) {
         return Boolean(ADDONS[id].inclExzellent) &&
@@ -676,6 +696,11 @@
         var addonNames = Object.keys(ADDONS).filter(function (id) { return selected[id]; })
           .map(function (id) { return ADDONS[id].name; });
         attr("Add-ons", addonNames.join(", "));
+
+        if (partnerRef) {
+          attr("Partner-Code", partnerRef);
+          attrs.push("ref=" + encodeURIComponent(partnerRef)); // GoAffPro-Tracking im Shop
+        }
 
         var url = "https://" + SHOP_DOMAIN + "/cart/" + items.join(",") + "?" + attrs.join("&");
 
