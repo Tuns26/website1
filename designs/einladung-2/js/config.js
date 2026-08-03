@@ -81,8 +81,9 @@ window.INVITE_CONFIG = {
 
   // Medien (generierte Aquarell-Assets)
   assets: {
-    envelopeImage: "https://d8j0ntlcm91z4.cloudfront.net/user_3FvydqbGOOHUpbISUQX0A2zheMB/hf_20260703_080918_700bc426-deb8-4682-9484-69ad9cd6197c.png",
-    envelopeVideo: "https://d8j0ntlcm91z4.cloudfront.net/user_3FvydqbGOOHUpbISUQX0A2zheMB/hf_20260703_081321_b8b74973-9842-491c-8cb5-9d55b1fac08e.mp4",
+    // Umschlag-Intro: Es wird direkt der erste Frame des Videos gezeigt
+    // (bewusst kein separates Poster-Bild).
+    envelopeVideo: "assets/envelope-open.mp4",
     heroImage: "https://d8j0ntlcm91z4.cloudfront.net/user_3FvydqbGOOHUpbISUQX0A2zheMB/hf_20260703_055741_967d9f0e-bcfe-4384-a287-7a6ab368a350.png",
     heroVideo: "https://d8j0ntlcm91z4.cloudfront.net/user_3FvydqbGOOHUpbISUQX0A2zheMB/hf_20260703_062111_ca39e378-ca0a-4f8c-8a4b-28bb91076abb.mp4",
     locationImage: "https://d8j0ntlcm91z4.cloudfront.net/user_3FvydqbGOOHUpbISUQX0A2zheMB/hf_20260703_060222_e5eb001d-4f76-4870-906e-1e03189b5b1c.png",

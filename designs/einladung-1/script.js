@@ -62,8 +62,8 @@
       'rsvp.noteDirect': 'Ihre Rückmeldung wird direkt an das Brautpaar übermittelt.',
       'rsvp.sending': 'Wird gesendet …',
       'rsvp.thanks': 'Vielen Dank! Ihre Rückmeldung ist angekommen.',
-      'mail.subjectYes': 'Zusage zur Hochzeit von Sophia & Alexander',
-      'mail.subjectNo': 'Absage zur Hochzeit von Sophia & Alexander',
+      'mail.subjectYes': 'Zusage zur Hochzeit von Tina & Alexander',
+      'mail.subjectNo': 'Absage zur Hochzeit von Tina & Alexander',
       'mail.attendYes': 'Mit Freude nehme ich an.',
       'mail.attendNo': 'Leider bin ich verhindert.',
       'mail.events': 'Veranstaltungen',
@@ -134,8 +134,8 @@
       'rsvp.noteDirect': 'Your reply is sent directly to the couple.',
       'rsvp.sending': 'Sending …',
       'rsvp.thanks': 'Thank you! Your reply has been received.',
-      'mail.subjectYes': "RSVP – accepting with joy – Sophia & Alexander's wedding",
-      'mail.subjectNo': "RSVP – regretfully declining – Sophia & Alexander's wedding",
+      'mail.subjectYes': "RSVP – accepting with joy – Tina & Alexander's wedding",
+      'mail.subjectNo': "RSVP – regretfully declining – Tina & Alexander's wedding",
       'mail.attendYes': 'I joyfully accept.',
       'mail.attendNo': 'I regretfully decline.',
       'mail.events': 'Events',
@@ -176,64 +176,9 @@
   /* ═══════════ Umschlag ═══════════ */
   var stage = document.getElementById('stage-envelope');
   var wrap = document.getElementById('envelopeWrap');
-  var flap = document.getElementById('envFlap');
+  var envVideo = document.getElementById('envelopeVideo');
   var bowStage = document.getElementById('stage-bow');
   var opened = false;
-
-  /* Laschenform des Umschlags: Spitze unter dem Wachssiegel, Falzkanten
-     steigen schräg zu den Bildrändern. Wird aus der echten Bildgröße und
-     dem object-fit:cover-Zuschnitt berechnet, damit die Klappe auf jedem
-     Display exakt auf den Falzlinien des Fotos liegt. */
-  var envImg = document.getElementById('envelopeImg');
-  var flapFront = flap.querySelector('.env-flap-front');
-  var flapBack = flap.querySelector('.env-flap-back');
-  var envInside = wrap.querySelector('.env-inside');
-
-  function setFlapClip() {
-    if (!envImg.naturalWidth || !envImg.naturalHeight) return;
-    var W = wrap.clientWidth, H = wrap.clientHeight;
-    if (!W || !H) return;
-    var s = Math.max(W / envImg.naturalWidth, H / envImg.naturalHeight);
-    var iw = envImg.naturalWidth * s;
-    var ih = envImg.naturalHeight * s;
-    var ox = (W - iw) / 2;
-    var oy = (H - ih) / 2;
-
-    // Laschen-Spitze = Siegelmitte; die Form folgt den Falzkanten und
-    // läuft unten um das komplette Wachssiegel herum, damit das Siegel
-    // als Ganzes mit der Lasche aufklappt
-    var slope = 1.1;
-    var cx = 0.5 * iw;              // Siegelmitte
-    var cy = 0.578 * ih;
-    var r = 0.088 * ih;             // Siegelradius (etwas großzügig)
-    var edgeYPx = cy - slope * cx;  // Falzkante am linken/rechten Bildrand
-
-    var pts = [[0, edgeYPx]];
-    for (var a = 200; a >= -20; a -= 20) {
-      var rad = a * Math.PI / 180;
-      pts.push([cx + r * Math.cos(rad), cy + r * Math.sin(rad)]);
-    }
-    pts.push([iw, edgeYPx], [iw, 0], [0, 0]);
-
-    var front = [], back = [];
-    pts.forEach(function (p) {
-      var x = Math.round(ox + p[0]);
-      var y = Math.round(oy + p[1]);
-      front.push(x + 'px ' + y + 'px');
-      back.push(x + 'px ' + (H - y) + 'px'); // Fläche ist um rotateX(180°) gedreht
-    });
-    var fp = 'polygon(' + front.join(', ') + ')';
-    var bp = 'polygon(' + back.join(', ') + ')';
-    flapFront.style.clipPath = fp;
-    flapFront.style.webkitClipPath = fp;
-    envInside.style.clipPath = fp;
-    envInside.style.webkitClipPath = fp;
-    flapBack.style.clipPath = bp;
-    flapBack.style.webkitClipPath = bp;
-  }
-  envImg.addEventListener('load', setFlapClip);
-  window.addEventListener('resize', setFlapClip);
-  setFlapClip();
 
   function openEnvelope() {
     if (opened) return;
@@ -250,12 +195,16 @@
     // Die Nutzergeste startet die durchgehende Hintergrundmusik
     startMusic();
 
-    // Die obere Hälfte klappt komplett nach oben auf (CSS-Transition);
-    // danach geht es weiter zur Schleife
-    flap.addEventListener('transitionend', function (e) {
-      if (e.propertyName === 'transform') setTimeout(done, 250);
-    });
-    setTimeout(done, 3200); // Sicherheitsnetz
+    // Das Öffnungsvideo läuft (Lasche klappt auf, die Karte gleitet
+    // heraus). Der Übergang zur Schleife startet ohne Wartezeit direkt am
+    // Videoende, damit das letzte Bild nicht als Standbild stehen bleibt
+    envVideo.addEventListener('ended', done);
+    var p = envVideo.play();
+    if (p && typeof p.catch === 'function') {
+      // Video nicht abspielbar → nach kurzem Moment weiter
+      p.catch(function () { setTimeout(done, 1200); });
+    }
+    setTimeout(done, 6000); // Sicherheitsnetz (Video dauert 3,8 s)
   }
 
   wrap.addEventListener('click', openEnvelope);

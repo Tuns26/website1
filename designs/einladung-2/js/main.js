@@ -11,7 +11,15 @@
   const locationImgEl = document.querySelector(".location__photo img");
   if (envVideoEl && assets.envelopeVideo) {
     envVideoEl.src = assets.envelopeVideo;
-    if (assets.envelopeImage) envVideoEl.poster = assets.envelopeImage;
+    // Kein Poster: Es soll direkt das erste Bild des Videos zu sehen sein.
+    // Der Sprung auf 0.01 s erzwingt, dass iOS/Safari den ersten Frame zeichnet,
+    // bevor das Video per Tipp gestartet wird.
+    envVideoEl.addEventListener("loadeddata", function onLoaded() {
+      envVideoEl.removeEventListener("loadeddata", onLoaded);
+      if (envVideoEl.currentTime === 0) {
+        try { envVideoEl.currentTime = 0.01; } catch (e) {}
+      }
+    });
   }
   if (heroVideoEl && assets.heroVideo) {
     heroVideoEl.src = assets.heroVideo;
