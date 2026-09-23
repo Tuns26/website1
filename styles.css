@@ -5,13 +5,13 @@
   --wine: #6d1f2f;
   --wine-dark: #521623;
   --wine-soft: #8a3a48;
-  --cream: #f7f1e8;
-  --cream-2: #f1e8db;
-  --sand: #e8dcc9;
+  --cream: #ffffff;      /* Grundfarbe der Seite */
+  --cream-2: #f8f3ee;    /* helles Creme für Wechsel-Abschnitte */
+  --sand: #ece3d8;
   --ink: #3a2f2a;
   --ink-soft: #6b5d54;
   --gold: #c8a96a;
-  --white: #fffdf9;
+  --white: #ffffff;
   --shadow: 0 20px 60px -20px rgba(82, 22, 35, 0.28);
   --radius: 18px;
   --serif: "Cormorant Garamond", Georgia, serif;
@@ -104,7 +104,7 @@ em { font-style: italic; }
   transition: background 0.3s ease, box-shadow 0.3s ease, padding 0.3s ease;
 }
 .nav.scrolled {
-  background: rgba(247, 241, 232, 0.92);
+  background: rgba(255, 255, 255, 0.92);
   backdrop-filter: blur(10px);
   box-shadow: 0 4px 24px -12px rgba(82, 22, 35, 0.25);
   padding: 0.7rem 0;
@@ -165,6 +165,7 @@ em { font-style: italic; }
   max-width: 620px; margin: 0 auto 2.2rem;
   font-size: 1.12rem; color: var(--ink-soft);
 }
+.hero__lead a { color: var(--wine); text-underline-offset: 3px; }
 .hero__actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
 .hero__meta {
   display: flex; align-items: center; justify-content: center; gap: 1.6rem;
@@ -244,7 +245,7 @@ em { font-style: italic; }
   padding: 6rem 0;
   background:
     radial-gradient(70% 60% at 85% 35%, rgba(200, 169, 106, 0.2), transparent 65%),
-    linear-gradient(180deg, var(--cream-2) 0%, var(--cream) 100%);
+    linear-gradient(180deg, var(--cream-2) 0%, var(--cream) 50%, var(--cream-2) 100%);
 }
 .games__lead { max-width: 720px; margin-inline: auto; }
 .games__layout {
