@@ -340,6 +340,15 @@
           <hr class="co-card__rule" />
 
           <div class="solo">
+            <div class="solo__row" data-row="spiele">
+              <span class="solo__icon">🎉</span>
+              <div class="solo__info">
+                <p class="solo__name">Hochzeitsspiele</p>
+                <p class="solo__desc">Brautpaar-Quiz, Hochzeits-Bingo, „Wer von uns?“ &amp; Tippspiel — alle Spiele auf Ihrer Website</p>
+              </div>
+              <span class="solo__price">+39&nbsp;€</span>
+              <button type="button" class="solo__toggle" data-addon="spiele" aria-label="Hochzeitsspiele hinzufügen">＋</button>
+            </div>
             <div class="solo__row" data-row="domain">
               <span class="solo__icon">🌐</span>
               <div class="solo__info">
@@ -366,15 +375,6 @@
               </div>
               <span class="solo__price">+39&nbsp;€</span>
               <button type="button" class="solo__toggle" data-addon="qr" aria-label="QR-Karten hinzufügen">＋</button>
-            </div>
-            <div class="solo__row" data-row="quiz">
-              <span class="solo__icon">🎉</span>
-              <div class="solo__info">
-                <p class="solo__name">Gäste-Quiz</p>
-                <p class="solo__desc">„Wie gut kennt ihr das Brautpaar?" — Spiel auf Ihrer Website</p>
-              </div>
-              <span class="solo__price">+79&nbsp;€</span>
-              <button type="button" class="solo__toggle" data-addon="quiz" aria-label="Gäste-Quiz hinzufügen">＋</button>
             </div>
             <div class="solo__row" data-row="express">
               <span class="solo__icon">⚡</span>
@@ -491,10 +491,10 @@
       };
 
       var ADDONS = {
+        spiele:  { name: "Hochzeitsspiele",                      price: 39, variant: "" },
         domain:  { name: "Eigene Domain (inkl. 1 Jahr Hosting)", price: 79, variant: "", inclExzellent: true },
         sprache: { name: "Zweite Sprache",                       price: 69, variant: "", inclExzellent: true },
         qr:      { name: "QR-Karten druckfertig",                price: 39, variant: "" },
-        quiz:    { name: "Gäste-Quiz",                           price: 79, variant: "" },
         express: { name: "Express 48h",                          price: 69, variant: "" }
       };
       /* ========================================================== */

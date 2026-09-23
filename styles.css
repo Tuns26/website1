@@ -239,6 +239,80 @@ em { font-style: italic; }
 .feature-card h3 { font-family: var(--serif); font-size: 1.4rem; font-weight: 600; margin-bottom: 0.5rem; }
 .feature-card p { font-size: 0.92rem; color: var(--ink-soft); }
 
+/* ---------- Hochzeitsspiele ---------- */
+.games {
+  padding: 6rem 0;
+  background:
+    radial-gradient(70% 60% at 85% 35%, rgba(200, 169, 106, 0.2), transparent 65%),
+    linear-gradient(180deg, var(--cream-2) 0%, var(--cream) 100%);
+}
+.games__lead { max-width: 720px; margin-inline: auto; }
+.games__layout {
+  display: grid; grid-template-columns: 1fr auto;
+  gap: 3rem; align-items: center;
+}
+.games__grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.2rem; }
+.game-card {
+  background: var(--white);
+  border: 1px solid var(--sand);
+  border-radius: var(--radius);
+  padding: 1.6rem 1.5rem;
+  display: flex; flex-direction: column;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.game-card:hover { transform: translateY(-6px); box-shadow: var(--shadow); }
+.game-card__icon {
+  width: 48px; height: 48px; margin-bottom: 0.9rem;
+  display: grid; place-items: center;
+  background: var(--cream-2); border-radius: 50%;
+  font-size: 1.25rem;
+}
+.game-card h3 { font-family: var(--serif); font-size: 1.4rem; font-weight: 600; margin-bottom: 0.4rem; }
+.game-card p { font-size: 0.9rem; color: var(--ink-soft); flex: 1; }
+.game-card__tag {
+  align-self: flex-start; margin-top: 1rem;
+  font-size: 0.7rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--wine); background: rgba(109, 31, 47, 0.07);
+  padding: 0.3rem 0.8rem; border-radius: 100px;
+}
+
+.phone--games { margin: 0; }
+.quiz { width: 100%; padding: 2.6rem 1.3rem 1.5rem; text-align: center; }
+.quiz__pre { text-transform: uppercase; letter-spacing: 0.2em; font-size: 0.58rem; color: var(--wine-soft); }
+.quiz__bar { height: 4px; margin: 0.7rem 0 1.4rem; background: var(--sand); border-radius: 4px; overflow: hidden; }
+.quiz__bar span { display: block; width: 30%; height: 100%; background: var(--gold); }
+.quiz__q { font-family: var(--serif); font-size: 1.35rem; line-height: 1.2; color: var(--ink); margin-bottom: 1.2rem; }
+.quiz__opts { display: flex; flex-direction: column; gap: 0.55rem; }
+.quiz__opts span {
+  display: block; padding: 0.65rem 1rem;
+  background: var(--white); border: 1px solid var(--sand); border-radius: 12px;
+  font-size: 0.82rem; color: var(--ink);
+}
+.quiz__opts .is-right { background: var(--wine); border-color: var(--wine); color: var(--white); }
+.quiz__score { margin-top: 1.2rem; font-family: var(--serif); font-size: 1.1rem; color: var(--wine); }
+
+.games__facts {
+  display: flex; flex-wrap: wrap; justify-content: center;
+  gap: 0.5rem 1.8rem; margin-top: 2.6rem;
+  font-size: 0.92rem; color: var(--ink-soft);
+}
+.games__facts span::before { content: "✓ "; color: var(--wine); }
+.games__offer {
+  margin: 2.2rem auto 0; max-width: 820px;
+  background: var(--white);
+  border: 1px solid var(--wine);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 1.6rem 2rem;
+  display: flex; align-items: center; justify-content: space-between; gap: 1.2rem 2rem; flex-wrap: wrap;
+}
+.games__offer-text p { color: var(--ink-soft); font-size: 0.95rem; }
+.games__offer-text .games__price {
+  font-family: var(--serif); font-size: 2.4rem; font-weight: 600; color: var(--wine); line-height: 1.1;
+  display: flex; align-items: baseline; gap: 0.5rem;
+}
+.games__price span { font-family: var(--sans); font-size: 0.8rem; color: var(--ink-soft); font-weight: 300; }
+
 /* ---------- Papier-Einladung + QR ---------- */
 .paper { padding: 6rem 0; background: var(--cream); }
 .paper__lead { max-width: 720px; margin-inline: auto; }
@@ -485,6 +559,8 @@ em { font-style: italic; }
 }
 .addon-card h4 { font-family: var(--serif); font-size: 1.3rem; font-weight: 600; margin-bottom: 0.4rem; }
 .addon-card p { font-size: 0.88rem; color: var(--ink-soft); flex: 1; }
+.addon-card p a { color: var(--wine); }
+.addon-card--featured { border-color: var(--wine); }
 .addon-card__price {
   margin-top: 1rem;
   font-family: var(--serif); font-size: 1.5rem; font-weight: 600; color: var(--wine);
@@ -608,4 +684,12 @@ body.demo-open { overflow: hidden; }
   }
   .cta__form { grid-template-columns: 1fr; }
   .footer__inner { flex-direction: column; }
+  .games__layout { grid-template-columns: 1fr; }
+  .phone--games { margin: 0 auto; }
+}
+
+@media (max-width: 560px) {
+  .games__grid { grid-template-columns: 1fr; }
+  .games__offer { justify-content: center; text-align: center; }
+  .games__offer-text .games__price { justify-content: center; }
 }
