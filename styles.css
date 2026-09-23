@@ -165,6 +165,7 @@ em { font-style: italic; }
   max-width: 620px; margin: 0 auto 2.2rem;
   font-size: 1.12rem; color: var(--ink-soft);
 }
+.hero__lead a { color: var(--wine); text-underline-offset: 3px; }
 .hero__actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
 .hero__meta {
   display: flex; align-items: center; justify-content: center; gap: 1.6rem;
@@ -244,7 +245,7 @@ em { font-style: italic; }
   padding: 6rem 0;
   background:
     radial-gradient(70% 60% at 85% 35%, rgba(200, 169, 106, 0.2), transparent 65%),
-    linear-gradient(180deg, var(--cream-2) 0%, var(--cream) 100%);
+    linear-gradient(180deg, var(--cream-2) 0%, var(--cream) 50%, var(--cream-2) 100%);
 }
 .games__lead { max-width: 720px; margin-inline: auto; }
 .games__layout {

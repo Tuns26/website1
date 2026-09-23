@@ -15,8 +15,8 @@ Bordeaux-Akzente und feine Serifen-Typografie — inspiriert von handgefertigten
 
 - **Hero** mit animiertem Handy-Mockup und Live-Countdown
 - **Features** — alles, was eine Einladung braucht
-- **Hochzeitsspiele** — Brautpaar-Quiz, Bingo, „Wer von uns?“ & Tippspiel (Add-on, 39 €)
 - **Kollektion** — vier Design-Stile
+- **Hochzeitsspiele** — Brautpaar-Quiz, Bingo, „Wer von uns?“ & Tippspiel (Add-on, 39 €)
 - **Kundenstimmen**
 - **Team & Ablauf**
 - **Preise** — Essentiell (175 €), Premium (375 €), Exzellent (975 €)
