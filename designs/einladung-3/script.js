@@ -44,7 +44,7 @@
       'menu.c3d': 'Branzino vom Grill oder Rinderfilet in Barolo',
       'menu.c4': 'Dolce',
       'menu.c4d': 'Hochzeitstorte, Tiramisù & Mitternachtssnack',
-      'menu.note': 'Vegetarische Alternativen sind selbstverständlich vorbereitet – teilen Sie uns Unverträglichkeiten gerne im RSVP mit.',
+      'menu.note': 'Vegetarische Alternativen sind selbstverständlich vorbereitet – teilen Sie uns Ihren Menüwunsch gerne im RSVP mit.',
       'dress.title': 'Dresscode',
       'dress.main': 'Elegante Abendgarderobe',
       'dress.note': 'Wir freuen uns, wenn Sie sich festlich kleiden.<br>Bitte verzichten Sie auf Weiß – das gehört an diesem Tag der Braut.',
@@ -66,7 +66,12 @@
       'rsvp.attendNo': 'Leider bin ich verhindert',
       'rsvp.extrasQ': 'Was dürfen wir für Sie vormerken?',
       'rsvp.extraShuttle': 'Ich nutze den Shuttle-Service',
-      'rsvp.extraVeggie': 'Vegetarisches Menü',
+      'rsvp.foodPh': 'Menüwunsch (optional)',
+      'rsvp.foodMeat': 'Fleisch',
+      'rsvp.foodFish': 'Fisch',
+      'rsvp.foodVeggie': 'Vegetarisch',
+      'rsvp.foodVegan': 'Vegan',
+      'rsvp.foodKids': 'Kindermenü',
       'rsvp.guestsQ': 'Anzahl der Gäste in Ihrer Begleitung',
       'rsvp.mainGuest': 'Hauptgast',
       'rsvp.namePh': 'Vollständiger Name',
@@ -85,7 +90,7 @@
       'mail.attendNo': 'Leider bin ich verhindert.',
       'mail.extras': 'Vorgemerkt',
       'mail.shuttle': 'Shuttle-Service',
-      'mail.veggie': 'Vegetarisches Menü',
+      'mail.food': 'Menüwunsch',
       'mail.companions': 'Begleitpersonen',
       'mail.name': 'Name',
       'mail.email': 'E-Mail',
@@ -132,7 +137,7 @@
       'menu.c3d': 'Grilled sea bass or beef fillet in Barolo',
       'menu.c4': 'Dolce',
       'menu.c4d': 'Wedding cake, tiramisù & midnight snack',
-      'menu.note': 'Vegetarian alternatives are of course available – please let us know about intolerances in your RSVP.',
+      'menu.note': 'Vegetarian alternatives are of course available – please let us know your menu choice in your RSVP.',
       'dress.title': 'Dress Code',
       'dress.main': 'Formal Evening Attire',
       'dress.note': 'We invite you to dress elegantly for the occasion.<br>Please avoid wearing white – that day it belongs to the bride.',
@@ -154,7 +159,12 @@
       'rsvp.attendNo': 'I regretfully decline',
       'rsvp.extrasQ': 'What may we note down for you?',
       'rsvp.extraShuttle': 'I will use the shuttle service',
-      'rsvp.extraVeggie': 'Vegetarian menu',
+      'rsvp.foodPh': 'Menu choice (optional)',
+      'rsvp.foodMeat': 'Meat',
+      'rsvp.foodFish': 'Fish',
+      'rsvp.foodVeggie': 'Vegetarian',
+      'rsvp.foodVegan': 'Vegan',
+      'rsvp.foodKids': "Children's menu",
       'rsvp.guestsQ': 'Number of guests accompanying you',
       'rsvp.mainGuest': 'Main guest',
       'rsvp.namePh': 'Full name',
@@ -173,7 +183,7 @@
       'mail.attendNo': 'I regretfully decline.',
       'mail.extras': 'Noted',
       'mail.shuttle': 'Shuttle service',
-      'mail.veggie': 'Vegetarian menu',
+      'mail.food': 'Menu choice',
       'mail.companions': 'Companions',
       'mail.name': 'Name',
       'mail.email': 'Email',
@@ -613,9 +623,11 @@
     if (attending) {
       var extras = [];
       form.querySelectorAll('input[name="extras"]:checked').forEach(function (c) {
-        extras.push(c.value === 'shuttle' ? t('mail.shuttle') : t('mail.veggie'));
+        if (c.value === 'shuttle') extras.push(t('mail.shuttle'));
       });
       lines.push(t('mail.extras') + ': ' + (extras.length ? extras.join(', ') : '–'));
+      var foodSel = document.getElementById('guestFood');
+      if (foodSel.value) lines.push(t('mail.food') + ': ' + foodSel.options[foodSel.selectedIndex].text);
       lines.push(t('mail.companions') + ': ' + guests);
     }
     lines.push(t('mail.name') + ': ' + name);
@@ -640,8 +652,8 @@
     if (attending) {
       form.querySelectorAll('input[name="extras"]:checked').forEach(function (c) {
         if (c.value === 'shuttle') events.push('Shuttle-Service');
-        if (c.value === 'veggie') food = 'Vegetarisches Menü';
       });
+      food = document.getElementById('guestFood').value;
     }
     return {
       name: document.getElementById('guestName').value.trim(),

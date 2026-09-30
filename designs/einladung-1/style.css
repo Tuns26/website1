@@ -790,6 +790,7 @@ h2.script {
 
 .rsvp-form input[type="text"],
 .rsvp-form input[type="email"],
+.rsvp-form select,
 .rsvp-form textarea {
   display: block;
   width: 100%;
@@ -805,6 +806,7 @@ h2.script {
   transition: border-color .25s, box-shadow .25s;
 }
 .rsvp-form input:focus,
+.rsvp-form select:focus,
 .rsvp-form textarea:focus {
   outline: none;
   border-color: var(--teal);

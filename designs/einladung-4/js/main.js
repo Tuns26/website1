@@ -322,7 +322,7 @@
         "Teilnahme: " + (data.get("attendance") || ""),
         "Anzahl Personen: " + (data.get("persons") || ""),
         "Vorabend: " + (data.get("weekend") ? "ja" : "nein"),
-        "Essenswünsche/Allergien: " + (data.get("food") || "keine"),
+        "Menüwunsch: " + (data.get("food") || "keine Angabe"),
         "",
         "Nachricht:",
         data.get("message") || "-",

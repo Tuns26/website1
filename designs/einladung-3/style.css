@@ -852,6 +852,7 @@ body.opened .scroll-cue { opacity: 0.9; }
 
 .rsvp-form input[type="text"],
 .rsvp-form input[type="email"],
+.rsvp-form select,
 .rsvp-form textarea {
   width: 100%;
   border: 0;
@@ -866,7 +867,7 @@ body.opened .scroll-cue { opacity: 0.9; }
   transition: border-color 0.25s;
   resize: vertical;
 }
-.rsvp-form input:focus, .rsvp-form textarea:focus { border-color: var(--gold); }
+.rsvp-form input:focus, .rsvp-form select:focus, .rsvp-form textarea:focus { border-color: var(--gold); }
 .rsvp-form ::placeholder { color: rgba(74, 22, 31, 0.45); font-style: italic; }
 
 .rsvp-submit {

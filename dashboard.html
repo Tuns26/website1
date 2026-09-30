@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Gäste-Dashboard — WeddingLink</title>
-<meta name="description" content="Ihre RSVP-Rückmeldungen auf einen Blick – nur mit persönlichem Zugangscode." />
+<meta name="description" content="Eure RSVP-Rückmeldungen auf einen Blick – nur mit persönlichem Zugangscode." />
 <meta name="robots" content="noindex, nofollow" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -108,14 +108,14 @@ td.num { font-variant-numeric: tabular-nums; text-align: right; }
 
   <!-- Anmeldung mit persönlichem Zugangscode -->
   <div class="card login" id="loginCard" hidden>
-    <h1>Ihre Rückmeldungen</h1>
-    <p>Bitte geben Sie Ihren persönlichen Zugangscode ein.</p>
+    <h1>Eure Rückmeldungen</h1>
+    <p>Bitte gebt euren persönlichen Zugangscode ein.</p>
     <form id="loginForm">
       <input type="password" id="codeInput" placeholder="Zugangscode" autocomplete="current-password" required />
       <button class="btn" type="submit">Anzeigen</button>
     </form>
     <p class="error" id="loginError">Dieser Zugangscode ist ungültig.</p>
-    <p class="privacy-note">Ihre Gästeliste ist nicht öffentlich: Ohne diesen Code kann niemand die Rückmeldungen einsehen.</p>
+    <p class="privacy-note">Eure Gästeliste ist nicht öffentlich: Ohne diesen Code kann niemand die Rückmeldungen einsehen.</p>
   </div>
 
   <!-- Dashboard -->
@@ -148,7 +148,7 @@ td.num { font-variant-numeric: tabular-nums; text-align: right; }
           <thead>
             <tr>
               <th>Datum</th><th>Name</th><th>E-Mail</th><th>Teilnahme</th>
-              <th>Personen</th><th>Programmpunkte</th><th>Menüwunsch / Unverträglichkeiten</th><th>Nachricht</th>
+              <th>Personen</th><th>Programmpunkte</th><th>Menüwunsch</th><th>Nachricht</th>
             </tr>
           </thead>
           <tbody></tbody>
@@ -304,7 +304,7 @@ var SUPABASE_ANON_KEY = "sb_publishable_vWjyliPNXn4SNtEwquJzuA_HrkbZHvt";
 
   document.getElementById('csvBtn').addEventListener('click', function () {
     if (!currentData) return;
-    var head = ['Datum', 'Name', 'E-Mail', 'Teilnahme', 'Personen', 'Programmpunkte', 'Menuewunsch/Unvertraeglichkeiten', 'Nachricht'];
+    var head = ['Datum', 'Name', 'E-Mail', 'Teilnahme', 'Personen', 'Programmpunkte', 'Menuewunsch', 'Nachricht'];
     var lines = [head.join(';')];
     (currentData.rsvps || []).forEach(function (r) {
       var cells = [

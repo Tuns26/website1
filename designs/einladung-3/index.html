@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=Great+Vibes&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="style.css?v=2">
 </head>
 <body>
 
@@ -156,7 +156,7 @@
         </div>
       </div>
       <div class="reveal parallax table-wrap"><img class="table-img" src="https://d8j0ntlcm91z4.cloudfront.net/user_3FvydqbGOOHUpbISUQX0A2zheMB/hf_20260705_183509_9cd9ca81-2c59-442c-9477-fdffc47fc9dd.png" alt="Illustration einer festlich gedeckten Hochzeitstafel"></div>
-      <p class="menu-note reveal" data-i18n="menu.note">Vegetarische Alternativen sind selbstverständlich vorbereitet – teilen Sie uns Unverträglichkeiten gerne im RSVP mit.</p>
+      <p class="menu-note reveal" data-i18n="menu.note">Vegetarische Alternativen sind selbstverständlich vorbereitet – teilen Sie uns Ihren Menüwunsch gerne im RSVP mit.</p>
     </div>
   </section>
 
@@ -236,11 +236,14 @@
             <span class="control"></span>
             <span data-i18n="rsvp.extraShuttle">Ich nutze den Shuttle-Service</span>
           </label>
-          <label class="check">
-            <input type="checkbox" name="extras" value="veggie">
-            <span class="control"></span>
-            <span data-i18n="rsvp.extraVeggie">Vegetarisches Menü</span>
-          </label>
+          <select id="guestFood" name="food" aria-label="Menüwunsch">
+            <option value="" data-i18n="rsvp.foodPh">Menüwunsch (optional)</option>
+            <option value="Fleisch" data-i18n="rsvp.foodMeat">Fleisch</option>
+            <option value="Fisch" data-i18n="rsvp.foodFish">Fisch</option>
+            <option value="Vegetarisch" data-i18n="rsvp.foodVeggie">Vegetarisch</option>
+            <option value="Vegan" data-i18n="rsvp.foodVegan">Vegan</option>
+            <option value="Kindermenü" data-i18n="rsvp.foodKids">Kindermenü</option>
+          </select>
         </fieldset>
 
         <fieldset>
@@ -280,6 +283,6 @@
 
 <script src="rsvp-config.js"></script>
 <script src="rsvp.js"></script>
-<script src="script.js"></script>
+<script src="script.js?v=2"></script>
 </body>
 </html>
