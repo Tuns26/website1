@@ -265,8 +265,15 @@
           <span data-config="rsvpWeekendLabel"></span>
         </label>
         <label class="field">
-          <span class="field__label">Essenswünsche / Allergien</span>
-          <input class="field__input" type="text" name="food" placeholder="z. B. vegetarisch, Nussallergie …" />
+          <span class="field__label">Menüwunsch</span>
+          <select class="field__input" name="food">
+            <option value="">Bitte wählen (optional)</option>
+            <option>Fleisch</option>
+            <option>Fisch</option>
+            <option>Vegetarisch</option>
+            <option>Vegan</option>
+            <option>Kindermenü</option>
+          </select>
         </label>
         <label class="field">
           <span class="field__label">Nachricht an uns</span>
@@ -290,6 +297,6 @@
   <script src="js/config.js?v=4"></script>
   <script src="js/rsvp-config.js"></script>
   <script src="js/rsvp.js"></script>
-  <script src="js/main.js?v=4"></script>
+  <script src="js/main.js?v=5"></script>
 </body>
 </html>

@@ -16,7 +16,7 @@ A complete responsive one-pager with these sections, top to bottom:
 1. **Fixed nav** — brand mark + links + CTA, turns opaque on scroll, mobile hamburger
 2. **Hero** — eyebrow, big serif title, script accent line, lead text, two CTAs,
    stats row, and an **animated phone mockup with a live countdown** to the wedding date
-3. **Features** — "Alles, was Sie brauchen" card grid (RSVP, map, gallery, WhatsApp…)
+3. **Features** — "Alles, was ihr braucht" card grid (RSVP, map, gallery, WhatsApp…)
 4. **Collection** — four phone-style design cards in different color moods
 5. **Testimonials** — quotes on a saturated accent-color band
 6. **Team** — studio intro + photo block

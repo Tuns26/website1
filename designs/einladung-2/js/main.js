@@ -64,7 +64,7 @@
         "E-Mail: " + (data.get("email") || "-"),
         "Teilnahme: " + (data.get("attendance") || ""),
         "Anzahl Personen: " + (data.get("persons") || ""),
-        "Essenswünsche/Allergien: " + (data.get("food") || "keine"),
+        "Menüwunsch: " + (data.get("food") || "keine Angabe"),
         "",
         "Nachricht:",
         data.get("message") || "-",

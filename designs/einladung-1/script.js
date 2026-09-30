@@ -55,7 +55,12 @@
       'rsvp.mainGuest': 'Hauptgast',
       'rsvp.namePh': 'Vollständiger Name',
       'rsvp.emailPh': 'E-Mail-Adresse',
-      'rsvp.foodPh': 'Essenswünsche / Allergien (optional)',
+      'rsvp.foodPh': 'Menüwunsch (optional)',
+      'rsvp.foodMeat': 'Fleisch',
+      'rsvp.foodFish': 'Fisch',
+      'rsvp.foodVeggie': 'Vegetarisch',
+      'rsvp.foodVegan': 'Vegan',
+      'rsvp.foodKids': 'Kindermenü',
       'rsvp.msgPh': 'Eine Nachricht an das Brautpaar (optional)',
       'rsvp.submit': 'Rückmeldung senden',
       'rsvp.note': 'Es öffnet sich Ihr E-Mail-Programm mit der fertigen Rückmeldung.',
@@ -72,7 +77,7 @@
       'mail.companions': 'Begleitpersonen',
       'mail.name': 'Name',
       'mail.email': 'E-Mail',
-      'mail.food': 'Essenswünsche',
+      'mail.food': 'Menüwunsch',
       'mail.message': 'Nachricht'
     },
     en: {
@@ -127,7 +132,12 @@
       'rsvp.mainGuest': 'Main guest',
       'rsvp.namePh': 'Full name',
       'rsvp.emailPh': 'Email address',
-      'rsvp.foodPh': 'Dietary wishes / allergies (optional)',
+      'rsvp.foodPh': 'Menu choice (optional)',
+      'rsvp.foodMeat': 'Meat',
+      'rsvp.foodFish': 'Fish',
+      'rsvp.foodVeggie': 'Vegetarian',
+      'rsvp.foodVegan': 'Vegan',
+      'rsvp.foodKids': "Children's menu",
       'rsvp.msgPh': 'A message for the couple (optional)',
       'rsvp.submit': 'Send reply',
       'rsvp.note': 'Your email app will open with the completed reply.',
@@ -144,7 +154,7 @@
       'mail.companions': 'Companions',
       'mail.name': 'Name',
       'mail.email': 'Email',
-      'mail.food': 'Dietary wishes',
+      'mail.food': 'Menu choice',
       'mail.message': 'Message'
     }
   };
@@ -357,7 +367,8 @@
     }
     lines.push(t('mail.name') + ': ' + name);
     lines.push(t('mail.email') + ': ' + email);
-    var food = document.getElementById('guestFood').value.trim();
+    var foodSel = document.getElementById('guestFood');
+    var food = foodSel.value ? foodSel.options[foodSel.selectedIndex].text : '';
     var msg = document.getElementById('guestMsg').value.trim();
     if (food) lines.push(t('mail.food') + ': ' + food);
     if (msg) { lines.push(''); lines.push(t('mail.message') + ':'); lines.push(msg); }
